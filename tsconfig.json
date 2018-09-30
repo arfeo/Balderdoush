@@ -8,6 +8,7 @@
     "allowJs": true,
     "moduleResolution": "node",
     "rootDir": "src",
+    "outDir": "dist",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "experimentalDecorators": true,
@@ -16,6 +17,7 @@
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "gulpfile.js"
   ]
 }
