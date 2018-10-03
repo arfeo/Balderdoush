@@ -1,0 +1,58 @@
+@import '../../assets/styles/variables';
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  width: 120vmin;
+  height: 84vmin;
+
+  .-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 120vmin;
+    height: 6vmin;
+
+    .-diamonds,
+    .-time,
+    .-score {
+      width: 30%;
+      font-size: 4.5vmin;
+      color: $white;
+
+      .-label {
+        display: inline;
+      }
+    }
+
+    .-diamonds {
+      .-label:after {
+        content: '◈';
+        margin: 0 1vmin;
+      }
+    }
+
+    .-time {
+      text-align: center;
+
+      .-label:before {
+        content: 'TIME';
+        margin-right: 3vmin;
+      }
+    }
+
+    .-score {
+      text-align: right;
+
+      .-label:before {
+        content: 'SCORE';
+        margin-right: 3vmin;
+      }
+    }
+  }
+
+  .-grid {
+    height: 78vmin;
+    border: 1px solid gold;
+  }
+}

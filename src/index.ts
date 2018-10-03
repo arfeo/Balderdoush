@@ -1,3 +1,7 @@
+import { Game } from './components/Game';
+
+import { globals } from './constants/globals';
+
 window.onload = () => {
-  document.getElementById('root').innerHTML = 'Balderdoush';
+  globals.pageInstance = new Game();
 };
