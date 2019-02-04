@@ -1,11 +1,8 @@
-import { globals } from '../../constants/globals';
-
 import { renderGameBoard, resetRenderPanel } from './render';
 
 class Game {
   level: number;
   diamonds: number;
-  time: number;
   score: number;
 
   appRoot: HTMLElement;
@@ -18,7 +15,6 @@ class Game {
   constructor(level = 1, score = 0) {
     this.level = level;
     this.diamonds = 0;
-    this.time = globals.timer;
     this.score = score;
 
     this.appRoot = document.getElementById('root');

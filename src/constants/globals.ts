@@ -1,6 +1,5 @@
 import { IGlobals } from '../types/constants';
 
-export const globals: IGlobals = {
+export const APP: IGlobals = {
   pageInstance: null,
-  timer: 150,
 };
