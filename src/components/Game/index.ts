@@ -25,7 +25,7 @@ class Game {
     this.render();
   }
 
-  render() {
+  render(): void {
     renderGameBoard.call(this);
     resetRenderPanel.call(this);
   }

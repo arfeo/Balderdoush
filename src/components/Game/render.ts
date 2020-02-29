@@ -1,4 +1,4 @@
-function renderGameBoard() {
+function renderGameBoard(): void {
   const gameBoardPanel: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
   const panelDiamondsContainer: HTMLElement = document.createElement('div');
@@ -28,7 +28,7 @@ function renderGameBoard() {
   panelScoreContainer.appendChild(this.panelScore);
 }
 
-function resetRenderPanel() {
+function resetRenderPanel(): void {
   this.panelDiamonds.innerText = this.diamonds;
   this.panelTime.innerText = 0;
   this.panelScore.innerText = this.score;
