@@ -1,18 +1,21 @@
+import { PageComponent } from '../core/Page';
+
 import { renderGameBoard, resetRenderPanel } from './render';
 
-class Game {
-  level: number;
-  diamonds: number;
-  score: number;
-
-  appRoot: HTMLElement;
-  gameBoardContainer: HTMLElement;
-  gameBoardCanvas: HTMLCanvasElement;
-  panelDiamonds: HTMLElement;
-  panelTime: HTMLElement;
-  panelScore: HTMLElement;
+class Game extends PageComponent {
+  protected appRoot: HTMLElement;
+  protected level: number;
+  protected diamonds: number;
+  protected score: number;
+  protected gameBoardContainer: HTMLElement;
+  protected gameBoardCanvas: HTMLCanvasElement;
+  protected panelDiamonds: HTMLElement;
+  protected panelTime: HTMLElement;
+  protected panelScore: HTMLElement;
 
   constructor(level = 1, score = 0) {
+    super(level, score);
+
     this.level = level;
     this.diamonds = 0;
     this.score = score;
@@ -21,11 +24,9 @@ class Game {
     this.panelDiamonds = document.createElement('div');
     this.panelTime = document.createElement('div');
     this.panelScore = document.createElement('div');
-
-    this.render();
   }
 
-  render(): void {
+  public render(): void {
     renderGameBoard.call(this);
     resetRenderPanel.call(this);
   }
