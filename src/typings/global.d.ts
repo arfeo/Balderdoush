@@ -1,0 +1,3 @@
+interface App {
+  pageInstance: any;
+}
