@@ -24,12 +24,14 @@ function renderGameBoard(): void {
   gameBoardPanel.appendChild(panelTimeContainer);
   gameBoardPanel.appendChild(panelScoreContainer);
   panelDiamondsContainer.appendChild(this.panelDiamonds);
+  panelDiamondsContainer.appendChild(this.panelDiamondValue);
   panelTimeContainer.appendChild(this.panelTime);
   panelScoreContainer.appendChild(this.panelScore);
 }
 
 function resetRenderPanel(): void {
   this.panelDiamonds.innerText = this.diamonds;
+  this.panelDiamondValue.innerText = this.diamondValue;
   this.panelTime.innerText = 0;
   this.panelScore.innerText = this.score;
 }

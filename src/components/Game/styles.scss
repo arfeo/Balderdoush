@@ -26,9 +26,16 @@
     }
 
     .-diamonds {
-      .-label:after {
-        content: '◈';
-        margin: 0 1vmin;
+      display: flex;
+
+      .-label {
+        display: flex;
+
+        &:after {
+          content: '◈';
+          margin: 0 1vmin;
+          line-height: 5vmin;
+        }
       }
     }
 

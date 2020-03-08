@@ -6,10 +6,12 @@ class Game extends PageComponent {
   protected appRoot: HTMLElement;
   protected level: number;
   protected diamonds: number;
+  protected diamondValue: number;
   protected score: number;
   protected gameBoardContainer: HTMLElement;
   protected gameBoardCanvas: HTMLCanvasElement;
   protected panelDiamonds: HTMLElement;
+  protected panelDiamondValue: HTMLElement;
   protected panelTime: HTMLElement;
   protected panelScore: HTMLElement;
 
@@ -18,10 +20,12 @@ class Game extends PageComponent {
 
     this.level = level;
     this.diamonds = 0;
+    this.diamondValue = 0;
     this.score = score;
 
     this.appRoot = document.getElementById('root');
     this.panelDiamonds = document.createElement('div');
+    this.panelDiamondValue = document.createElement('div');
     this.panelTime = document.createElement('div');
     this.panelScore = document.createElement('div');
   }
