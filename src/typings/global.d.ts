@@ -17,5 +17,5 @@ interface Level {
   diamondsToGet: number;
   diamondValue: number;
   time: number;
-  map: number[][];
+  levelMap: number[][];
 }
