@@ -11,3 +11,11 @@ interface EventHandler {
   type: string;
   listener: EventListener;
 }
+
+interface Level {
+  id: number;
+  diamondsToGet: number;
+  diamondValue: number;
+  time: number;
+  map: number[][];
+}
