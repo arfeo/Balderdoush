@@ -14,13 +14,11 @@ class Game extends PageComponent {
   protected diamondValue: number;
   protected time: number;
   protected score: number;
-  protected mapCanvas: HTMLCanvasElement;
-  protected gameBoardContainer: HTMLElement;
-  protected gameBoardCanvas: HTMLCanvasElement;
   protected panelDiamonds: HTMLElement;
   protected panelDiamondValue: HTMLElement;
   protected panelTime: HTMLElement;
   protected panelScore: HTMLElement;
+  protected mapCanvas: HTMLCanvasElement;
 
   constructor(levelId = 1, score = 0) {
     super(levelId, score);
@@ -40,11 +38,11 @@ class Game extends PageComponent {
     this.score = score;
 
     this.appRoot = document.getElementById('root');
-    this.mapCanvas = document.createElement('canvas');
     this.panelDiamonds = document.createElement('div');
     this.panelDiamondValue = document.createElement('div');
     this.panelTime = document.createElement('div');
     this.panelScore = document.createElement('div');
+    this.mapCanvas = document.createElement('canvas');
   }
 
   public render(): void {

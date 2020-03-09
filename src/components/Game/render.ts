@@ -1,15 +1,14 @@
 import { MAP_HEIGHT, MAP_WIDTH } from '../../constants/game';
 
 function renderGameBoard(): void {
+  const gameBoardContainer: HTMLElement = document.createElement('div');
   const gameBoardPanel: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
   const panelDiamondsContainer: HTMLElement = document.createElement('div');
   const panelTimeContainer: HTMLElement = document.createElement('div');
   const panelScoreContainer: HTMLElement = document.createElement('div');
 
-  this.gameBoardContainer = document.createElement('div');
-
-  this.gameBoardContainer.className = 'game-board';
+  gameBoardContainer.className = 'game-board';
   gameBoardPanel.className = '-panel';
   panelDiamondsContainer.className = '-diamonds';
   panelTimeContainer.className = '-time';
@@ -23,9 +22,9 @@ function renderGameBoard(): void {
   this.mapCanvas.width = this.cellSize * MAP_WIDTH;
   this.mapCanvas.height = this.cellSize * MAP_HEIGHT;
 
-  this.appRoot.appendChild(this.gameBoardContainer);
-  this.gameBoardContainer.appendChild(gameBoardPanel);
-  this.gameBoardContainer.appendChild(gameBoardGrid);
+  this.appRoot.appendChild(gameBoardContainer);
+  gameBoardContainer.appendChild(gameBoardPanel);
+  gameBoardContainer.appendChild(gameBoardGrid);
   gameBoardPanel.appendChild(panelDiamondsContainer);
   gameBoardPanel.appendChild(panelTimeContainer);
   gameBoardPanel.appendChild(panelScoreContainer);
