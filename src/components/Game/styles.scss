@@ -58,7 +58,7 @@
     }
   }
 
-  .-grid {
+  .-map {
     position: relative;
     width: calc(#{$cellSize * $mapWidth});
     height: calc(#{$cellSize * $mapHeight});
