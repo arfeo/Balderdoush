@@ -29,11 +29,19 @@ function renderGameBoard(): void {
   panelScoreContainer.appendChild(this.panelScore);
 }
 
-function resetRenderPanel(): void {
-  this.panelDiamonds.innerText = this.diamonds;
-  this.panelDiamondValue.innerText = this.diamondValue;
-  this.panelTime.innerText = 0;
-  this.panelScore.innerText = this.score;
+function renderMap(): void {
+  // ...
 }
 
-export { renderGameBoard, resetRenderPanel };
+function resetRenderPanel(): void {
+  this.panelDiamonds.innerText = this.diamondsToGet.toString().padStart(3, '0');
+  this.panelDiamondValue.innerText = this.diamondValue.toString().padStart(4, '0');
+  this.panelTime.innerText = this.time;
+  this.panelScore.innerText = this.score.toString().padStart(6, '0');
+}
+
+export {
+  renderGameBoard,
+  resetRenderPanel,
+  renderMap,
+};

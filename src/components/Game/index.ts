@@ -1,12 +1,18 @@
 import { PageComponent } from '../core/Page';
 
-import { renderGameBoard, resetRenderPanel } from './render';
+import { CELL_SIZE_VMIN } from '../../constants/game';
+import { LEVELS } from '../../constants/levels';
+
+import { renderGameBoard, renderMap, resetRenderPanel } from './render';
+import { getCellSize } from './helpers';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
-  protected level: number;
-  protected diamonds: number;
+  protected cellSize: number;
+  protected levelId: number;
+  protected diamondsToGet: number;
   protected diamondValue: number;
+  protected time: number;
   protected score: number;
   protected gameBoardContainer: HTMLElement;
   protected gameBoardCanvas: HTMLCanvasElement;
@@ -15,12 +21,21 @@ class Game extends PageComponent {
   protected panelTime: HTMLElement;
   protected panelScore: HTMLElement;
 
-  constructor(level = 1, score = 0) {
-    super(level, score);
+  constructor(levelId = 1, score = 0) {
+    super(levelId, score);
 
-    this.level = level;
-    this.diamonds = 0;
-    this.diamondValue = 0;
+    const level: Level = LEVELS.find((item: Level) => item.id === levelId);
+
+    if (!level) {
+      throw Error('Level with unknown id.');
+    }
+
+    this.cellSize = getCellSize(CELL_SIZE_VMIN);
+
+    this.levelId = levelId;
+    this.diamondsToGet = level.diamondsToGet;
+    this.diamondValue = level.diamondValue;
+    this.time = level.time;
     this.score = score;
 
     this.appRoot = document.getElementById('root');
@@ -33,6 +48,7 @@ class Game extends PageComponent {
   public render(): void {
     renderGameBoard.call(this);
     resetRenderPanel.call(this);
+    renderMap.call(this);
   }
 }
 
