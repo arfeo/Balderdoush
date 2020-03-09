@@ -1,3 +1,5 @@
+import { MAP_HEIGHT, MAP_WIDTH } from '../../constants/game';
+
 function renderGameBoard(): void {
   const gameBoardPanel: HTMLElement = document.createElement('div');
   const gameBoardGrid: HTMLElement = document.createElement('div');
@@ -18,8 +20,8 @@ function renderGameBoard(): void {
   gameBoardGrid.className = '-grid';
   this.mapCanvas.className = '-map-canvas';
 
-  this.mapCanvas.width = this.cellSize * 20;
-  this.mapCanvas.height = this.cellSize * 13;
+  this.mapCanvas.width = this.cellSize * MAP_WIDTH;
+  this.mapCanvas.height = this.cellSize * MAP_HEIGHT;
 
   this.appRoot.appendChild(this.gameBoardContainer);
   this.gameBoardContainer.appendChild(gameBoardPanel);

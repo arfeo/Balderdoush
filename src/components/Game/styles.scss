@@ -3,14 +3,14 @@
 .game-board {
   display: flex;
   flex-direction: column;
-  width: calc(#{$cellSize * 20});
-  height: calc(#{$cellSize * 14});
+  width: calc(#{$cellSize * $mapWidth});
+  height: calc(#{$cellSize * ($mapHeight + 1)});
 
   .-panel {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(#{$cellSize * 20});
+    width: calc(#{$cellSize * $mapWidth});
     height: $cellSize;
 
     .-diamonds,
@@ -60,16 +60,16 @@
 
   .-grid {
     position: relative;
-    width: calc(#{$cellSize * 20});
-    height: calc(#{$cellSize * 13});
+    width: calc(#{$cellSize * $mapWidth});
+    height: calc(#{$cellSize * $mapHeight});
     border: 1px solid gold;
 
     .-map-canvas {
       position: absolute;
       top: 0;
       left: 0;
-      width: calc(#{$cellSize * 20});
-      height: calc(#{$cellSize * 13});
+      width: calc(#{$cellSize * $mapWidth});
+      height: calc(#{$cellSize * $mapHeight});
     }
   }
 }
