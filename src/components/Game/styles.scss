@@ -62,7 +62,6 @@
     position: relative;
     width: calc(#{$cellSize * $mapWidth});
     height: calc(#{$cellSize * $mapHeight});
-    border: 1px solid gold;
 
     .-map-canvas {
       position: absolute;

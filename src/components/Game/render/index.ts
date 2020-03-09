@@ -1,4 +1,6 @@
-import { MAP_HEIGHT, MAP_WIDTH } from '../../constants/game';
+import { MAP_HEIGHT, MAP_WIDTH, MapItems } from '../../../constants/game';
+
+import { renderWall } from './wall';
 
 function renderGameBoard(): void {
   const gameBoardContainer: HTMLElement = document.createElement('div');
@@ -36,7 +38,16 @@ function renderGameBoard(): void {
 }
 
 function renderMap(): void {
-  // ...
+  for (let y = 0; y < this.levelMap.length; y += 1) {
+    for (let x = 0; x < this.levelMap[y].length; x += 1) {
+      switch (this.levelMap[y][x]) {
+        case MapItems.Wall:
+          renderWall.call(this, x, y);
+          break;
+        default: break;
+      }
+    }
+  }
 }
 
 function resetRenderPanel(): void {
