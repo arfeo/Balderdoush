@@ -16,6 +16,10 @@ function renderGameBoard(): void {
   this.panelTime.className = '-label';
   this.panelScore.className = '-label';
   gameBoardGrid.className = '-grid';
+  this.mapCanvas.className = '-map-canvas';
+
+  this.mapCanvas.width = this.cellSize * 20;
+  this.mapCanvas.height = this.cellSize * 13;
 
   this.appRoot.appendChild(this.gameBoardContainer);
   this.gameBoardContainer.appendChild(gameBoardPanel);
@@ -27,6 +31,7 @@ function renderGameBoard(): void {
   panelDiamondsContainer.appendChild(this.panelDiamondValue);
   panelTimeContainer.appendChild(this.panelTime);
   panelScoreContainer.appendChild(this.panelScore);
+  gameBoardGrid.appendChild(this.mapCanvas);
 }
 
 function renderMap(): void {
