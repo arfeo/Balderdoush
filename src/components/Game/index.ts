@@ -27,7 +27,7 @@ class Game extends PageComponent {
     const level: Level = LEVELS.find((item: Level) => item.id === levelId);
 
     if (!level) {
-      throw Error('Level with unknown id.');
+      throw new Error('Level with unknown id.');
     }
 
     this.cellSize = getCellSize(CELL_SIZE_VMIN);
