@@ -34,7 +34,7 @@ function renderSoil(x: number, y: number): void {
     this.cellSize,
     this.cellSize,
     {
-      fillColor: 'rgb(218,179,135)',
+      fillColor: 'rgb(218, 179, 135)',
     },
   );
 

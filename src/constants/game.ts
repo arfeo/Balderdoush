@@ -12,4 +12,5 @@ export enum MapItems {
   Soil,
   Wall,
   Rockford,
+  BrickWall,
 }

@@ -27,7 +27,7 @@ function renderWall(x: number, y: number): void {
     0,
     {
       edgingWidth: this.cellSize / 30,
-      edgingColor: 'rgb(218,179,0)',
+      edgingColor: 'rgb(218, 179, 0)',
     },
   );
 
@@ -39,7 +39,7 @@ function renderWall(x: number, y: number): void {
     90,
     {
       edgingWidth: this.cellSize / 30,
-      edgingColor: 'rgb(218,179,0)',
+      edgingColor: 'rgb(218, 179, 0)',
     },
   );
 
@@ -93,7 +93,7 @@ function renderWall(x: number, y: number): void {
       0,
       {
         edgingWidth: this.cellSize / 30,
-        edgingColor: 'rgb(218,179,0)',
+        edgingColor: 'rgb(218, 179, 0)',
       },
     );
 
@@ -105,7 +105,7 @@ function renderWall(x: number, y: number): void {
       90,
       {
         edgingWidth: this.cellSize / 30,
-        edgingColor: 'rgb(218,179,0)',
+        edgingColor: 'rgb(218, 179, 0)',
       },
     );
   });
