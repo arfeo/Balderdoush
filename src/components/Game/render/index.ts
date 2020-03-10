@@ -4,6 +4,7 @@ import { renderWall } from './wall';
 import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
 import { renderBoulder } from './boulder';
+import { renderDiamond } from './diamond';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -55,6 +56,9 @@ function renderMap(): void {
           break;
         case MapItems.Boulder:
           renderBoulder.call(this, x, y);
+          break;
+        case MapItems.Diamond:
+          renderDiamond.call(this, x, y);
           break;
         default: break;
       }

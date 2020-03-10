@@ -14,7 +14,6 @@ interface EventHandler {
 
 interface Level {
   id: number;
-  name: string;
   diamondsToGet: number;
   diamondValue: number;
   time: number;
