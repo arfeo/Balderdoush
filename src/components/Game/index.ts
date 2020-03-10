@@ -3,7 +3,7 @@ import { PageComponent } from '../core/Page';
 import { CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
-import { renderGameBoard, renderMap, resetRenderPanel } from './render';
+import { renderGameBoard, renderMap, renderPanel } from './render';
 import { getCellSize } from './helpers';
 
 class Game extends PageComponent {
@@ -49,7 +49,7 @@ class Game extends PageComponent {
 
   public render(): void {
     renderGameBoard.call(this);
-    resetRenderPanel.call(this);
+    renderPanel.call(this);
     renderMap.call(this);
   }
 }

@@ -1,6 +1,6 @@
 @import '../../assets/styles/variables';
 
-.game-board {
+.game-container {
   display: flex;
   flex-direction: column;
   width: calc(#{$cellSize * $mapWidth});
