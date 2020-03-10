@@ -3,6 +3,7 @@ import { MAP_HEIGHT, MAP_WIDTH, MapItems } from '../../../constants/game';
 import { renderWall } from './wall';
 import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
+import { renderBoulder } from './boulder';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -51,6 +52,9 @@ function renderMap(): void {
           break;
         case MapItems.BrickWall:
           renderBrickWall.call(this, x, y);
+          break;
+        case MapItems.Boulder:
+          renderBoulder.call(this, x, y);
           break;
         default: break;
       }

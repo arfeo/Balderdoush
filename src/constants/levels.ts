@@ -7,6 +7,8 @@
  *  1 - Soil
  *  2 - Wall
  *  3 - Rockford
+ *  4 - Brick wall
+ *  5 - Boulder
  */
 export const LEVELS: Level[] = [
   {
