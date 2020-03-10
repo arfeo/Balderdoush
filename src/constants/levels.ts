@@ -11,6 +11,7 @@
 export const LEVELS: Level[] = [
   {
     id: 1,
+    name: 'BDD_GAME1',
     diamondsToGet: 12,
     diamondValue: 15,
     time: 150,
