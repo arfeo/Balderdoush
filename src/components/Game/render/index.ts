@@ -44,31 +44,35 @@ function renderGameBoard(): void {
 }
 
 function renderMap(): void {
-  for (let y = 0; y < this.levelMap.length; y += 1) {
-    for (let x = 0; x < this.levelMap[y].length; x += 1) {
+  const [offsetY, offsetX] = this.offset;
+
+  for (let y = offsetY; y < offsetY + 13; y += 1) {
+    for (let x = offsetX; x < offsetX + 20; x += 1) {
       switch (this.levelMap[y][x]) {
         case MapItems.Soil:
-          renderSoil.call(this, x, y);
+          renderSoil.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Wall:
-          renderWall.call(this, x, y);
+          renderWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Avatar:
-          renderAvatar.call(this, x, y);
+          renderAvatar.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.BrickWall:
-          renderBrickWall.call(this, x, y);
+          renderBrickWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Boulder:
-          renderBoulder.call(this, x, y);
+          renderBoulder.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Diamond:
-          renderDiamond.call(this, x, y);
+          renderDiamond.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Skull:
-          renderSkull.call(this, x, y);
+          renderSkull.call(this, x - offsetX, y - offsetY);
           break;
-        default: break;
+        default:
+          clearCells(this.mapCanvas.getContext('2d'), x, y);
+          break;
       }
     }
   }

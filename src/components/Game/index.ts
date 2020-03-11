@@ -4,7 +4,7 @@ import { CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderMap, renderPanel } from './render';
-import { getCellSize } from './helpers';
+import { getCellSize, getInitialOffset } from './helpers';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -20,6 +20,7 @@ class Game extends PageComponent {
   protected panelTime: HTMLElement;
   protected panelScore: HTMLElement;
   protected mapCanvas: HTMLCanvasElement;
+  protected offset: number[];
 
   constructor(levelId = 1, score = 0) {
     super(levelId, score);
@@ -45,6 +46,8 @@ class Game extends PageComponent {
     this.panelTime = document.createElement('div');
     this.panelScore = document.createElement('div');
     this.mapCanvas = document.createElement('canvas');
+
+    this.offset = getInitialOffset(this.levelMap);
   }
 
   public render(): void {
