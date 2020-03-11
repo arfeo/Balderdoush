@@ -7,6 +7,7 @@ import { renderBoulder } from './boulder';
 import { renderDiamond } from './diamond';
 import { renderSkull } from './skull';
 import { renderAvatar } from './avatar';
+import { renderEmpty } from './empty';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -71,7 +72,7 @@ function renderMap(): void {
           renderSkull.call(this, x - offsetX, y - offsetY);
           break;
         default:
-          clearCells(this.mapCanvas.getContext('2d'), x, y);
+          renderEmpty.call(this, x - offsetX, y - offsetY);
           break;
       }
     }
