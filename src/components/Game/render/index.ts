@@ -46,11 +46,11 @@ function renderMap(): void {
   for (let y = 0; y < this.levelMap.length; y += 1) {
     for (let x = 0; x < this.levelMap[y].length; x += 1) {
       switch (this.levelMap[y][x]) {
-        case MapItems.Wall:
-          renderWall.call(this, x, y);
-          break;
         case MapItems.Soil:
           renderSoil.call(this, x, y);
+          break;
+        case MapItems.Wall:
+          renderWall.call(this, x, y);
           break;
         case MapItems.BrickWall:
           renderBrickWall.call(this, x, y);
