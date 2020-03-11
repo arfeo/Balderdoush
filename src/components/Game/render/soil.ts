@@ -1,4 +1,5 @@
 import { drawRectangle } from '../../../utils/drawing';
+import { clearCells } from './';
 
 interface NoiseParam {
   randomX: number;
@@ -26,6 +27,8 @@ function getNoiseParams(cellSize: number): void {
 
 function renderSoil(x: number, y: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+
+  clearCells.call(this, ctx, x, y);
 
   drawRectangle(
     ctx,

@@ -1,7 +1,10 @@
 import { drawTriangle } from '../../../utils/drawing';
+import { clearCells } from './';
 
 function renderDiamond(x: number, y: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+
+  clearCells.call(this, ctx, x, y);
 
   drawTriangle(
     ctx,

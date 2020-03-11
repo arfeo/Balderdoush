@@ -1,9 +1,12 @@
 import { drawCircle, drawLineToAngle, drawTriangle } from '../../../utils/drawing';
+import { clearCells } from './';
 
 import { DrawOptions } from '../../../utils/types';
 
 function renderSkull(x: number, y: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+
+  clearCells.call(this, ctx, x, y);
 
   drawCircle(
     ctx,

@@ -1,4 +1,5 @@
 import { drawLineToAngle, drawRectangle } from '../../../utils/drawing';
+import { clearCells } from './';
 
 interface WallHole {
   left: number;
@@ -7,6 +8,8 @@ interface WallHole {
 
 function renderWall(x: number, y: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+
+  clearCells.call(this, ctx, x, y);
 
   drawRectangle(
     ctx,

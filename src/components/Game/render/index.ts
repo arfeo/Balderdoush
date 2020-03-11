@@ -81,8 +81,18 @@ function renderPanel(): void {
   this.panelScore.innerText = this.score.toString().padStart(6, '0');
 }
 
+function clearCells(ctx: CanvasRenderingContext2D, left: number, top: number, xCount = 1, yCount = 1): void {
+  ctx.clearRect(
+    this.cellSize * left,
+    this.cellSize * top,
+    this.cellSize * xCount,
+    this.cellSize * yCount,
+  );
+}
+
 export {
   renderGameBoard,
   renderPanel,
   renderMap,
+  clearCells,
 };
