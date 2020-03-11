@@ -11,7 +11,7 @@ function renderAvatar(x: number, y: number): void {
     this.cellSize / 2,
     this.cellSize / 5,
     {
-      fillColor: 'green',
+      fillColor: 'rgb(0, 218, 179)',
     },
   );
 }
