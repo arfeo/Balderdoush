@@ -1,3 +1,5 @@
+import { MapItems } from '../../constants/game';
+
 /**
  * Function returns the cell size (atomic canvas measure)
  * depending on the screen size and the given vmin value
@@ -50,8 +52,30 @@ function changeMapValue(levelMap: number[][], x: number, y: number, newValue: nu
   }));
 }
 
+/**
+ * Function returns an array of top and left coordinates of the initial map offset;
+ * if the avatar item not found on the given map, it returns zero values array
+ *
+ * @param levelMap
+ */
+function getInitialOffset(levelMap: number[][]): number[] {
+  const items: number[][] = getMapItemsByType(levelMap, MapItems.Avatar);
+
+  if (!items.length) {
+    return [0, 0];
+  }
+
+  const avatarPosition: number[] = items[0];
+  const [avatarY, avatarX] = avatarPosition;
+  const offsetY: number = levelMap[avatarY - 9] ? avatarY - 9 : 0;
+  const offsetX: number = levelMap[offsetY][avatarX - 15] ? avatarX - 15 : 0;
+
+  return [offsetY, offsetX];
+}
+
 export {
   getCellSize,
   getMapItemsByType,
   changeMapValue,
+  getInitialOffset,
 };
