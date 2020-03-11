@@ -11,7 +11,7 @@ export enum MapItems {
   EmptySpace = 0,
   Soil,
   Wall,
-  Rockford,
+  Avatar,
   BrickWall,
   Boulder,
   Diamond,
