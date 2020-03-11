@@ -15,4 +15,5 @@ export enum MapItems {
   BrickWall,
   Boulder,
   Diamond,
+  Skull,
 }

@@ -10,6 +10,7 @@
  *  4 - Brick wall
  *  5 - Boulder
  *  6 - Diamond
+ *  7 - Skull
  */
 export const LEVELS: Level[] = [
   {
