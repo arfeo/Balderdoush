@@ -6,7 +6,7 @@ import { getMapItemsByType } from './helpers';
 function onKeyDown(e: KeyboardEvent): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
-  if (!items.length) {
+  if (!e || !items.length) {
     return;
   }
 
