@@ -9,7 +9,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   }
 
   const mapItem: number = this.levelMap[targetY][targetX];
-  const isWall: boolean = mapItem === MapItems.Wall || mapItem === MapItems.BrickWall;
+  const isWall: boolean = mapItem === MapItems.Wall || mapItem === MapItems.Exit || mapItem === MapItems.BrickWall;
 
   return !isWall;
 }

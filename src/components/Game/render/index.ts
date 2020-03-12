@@ -57,6 +57,7 @@ function renderMap(): void {
           renderSoil.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Wall:
+        case MapItems.Exit:
           renderWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Avatar:
