@@ -3,8 +3,19 @@ import { MapItems } from '../../constants/game';
 import { renderMap, renderPanel } from './render';
 import { changeMapValue } from './helpers';
 
-function tryMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
+function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
+    return false;
+  }
+
+  const mapItem: number = this.levelMap[targetY][targetX];
+  const isWall: boolean = mapItem === MapItems.Wall || mapItem === MapItems.BrickWall;
+
+  return !isWall;
+}
+
+function tryMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
+  if (!checkMovePossibility.call(this, targetX, targetY)) {
     return;
   }
 
