@@ -25,7 +25,9 @@ class Game extends PageComponent {
 
   constructor(levelId = 1, score = 0) {
     super(levelId, score);
+  }
 
+  public init(levelId: number, score: number): void {
     const level: Level = LEVELS.find((item: Level) => item.id === levelId);
 
     if (!level) {
