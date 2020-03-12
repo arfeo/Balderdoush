@@ -1,7 +1,7 @@
 import { MapItems } from '../../constants/game';
 
 import { renderMap, renderPanel } from './render';
-import { changeMapValue } from './helpers';
+import { changeMapValue } from '../../utils/game';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {

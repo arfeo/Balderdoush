@@ -1,7 +1,7 @@
 import { MapItems } from '../../constants/game';
 
 import { tryMove } from './actions';
-import { getMapItemsByType } from './helpers';
+import { getMapItemsByType } from '../../utils/game';
 
 function onKeyDown(e: KeyboardEvent): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);

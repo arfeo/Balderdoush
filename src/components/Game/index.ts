@@ -5,7 +5,8 @@ import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown } from './events';
-import { getCellSize, getInitialOffset } from './helpers';
+import { getInitialOffset } from './helpers';
+import { getCellSize } from '../../utils/game';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -50,7 +51,7 @@ class Game extends PageComponent {
     this.panelScore = document.createElement('div');
     this.mapCanvas = document.createElement('canvas');
 
-    this.offset = getInitialOffset(this.levelMap);
+    this.offset = getInitialOffset.call(this);
 
     this.eventHandlers = [
       {
