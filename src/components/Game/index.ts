@@ -4,6 +4,7 @@ import { CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderMap, renderPanel } from './render';
+import { onKeyDown } from './events';
 import { getCellSize, getInitialOffset } from './helpers';
 
 class Game extends PageComponent {
@@ -48,6 +49,14 @@ class Game extends PageComponent {
     this.mapCanvas = document.createElement('canvas');
 
     this.offset = getInitialOffset(this.levelMap);
+
+    this.eventHandlers = [
+      {
+        target: document,
+        type: 'keydown',
+        listener: onKeyDown.bind(this),
+      },
+    ];
   }
 
   public render(): void {

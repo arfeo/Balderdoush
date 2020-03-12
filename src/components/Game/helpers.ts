@@ -65,8 +65,7 @@ function getInitialOffset(levelMap: number[][]): number[] {
     return [0, 0];
   }
 
-  const avatarPosition: number[] = items[0];
-  const [avatarY, avatarX] = avatarPosition;
+  const [avatarY, avatarX] = items[0];
   const offsetY: number = levelMap[avatarY - 9] ? avatarY - 9 : 0;
   const offsetX: number = levelMap[offsetY][avatarX - 15] ? avatarX - 15 : 0;
 

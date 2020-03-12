@@ -50,6 +50,9 @@ function renderMap(): void {
   for (let y = offsetY; y < offsetY + 13; y += 1) {
     for (let x = offsetX; x < offsetX + 20; x += 1) {
       switch (this.levelMap[y][x]) {
+        case MapItems.EmptySpace:
+          renderEmpty.call(this, x - offsetX, y - offsetY);
+          break;
         case MapItems.Soil:
           renderSoil.call(this, x - offsetX, y - offsetY);
           break;
@@ -71,9 +74,7 @@ function renderMap(): void {
         case MapItems.Skull:
           renderSkull.call(this, x - offsetX, y - offsetY);
           break;
-        default:
-          renderEmpty.call(this, x - offsetX, y - offsetY);
-          break;
+        default: break;
       }
     }
   }
