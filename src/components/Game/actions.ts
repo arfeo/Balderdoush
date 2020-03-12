@@ -1,19 +1,27 @@
 import { MapItems } from '../../constants/game';
 
-import { renderPanel } from './render';
+import { renderMap, renderPanel } from './render';
+import { changeMapValue } from './helpers';
 
-function checkCell(x: number, y: number): void {
-  const mapItem: number = this.levelMap[y][x];
+function tryMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
+  if (this.levelMap[targetY] && this.levelMap[targetY][targetX] !== undefined) {
+    const mapItem: number = this.levelMap[targetY][targetX];
 
-  switch (mapItem) {
-    case MapItems.Diamond:
-      this.score += this.diamondValue;
-      this.diamondsToGet -= 1;
+    switch (mapItem) {
+      case MapItems.Diamond:
+        this.score += this.diamondValue;
+        this.diamondsToGet -= 1;
 
-      renderPanel.call(this);
-      break;
-    default: break;
+        renderPanel.call(this);
+        break;
+      default: break;
+    }
+
+    this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+    this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.Avatar);
+
+    renderMap.call(this);
   }
 }
 
-export { checkCell };
+export { tryMove };
