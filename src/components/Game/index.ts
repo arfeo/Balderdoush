@@ -32,7 +32,7 @@ class Game extends PageComponent {
     const level: Level = LEVELS.find((item: Level) => item.id === levelId);
 
     if (!level) {
-      throw new Error('Incorrect level id.');
+      throw 'Incorrect level id.';
     }
 
     this.cellSize = getCellSize(CELL_SIZE_VMIN);
