@@ -8,6 +8,7 @@ export interface Images {
 export abstract class PageComponent {
   public eventHandlers: EventHandler[];
   public images: Images;
+  public loopTimeout: number;
   public init?(...args: any[]): Promise<any> | void;
   public abstract render(): void;
   public abstract loop?(): void;
@@ -15,11 +16,12 @@ export abstract class PageComponent {
 
   public constructor(...args: any[]) {
     this.eventHandlers = [];
+    this.loopTimeout = 4;
 
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
         typeof this.render === 'function' && this.render();
-        typeof this.loop === 'function' && PageComponent.startLoop(() => this.loop());
+        typeof this.loop === 'function' && this.startLoop(() => this.loop());
 
         if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
           this.setUpEventHandlers();
@@ -32,14 +34,6 @@ export abstract class PageComponent {
     typeof this.init === 'function' && await this.init(...args);
 
     return Promise.resolve();
-  }
-
-  private static startLoop(handler: () => void): void {
-    if (typeof handler !== 'function') {
-      return;
-    }
-
-    window.setInterval(handler, 4);
   }
 
   private loadImages(images: Images): Promise<void[]> {
@@ -94,6 +88,14 @@ export abstract class PageComponent {
 
   public removeEventHandlers(): void {
     this.processEventHandlers('remove');
+  }
+
+  private startLoop(handler: () => void): void {
+    if (typeof handler !== 'function') {
+      return;
+    }
+
+    window.setInterval(handler, this.loopTimeout);
   }
 
   public destroy(): void {
