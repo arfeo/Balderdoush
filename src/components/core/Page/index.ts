@@ -5,7 +5,10 @@ export interface Images {
   };
 }
 
+const DEFAULT_LOOP_TIMEOUT = 4;
+
 export abstract class PageComponent {
+  private loopFrame: number;
   public eventHandlers: EventHandler[];
   public images: Images;
   public loopTimeout: number;
@@ -16,7 +19,7 @@ export abstract class PageComponent {
 
   public constructor(...args: any[]) {
     this.eventHandlers = [];
-    this.loopTimeout = 4;
+    this.loopTimeout = DEFAULT_LOOP_TIMEOUT;
 
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
@@ -52,6 +55,26 @@ export abstract class PageComponent {
         return resolve();
       };
     })));
+  }
+
+  private startLoop(handler: () => void): void {
+    if (typeof handler !== 'function') {
+      return;
+    }
+
+    let start: number = performance.now();
+
+    const loop = (time: number): void => {
+      if (time - start > this.loopTimeout) {
+        handler();
+
+        start = time;
+      }
+
+      this.loopFrame = requestAnimationFrame(loop);
+    };
+
+    this.loopFrame = requestAnimationFrame(loop);
   }
 
   private processEventHandlers(actionType: 'add' | 'remove'): void {
@@ -90,16 +113,10 @@ export abstract class PageComponent {
     this.processEventHandlers('remove');
   }
 
-  private startLoop(handler: () => void): void {
-    if (typeof handler !== 'function') {
-      return;
-    }
-
-    window.setInterval(handler, this.loopTimeout);
-  }
-
   public destroy(): void {
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();
+
+    cancelAnimationFrame(this.loopFrame);
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
       this.removeEventHandlers();
