@@ -10,6 +10,7 @@ export abstract class PageComponent {
   public images: Images;
   public init?(...args: any[]): Promise<any> | void;
   public abstract render(): void;
+  public abstract loop?(): void;
   public beforeUnmount?(): void;
 
   public constructor(...args: any[]) {
@@ -18,6 +19,7 @@ export abstract class PageComponent {
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
         typeof this.render === 'function' && this.render();
+        typeof this.loop === 'function' && PageComponent.startLoop(() => this.loop());
 
         if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
           this.setUpEventHandlers();
@@ -30,6 +32,14 @@ export abstract class PageComponent {
     typeof this.init === 'function' && await this.init(...args);
 
     return Promise.resolve();
+  }
+
+  private static startLoop(handler: () => void): void {
+    if (typeof handler !== 'function') {
+      return;
+    }
+
+    window.setInterval(handler, 4);
   }
 
   private loadImages(images: Images): Promise<void[]> {
