@@ -13,7 +13,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   return mapItem === MapItems.EmptySpace || mapItem === MapItems.Soil || mapItem === MapItems.Diamond;
 }
 
-function checkBoulders(): void {
+function handleBoulders(): void {
   const boulders: number[][] = getMapItemsByType(this.levelMap, MapItems.Boulder);
 
   if (!boulders.length) {
@@ -28,6 +28,29 @@ function checkBoulders(): void {
       this.levelMap = changeMapValue(this.levelMap, boulderX, boulderY + 1, MapItems.Boulder);
 
       renderMap.call(this);
+    }
+  }
+}
+
+function handleGameOver(): void {
+  if (!this.isGameOver) {
+    return;
+  }
+
+  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+
+  if (!items.length) {
+    return;
+  }
+
+  const [avatarY, avatarX] = items[0];
+
+  for (let y = avatarY - 1; y <= avatarY + 1; y += 1) {
+    for (let x = avatarX - 1; x <= avatarX + 1; x += 1) {
+      if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall) {
+        // TODO: add explosion animation
+        this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
+      }
     }
   }
 }
@@ -53,7 +76,7 @@ function adjustOffset(x: number, y: number): void {
 }
 
 function tryMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
-  if (!checkMovePossibility.call(this, targetX, targetY)) {
+  if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver) {
     return;
   }
 
@@ -72,6 +95,10 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
     default: break;
   }
 
+  if (this.levelMap[itemY - 1] && this.levelMap[itemY - 1][itemX] === MapItems.Boulder && itemX === targetX) {
+    this.isGameOver = true;
+  }
+
   this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
   this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.Avatar);
 
@@ -81,6 +108,7 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
 }
 
 export {
-  checkBoulders,
+  handleBoulders,
+  handleGameOver,
   tryMove,
 };

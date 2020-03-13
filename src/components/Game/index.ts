@@ -7,7 +7,7 @@ import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown } from './events';
 import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
-import { checkBoulders } from './actions';
+import { handleBoulders, handleGameOver } from './actions';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -24,6 +24,7 @@ class Game extends PageComponent {
   protected panelScore: HTMLElement;
   protected mapCanvas: HTMLCanvasElement;
   protected offset: number[];
+  protected isGameOver: boolean;
 
   constructor(levelId = 1, score = 0) {
     super(levelId, score);
@@ -54,6 +55,8 @@ class Game extends PageComponent {
 
     this.offset = getInitialOffset.call(this);
 
+    this.isGameOver = false;
+
     this.eventHandlers = [
       {
         target: document,
@@ -70,7 +73,8 @@ class Game extends PageComponent {
   }
 
   public loop(): void {
-    checkBoulders.call(this);
+    handleGameOver.call(this);
+    handleBoulders.call(this);
   }
 }
 
