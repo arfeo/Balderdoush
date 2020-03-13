@@ -10,7 +10,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
 
   const mapItem: number = this.levelMap[targetY][targetX];
 
-  return mapItem === MapItems.EmptySpace || mapItem === MapItems.Soil;
+  return mapItem === MapItems.EmptySpace || mapItem === MapItems.Soil || mapItem === MapItems.Diamond;
 }
 
 function adjustOffset(x: number, y: number): void {
@@ -43,7 +43,10 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
   switch (mapItem) {
     case MapItems.Diamond:
       this.score += this.diamondValue;
-      this.diamondsToGet -= 1;
+
+      if (this.diamondsToGet > 0) {
+        this.diamondsToGet -= 1;
+      }
 
       renderPanel.call(this);
       break;
