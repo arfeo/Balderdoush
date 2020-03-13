@@ -7,6 +7,7 @@ import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown } from './events';
 import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
+import { checkBoulders } from './actions';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -66,6 +67,10 @@ class Game extends PageComponent {
     renderGameBoard.call(this);
     renderPanel.call(this);
     renderMap.call(this);
+  }
+
+  public loop(): void {
+    checkBoulders.call(this);
   }
 }
 

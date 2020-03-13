@@ -1,7 +1,7 @@
 import { MapItems } from '../../constants/game';
 
 import { renderMap, renderPanel } from './render';
-import { changeMapValue } from '../../utils/game';
+import { changeMapValue, getMapItemsByType } from '../../utils/game';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
@@ -11,6 +11,25 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   const mapItem: number = this.levelMap[targetY][targetX];
 
   return mapItem === MapItems.EmptySpace || mapItem === MapItems.Soil || mapItem === MapItems.Diamond;
+}
+
+function checkBoulders(): void {
+  const boulders: number[][] = getMapItemsByType(this.levelMap, MapItems.Boulder);
+
+  if (!boulders.length) {
+    return;
+  }
+
+  for (const boulder of boulders) {
+    const [boulderY, boulderX] = boulder;
+
+    if (this.levelMap[boulderY + 1] && this.levelMap[boulderY + 1][boulderX] === MapItems.EmptySpace) {
+      this.levelMap = changeMapValue(this.levelMap, boulderX, boulderY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, boulderX, boulderY + 1, MapItems.Boulder);
+
+      renderMap.call(this);
+    }
+  }
 }
 
 function adjustOffset(x: number, y: number): void {
@@ -61,4 +80,7 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
   renderMap.call(this);
 }
 
-export { tryMove };
+export {
+  checkBoulders,
+  tryMove,
+};
