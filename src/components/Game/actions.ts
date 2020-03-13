@@ -20,15 +20,15 @@ function adjustOffset(x: number, y: number): void {
     this.offset = [offsetY, offsetX - 1];
   }
 
-  if ((x - offsetX) > 17 && this.levelMap && this.levelMap[0] && (offsetX + 20) < this.levelMap[0].length) {
+  if ((x - offsetX) >= 17 && this.levelMap && this.levelMap[0] && (offsetX + 20) < this.levelMap[0].length) {
     this.offset = [offsetY, offsetX + 1];
   }
 
-  if ((y - offsetY) <= 3 && offsetY > 0) {
+  if ((y - offsetY) < 3 && offsetY > 0) {
     this.offset = [offsetY - 1, offsetX];
   }
 
-  if ((y - offsetY) > 10 && this.levelMap && (offsetY + 13) < this.levelMap.length) {
+  if ((y - offsetY) >= 10 && this.levelMap && (offsetY + 13) < this.levelMap.length) {
     this.offset = [offsetY + 1, offsetX];
   }
 }
