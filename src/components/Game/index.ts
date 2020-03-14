@@ -7,7 +7,7 @@ import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown } from './events';
 import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
-import { handleBoulders, handleGameOver } from './actions';
+import { handleBoulders, handleExits, handleGameOver } from './actions';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -17,6 +17,7 @@ class Game extends PageComponent {
   protected diamondValue: number;
   protected time: number;
   protected score: number;
+  protected lives: number;
   protected levelMap: number[][];
   protected panelDiamonds: HTMLElement;
   protected panelDiamondValue: HTMLElement;
@@ -25,12 +26,13 @@ class Game extends PageComponent {
   protected mapCanvas: HTMLCanvasElement;
   protected offset: number[];
   protected isGameOver: boolean;
+  protected animateExits: number[];
 
-  constructor(levelId = 1, score = 0) {
-    super(levelId, score);
+  constructor(levelId = 1, score = 0, lives = 3) {
+    super(levelId, score, lives);
   }
 
-  public init(levelId: number, score: number): void {
+  public init(levelId: number, score: number, lives: number): void {
     const level: Level = LEVELS.find((item: Level) => item.id === levelId);
 
     if (!level) {
@@ -44,6 +46,7 @@ class Game extends PageComponent {
     this.diamondValue = level.diamondValue;
     this.time = level.time;
     this.score = score;
+    this.lives = lives;
     this.levelMap = [...level.levelMap];
 
     this.appRoot = document.getElementById('root');
@@ -54,8 +57,8 @@ class Game extends PageComponent {
     this.mapCanvas = document.createElement('canvas');
 
     this.offset = getInitialOffset.call(this);
-
     this.isGameOver = false;
+    this.animateExits = [];
 
     this.eventHandlers = [
       {
@@ -75,6 +78,7 @@ class Game extends PageComponent {
   public loop(): void {
     handleGameOver.call(this);
     handleBoulders.call(this);
+    handleExits.call(this);
   }
 }
 

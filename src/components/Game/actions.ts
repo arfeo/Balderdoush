@@ -2,6 +2,7 @@ import { MapItems } from '../../constants/game';
 
 import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
+import { animateActiveExit } from './animations';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
@@ -32,14 +33,24 @@ function handleBoulders(): void {
   }
 }
 
-function handleGameOver(): void {
-  if (!this.isGameOver) {
+function handleExits(): void {
+  if (this.diamondsToGet > 0 || this.animateExits.length) {
     return;
   }
 
+  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Exit);
+
+  for (let i = 0; i < items.length; i += 1) {
+    const [exitY, exitX] = items[i];
+
+    animateActiveExit.call(this, i, exitX, exitY);
+  }
+}
+
+function handleGameOver(): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
-  if (!items.length) {
+  if (!this.isGameOver || !items.length) {
     return;
   }
 
@@ -53,6 +64,8 @@ function handleGameOver(): void {
       }
     }
   }
+
+  this.lives -= 1;
 }
 
 function handleTarget(targetX: number, targetY: number): void {
@@ -114,5 +127,6 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
 export {
   handleBoulders,
   handleGameOver,
+  handleExits,
   tryMove,
 };
