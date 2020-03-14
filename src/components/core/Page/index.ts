@@ -8,10 +8,11 @@ export interface Images {
 const DEFAULT_LOOP_TIMEOUT = 4;
 
 export abstract class PageComponent {
-  private loopFrame: number;
+  private loopRequestId: number;
   public eventHandlers: EventHandler[];
   public images: Images;
   public loopTimeout: number;
+  public animations: { [key: string]: number[] | number };
   public init?(...args: any[]): Promise<any> | void;
   public abstract render(): void;
   public abstract loop?(): void;
@@ -20,6 +21,7 @@ export abstract class PageComponent {
   public constructor(...args: any[]) {
     this.eventHandlers = [];
     this.loopTimeout = DEFAULT_LOOP_TIMEOUT;
+    this.animations = {};
 
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
@@ -71,10 +73,10 @@ export abstract class PageComponent {
         start = time;
       }
 
-      this.loopFrame = requestAnimationFrame(loop);
+      this.loopRequestId = requestAnimationFrame(loop);
     };
 
-    this.loopFrame = requestAnimationFrame(loop);
+    this.loopRequestId = requestAnimationFrame(loop);
   }
 
   private processEventHandlers(actionType: 'add' | 'remove'): void {
@@ -116,7 +118,23 @@ export abstract class PageComponent {
   public destroy(): void {
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();
 
-    cancelAnimationFrame(this.loopFrame);
+    if (typeof this.animations === 'object' && Object.keys(this.animations).length > 0) {
+      Object.keys(this.animations).forEach((key: string) => {
+        if (Object.prototype.hasOwnProperty.call(this.animations, key)) {
+          const item: number[] | number = this.animations[key];
+
+          typeof item === 'number' && window.cancelAnimationFrame(item as number);
+
+          if (Array.isArray(item)) {
+            for (const requestId of item) {
+              typeof requestId === 'number' && window.cancelAnimationFrame(requestId);
+            }
+          }
+        }
+      });
+    }
+
+    cancelAnimationFrame(this.loopRequestId);
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
       this.removeEventHandlers();
