@@ -23,28 +23,24 @@ function animateActiveExit(index: number, x: number, y: number): void {
   this.animations.exits[index] = requestAnimationFrame(animate);
 }
 
-function animateExplosion(index: number, x: number, y: number): Promise<void> {
-  return new Promise((resolve) => {
-    let alpha = 1;
+function animateExplosion(index: number, x: number, y: number): void {
+  let alpha = 1;
 
-    const animate = (): void => {
-      if (alpha < 0) {
-        cancelAnimationFrame(this.animations.explosions[index]);
+  const animate = (): void => {
+    if (alpha < 0) {
+      return cancelAnimationFrame(this.animations.explosions[index]);
+    }
 
-        return resolve();
-      }
+    const [offsetY, offsetX] = this.offset;
 
-      const [offsetY, offsetX] = this.offset;
+    renderExplosion.call(this, x - offsetX, y - offsetY, alpha);
 
-      renderExplosion.call(this, x - offsetX, y - offsetY, alpha);
-
-      alpha -= FADE_OUT_ANIMATION_SPEED / 4;
-
-      this.animations.explosions[index] = requestAnimationFrame(animate);
-    };
+    alpha -= FADE_OUT_ANIMATION_SPEED / 4;
 
     this.animations.explosions[index] = requestAnimationFrame(animate);
-  });
+  };
+
+  this.animations.explosions[index] = requestAnimationFrame(animate);
 }
 
 export {

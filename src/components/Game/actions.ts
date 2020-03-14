@@ -66,11 +66,11 @@ function handleGameOver(): void {
   for (let y = avatarY - 1; y <= avatarY + 1; y += 1) {
     for (let x = avatarX - 1; x <= avatarX + 1; x += 1) {
       if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall && this.levelMap[y][x] !== MapItems.Exit) {
-        animateExplosion.call(this, explosionIndex, x, y).then(() => {
-          this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
-        });
+        animateExplosion.call(this, explosionIndex, x, y);
 
         explosionIndex += 1;
+
+        this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
       }
     }
   }
