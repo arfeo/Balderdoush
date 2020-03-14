@@ -15,7 +15,7 @@ export abstract class PageComponent {
   public animations: { [key: string]: number[] | number };
   public init?(...args: any[]): Promise<any> | void;
   public abstract render(): void;
-  public abstract loop?(): void;
+  public loop?(): void;
   public beforeUnmount?(): void;
 
   public constructor(...args: any[]) {
@@ -47,7 +47,7 @@ export abstract class PageComponent {
     }
 
     return Promise.all(Object.keys(images).map((key: string): Promise<void> => new Promise((resolve, reject): void => {
-      if (images[key] === undefined) {
+      if (!Object.prototype.hasOwnProperty.call(images, key) || images[key] === undefined) {
         return reject();
       }
 
