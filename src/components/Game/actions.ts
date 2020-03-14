@@ -4,7 +4,7 @@ import { MapItems } from '../../constants/game';
 
 import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
-import { animateActiveExit } from './animations';
+import { animateActiveExit, animateExplosion } from './animations';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
@@ -61,12 +61,16 @@ function handleGameOver(): void {
   }
 
   const [avatarY, avatarX] = items[0];
+  let explosionIndex = 0;
 
   for (let y = avatarY - 1; y <= avatarY + 1; y += 1) {
     for (let x = avatarX - 1; x <= avatarX + 1; x += 1) {
       if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall && this.levelMap[y][x] !== MapItems.Exit) {
-        // TODO: add explosion animation
-        this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
+        animateExplosion.call(this, explosionIndex, x, y).then(() => {
+          this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
+        });
+
+        explosionIndex += 1;
       }
     }
   }

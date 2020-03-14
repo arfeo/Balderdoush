@@ -29,6 +29,7 @@ class Game extends PageComponent {
   protected isLevelCompleted: boolean;
   public animations: {
     exits?: number[];
+    explosions?: number[];
   };
 
   constructor(levelId = 1, score = 0, lives = 3) {
@@ -74,6 +75,7 @@ class Game extends PageComponent {
 
     this.animations = {
       exits: [],
+      explosions: [],
     };
   }
 
