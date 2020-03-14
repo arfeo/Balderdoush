@@ -1,3 +1,5 @@
+import { Alert } from '../common/Alert';
+
 import { MapItems } from '../../constants/game';
 
 import { renderMap, renderPanel } from './render';
@@ -10,8 +12,12 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   }
 
   const mapItem: number = this.levelMap[targetY][targetX];
+  const isEmptySpace: boolean = mapItem === MapItems.EmptySpace;
+  const isSoil: boolean = mapItem === MapItems.Soil;
+  const isDiamond: boolean = mapItem === MapItems.Diamond;
+  const isActiveExit: boolean = mapItem === MapItems.Exit && this.diamondsToGet === 0;
 
-  return mapItem === MapItems.EmptySpace || mapItem === MapItems.Soil || mapItem === MapItems.Diamond;
+  return isEmptySpace || isSoil || isDiamond || isActiveExit;
 }
 
 function handleBoulders(): void {
@@ -72,6 +78,13 @@ function handleTarget(targetX: number, targetY: number): void {
   const mapItem: number = this.levelMap[targetY] && this.levelMap[targetY][targetX];
 
   switch (mapItem) {
+    case MapItems.Exit:
+      if (this.diamondsToGet === 0) {
+        this.isLevelCompleted = true;
+
+        new Alert(this, 'Level completed.');
+      }
+      break;
     case MapItems.Diamond:
       this.score += this.diamondValue;
 
@@ -106,7 +119,7 @@ function adjustOffset(x: number, y: number): void {
 }
 
 function tryMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
-  if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver) {
+  if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver || this.isLevelCompleted) {
     return;
   }
 
