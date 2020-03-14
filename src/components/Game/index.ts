@@ -9,10 +9,6 @@ import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { handleBoulders, handleExits, handleGameOver } from './actions';
 
-type Animations = {
-  exits?: number[];
-};
-
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
   protected cellSize: number;
@@ -30,7 +26,9 @@ class Game extends PageComponent {
   protected mapCanvas: HTMLCanvasElement;
   protected offset: number[];
   protected isGameOver: boolean;
-  public animations: Animations;
+  public animations: {
+    exits?: number[];
+  };
 
   constructor(levelId = 1, score = 0, lives = 3) {
     super(levelId, score, lives);

@@ -6,7 +6,7 @@ export interface WallHole {
   top: number;
 }
 
-function renderWall(x: number, y: number): void {
+function renderWallBase(x: number, y: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
 
   clearCells.call(this, ctx, x, y);
@@ -45,6 +45,12 @@ function renderWall(x: number, y: number): void {
       edgingColor: 'rgb(218, 179, 0)',
     },
   );
+}
+
+function renderWall(x: number, y: number): void {
+  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+
+  renderWallBase.call(this, x, y);
 
   const wallHoles: WallHole[] = [
     {
@@ -114,4 +120,7 @@ function renderWall(x: number, y: number): void {
   });
 }
 
-export { renderWall };
+export {
+  renderWallBase,
+  renderWall,
+};

@@ -9,7 +9,7 @@ function animateActiveExit(index: number, x: number, y: number): void {
 
     renderExitActive.call(this, x - offsetX, y - offsetY, state);
 
-    if (time - start > 250) {
+    if (time - start > 300) {
       start = time;
       state = state === 1 ? 2 : 1;
     }
