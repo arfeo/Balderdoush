@@ -34,7 +34,7 @@ function handleBoulders(): void {
 }
 
 function handleExits(): void {
-  if (this.diamondsToGet > 0 || this.animateExits.length) {
+  if (this.diamondsToGet > 0 || this.animations.exits.length) {
     return;
   }
 

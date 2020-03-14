@@ -14,10 +14,10 @@ function animateActiveExit(index: number, x: number, y: number): void {
       state = state === 1 ? 2 : 1;
     }
 
-    this.animateExits[index] = requestAnimationFrame(animate);
+    this.animations.exits[index] = requestAnimationFrame(animate);
   };
 
-  this.animateExits[index] = requestAnimationFrame(animate);
+  this.animations.exits[index] = requestAnimationFrame(animate);
 }
 
 export { animateActiveExit };

@@ -9,6 +9,10 @@ import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { handleBoulders, handleExits, handleGameOver } from './actions';
 
+type Animations = {
+  exits?: number[];
+};
+
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
   protected cellSize: number;
@@ -26,7 +30,7 @@ class Game extends PageComponent {
   protected mapCanvas: HTMLCanvasElement;
   protected offset: number[];
   protected isGameOver: boolean;
-  protected animateExits: number[];
+  public animations: Animations;
 
   constructor(levelId = 1, score = 0, lives = 3) {
     super(levelId, score, lives);
@@ -58,7 +62,6 @@ class Game extends PageComponent {
 
     this.offset = getInitialOffset.call(this);
     this.isGameOver = false;
-    this.animateExits = [];
 
     this.eventHandlers = [
       {
@@ -67,6 +70,10 @@ class Game extends PageComponent {
         listener: onKeyDown.bind(this),
       },
     ];
+
+    this.animations = {
+      exits: [],
+    };
   }
 
   public render(): void {
@@ -79,12 +86,6 @@ class Game extends PageComponent {
     handleGameOver.call(this);
     handleBoulders.call(this);
     handleExits.call(this);
-  }
-
-  public beforeUnmount(): void {
-    for (const frame of this.animateExits) {
-      cancelAnimationFrame(frame);
-    }
   }
 }
 
