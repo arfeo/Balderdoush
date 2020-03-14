@@ -7,9 +7,9 @@ function animateActiveExit(index: number, x: number, y: number): void {
   const animate = (time: number): void => {
     const [offsetY, offsetX] = this.offset;
 
-    if (time - start > 500) {
-      renderExitActive.call(this, x - offsetX, y - offsetY, state);
+    renderExitActive.call(this, x - offsetX, y - offsetY, state);
 
+    if (time - start > 250) {
       start = time;
       state = state === 1 ? 2 : 1;
     }
