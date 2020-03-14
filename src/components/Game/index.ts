@@ -80,6 +80,12 @@ class Game extends PageComponent {
     handleBoulders.call(this);
     handleExits.call(this);
   }
+
+  public beforeUnmount(): void {
+    for (const frame of this.animateExits) {
+      cancelAnimationFrame(frame);
+    }
+  }
 }
 
 export { Game };

@@ -1,11 +1,6 @@
-import { renderWall } from './wall';
+import { renderWall, WallHole } from './wall';
 import { clearCells } from './index';
 import { drawRectangle } from '../../../utils/drawing';
-
-interface WallHole {
-  left: number;
-  top: number;
-}
 
 function renderExit(x: number, y: number): void {
   renderWall.call(this, x, y);

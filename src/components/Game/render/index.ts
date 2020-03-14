@@ -8,7 +8,7 @@ import { renderDiamond } from './diamond';
 import { renderSkull } from './skull';
 import { renderAvatar } from './avatar';
 import { renderEmpty } from './empty';
-import { renderExit } from './exit';
+import { renderExit, renderExitActive } from './exit';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -61,7 +61,9 @@ function renderMap(): void {
           renderWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Exit:
-          this.diamondsToGet > 0 && renderExit.call(this, x - offsetX, y - offsetY);
+          this.diamondsToGet > 0
+            && renderExit.call(this, x - offsetX, y - offsetY)
+            || renderExitActive.call(this, x - offsetX, y - offsetY, 1);
           break;
         case MapItems.Avatar:
           renderAvatar.call(this, x - offsetX, y - offsetY);
