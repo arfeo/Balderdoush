@@ -47,11 +47,28 @@ function handleGameOver(): void {
 
   for (let y = avatarY - 1; y <= avatarY + 1; y += 1) {
     for (let x = avatarX - 1; x <= avatarX + 1; x += 1) {
-      if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall) {
+      if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall && this.levelMap[y][x] !== MapItems.Exit) {
         // TODO: add explosion animation
         this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
       }
     }
+  }
+}
+
+function handleTarget(targetX: number, targetY: number): void {
+  const mapItem: number = this.levelMap[targetY] && this.levelMap[targetY][targetX];
+
+  switch (mapItem) {
+    case MapItems.Diamond:
+      this.score += this.diamondValue;
+
+      if (this.diamondsToGet > 0) {
+        this.diamondsToGet -= 1;
+      }
+
+      renderPanel.call(this);
+      break;
+    default: break;
   }
 }
 
@@ -80,20 +97,7 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
     return;
   }
 
-  const mapItem: number = this.levelMap[targetY][targetX];
-
-  switch (mapItem) {
-    case MapItems.Diamond:
-      this.score += this.diamondValue;
-
-      if (this.diamondsToGet > 0) {
-        this.diamondsToGet -= 1;
-      }
-
-      renderPanel.call(this);
-      break;
-    default: break;
-  }
+  handleTarget.call(this, targetX, targetY);
 
   if (this.levelMap[itemY - 1] && this.levelMap[itemY - 1][itemX] === MapItems.Boulder && itemX === targetX) {
     this.isGameOver = true;
