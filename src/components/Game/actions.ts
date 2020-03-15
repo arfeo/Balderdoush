@@ -35,11 +35,32 @@ function handleGravitation(): void {
     const [itemY, itemX] = item;
     const itemType = this.levelMap[itemY][itemX];
 
-    if (this.levelMap[itemY + 1] && this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
+    if (this.levelMap[itemY + 1] === undefined) {
+      continue;
+    }
+
+    if (this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
       this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
       this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
 
       shouldRerender = true;
+    }
+
+    if (this.levelMap[itemY + 1][itemX] === MapItems.Diamond || this.levelMap[itemY + 1][itemX] === MapItems.Boulder) {
+      if (
+        (this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace
+          && this.levelMap[itemY + 1][itemX - 1] === MapItems.EmptySpace)
+        ||
+        (this.levelMap[itemY][itemX + 1] === MapItems.EmptySpace
+          && this.levelMap[itemY + 1][itemX + 1] === MapItems.EmptySpace)
+      ) {
+        const direction: number = this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace ? - 1 : 1;
+
+        this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+        this.levelMap = changeMapValue(this.levelMap, itemX + direction, itemY + 1, itemType);
+
+        shouldRerender = true;
+      }
     }
   }
 
