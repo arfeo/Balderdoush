@@ -26,6 +26,7 @@ class Game extends PageComponent {
   protected mapCanvas: HTMLCanvasElement;
   protected offset: number[];
   protected isGameOver: boolean;
+  protected isExploding: boolean;
   protected isLevelCompleted: boolean;
   public animations: {
     exits?: number[];
@@ -63,6 +64,7 @@ class Game extends PageComponent {
     this.offset = getInitialOffset.call(this);
 
     this.isGameOver = false;
+    this.isExploding = false;
     this.isLevelCompleted = false;
 
     this.eventHandlers = [

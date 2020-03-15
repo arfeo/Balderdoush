@@ -1,8 +1,6 @@
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 
-export const FADE_OUT_ANIMATION_SPEED = 1;
-
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
   let state = 1;
@@ -23,24 +21,33 @@ function animateActiveExit(index: number, x: number, y: number): void {
   this.animations.exits[index] = requestAnimationFrame(animate);
 }
 
-function animateExplosion(index: number, x: number, y: number): void {
-  let alpha = 1;
+function animateExplosion(index: number, x: number, y: number): Promise<void> {
+  return new Promise((resolve) => {
+    let alpha = 0;
+    let direction = 1;
 
-  const animate = (): void => {
-    if (alpha < 0) {
-      return cancelAnimationFrame(this.animations.explosions[index]);
-    }
+    const animate = (): void => {
+      if (alpha < 0) {
+        cancelAnimationFrame(this.animations.explosions[index]);
 
-    const [offsetY, offsetX] = this.offset;
+        return resolve();
+      }
 
-    renderExplosion.call(this, x - offsetX, y - offsetY, alpha);
+      const [offsetY, offsetX] = this.offset;
 
-    alpha -= FADE_OUT_ANIMATION_SPEED / 4;
+      renderExplosion.call(this, x - offsetX, y - offsetY, alpha);
+
+      alpha += direction * (direction === 1 ? 10 : 0.3) / 4;
+
+      if (alpha > 1) {
+        direction = -1;
+      }
+
+      this.animations.explosions[index] = requestAnimationFrame(animate);
+    };
 
     this.animations.explosions[index] = requestAnimationFrame(animate);
-  };
-
-  this.animations.explosions[index] = requestAnimationFrame(animate);
+  });
 }
 
 export {

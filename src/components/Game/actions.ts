@@ -5,6 +5,7 @@ import { MapItems } from '../../constants/game';
 import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
+import { renderEmpty } from './render/empty';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
@@ -23,7 +24,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
 function handleBoulders(): void {
   const boulders: number[][] = getMapItemsByType(this.levelMap, MapItems.Boulder);
 
-  if (!boulders.length) {
+  if (!boulders.length || this.isExploding) {
     return;
   }
 
@@ -60,22 +61,31 @@ function handleGameOver(): void {
     return;
   }
 
+  const [offsetY, offsetX] = this.offset;
   const [avatarY, avatarX] = items[0];
+  const explosionsPromises = [];
   let explosionIndex = 0;
+
+  this.isExploding = true;
 
   for (let y = avatarY - 1; y <= avatarY + 1; y += 1) {
     for (let x = avatarX - 1; x <= avatarX + 1; x += 1) {
       if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall && this.levelMap[y][x] !== MapItems.Exit) {
-        animateExplosion.call(this, explosionIndex, x, y);
+        explosionsPromises.push(animateExplosion.call(this, explosionIndex, x, y));
 
         explosionIndex += 1;
 
         this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
+
+        renderEmpty.call(this, x - offsetX, y - offsetY);
       }
     }
   }
 
-  this.lives -= 1;
+  Promise.all(explosionsPromises).then(() => {
+    this.isExploding = false;
+    this.lives -= 1;
+  });
 }
 
 function handleTarget(targetX: number, targetY: number): void {
