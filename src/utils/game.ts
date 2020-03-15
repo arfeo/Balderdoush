@@ -14,7 +14,7 @@ function getCellSize(vmin: number): number {
 
 /**
  * Function returns an array of items' coordinates for the given board map
- * according to the given item type; if the given map is undefined or not an array,
+ * according to the given item type (or array of types); if the given map is undefined or not an array,
  * function returns an empty array.
  *
  * @param map
