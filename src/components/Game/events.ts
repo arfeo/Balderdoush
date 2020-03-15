@@ -1,6 +1,6 @@
 import { MapItems } from '../../constants/game';
 
-import { tryMove } from './actions';
+import { makeMove } from './actions';
 import { getMapItemsByType } from '../../utils/game';
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -14,19 +14,19 @@ function onKeyDown(e: KeyboardEvent): void {
 
   switch (e.key) {
     case 'ArrowLeft': {
-      tryMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
+      makeMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
       break;
     }
     case 'ArrowRight': {
-      tryMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
+      makeMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
       break;
     }
     case 'ArrowUp': {
-      tryMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
+      makeMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
       break;
     }
     case 'ArrowDown': {
-      tryMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
+      makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
       break;
     }
     default: break;

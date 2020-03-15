@@ -169,7 +169,7 @@ function adjustOffset(x: number, y: number): void {
   }
 }
 
-function tryMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
+function makeMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
   if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver || this.isLevelCompleted) {
     return;
   }
@@ -188,5 +188,5 @@ export {
   handleGravitation,
   handleGameOver,
   handleExits,
-  tryMove,
+  makeMove,
 };
