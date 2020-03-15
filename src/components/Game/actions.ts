@@ -62,7 +62,7 @@ function handleGravitation(): void {
       }
     }
 
-    if (this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
+    if (isEmptyCell.call(this, itemX, itemY + 1)) {
       if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX] === MapItems.Avatar) {
         this.isGameOver = true;
       } else {
