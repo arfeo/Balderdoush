@@ -21,23 +21,29 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   return isEmptySpace || isSoil || isDiamond || isActiveExit;
 }
 
-function handleBoulders(): void {
+function handleGravitation(): void {
   const boulders: number[][] = getMapItemsByType(this.levelMap, MapItems.Boulder);
+  const diamonds: number[][] = getMapItemsByType(this.levelMap, MapItems.Diamond);
+  const items: number[][] = [...boulders, ...diamonds];
+  let shouldRerender = false;
 
   if (!boulders.length || this.isExploding) {
     return;
   }
 
-  for (const boulder of boulders) {
-    const [boulderY, boulderX] = boulder;
+  for (const item of items) {
+    const [itemY, itemX] = item;
+    const itemType = this.levelMap[itemY][itemX];
 
-    if (this.levelMap[boulderY + 1] && this.levelMap[boulderY + 1][boulderX] === MapItems.EmptySpace) {
-      this.levelMap = changeMapValue(this.levelMap, boulderX, boulderY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, boulderX, boulderY + 1, MapItems.Boulder);
+    if (this.levelMap[itemY + 1] && this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
+      this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
 
-      renderMap.call(this);
+      shouldRerender = true;
     }
   }
+
+  shouldRerender && renderMap.call(this);
 }
 
 function handleExits(): void {
@@ -152,7 +158,7 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
 }
 
 export {
-  handleBoulders,
+  handleGravitation,
   handleGameOver,
   handleExits,
   tryMove,

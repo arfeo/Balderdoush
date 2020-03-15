@@ -7,7 +7,7 @@ import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown } from './events';
 import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
-import { handleBoulders, handleExits, handleGameOver } from './actions';
+import { handleGravitation, handleExits, handleGameOver } from './actions';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -89,7 +89,7 @@ class Game extends PageComponent {
 
   public loop(): void {
     handleGameOver.call(this);
-    handleBoulders.call(this);
+    handleGravitation.call(this);
     handleExits.call(this);
   }
 }
