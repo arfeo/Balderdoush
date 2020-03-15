@@ -6,6 +6,7 @@ import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
+import { isEmptyCell } from './helpers';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
@@ -38,17 +39,16 @@ function handleGravitation(): void {
     }
 
     if ([MapItems.Diamond, MapItems.Boulder].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
-      if (
-        ((this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace
-          && this.levelMap[itemY + 1][itemX - 1] === MapItems.EmptySpace)
-        ||
-        (this.levelMap[itemY][itemX + 1] === MapItems.EmptySpace
-          && this.levelMap[itemY + 1][itemX + 1] === MapItems.EmptySpace))
-      ) {
-        const direction: number = this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace ? - 1 : 1;
-
+      if (isEmptyCell.call(this, itemX - 1, itemY) && isEmptyCell.call(this, itemX - 1, itemY + 1)) {
         this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-        this.levelMap = changeMapValue(this.levelMap, itemX + direction, itemY + 1, itemType);
+        this.levelMap = changeMapValue(this.levelMap, itemX - 1, itemY + 1, itemType);
+
+        shouldRerender = true;
+      }
+
+      if (isEmptyCell.call(this, itemX + 1, itemY) && isEmptyCell.call(this, itemX + 1, itemY + 1)) {
+        this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+        this.levelMap = changeMapValue(this.levelMap, itemX + 1, itemY + 1, itemType);
 
         shouldRerender = true;
       }
@@ -163,14 +163,6 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
   }
 
   handleTarget.call(this, targetX, targetY);
-
-  if (
-    itemX === targetX
-    && this.levelMap[itemY - 1]
-    && [MapItems.Boulder, MapItems.Diamond].indexOf(this.levelMap[itemY - 1][itemX]) > -1
-  ) {
-    this.isGameOver = true;
-  }
 
   this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
   this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.Avatar);
