@@ -73,7 +73,7 @@
     "key-spacing": "error",
     "keyword-spacing": "error",
     "max-classes-per-file": "error",
-    "max-depth": ["error", 3],
+    "max-depth": ["error", 4],
     "max-len": [
       "warn",
       {
