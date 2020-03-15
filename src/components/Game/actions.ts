@@ -22,9 +22,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
 }
 
 function handleGravitation(): void {
-  const boulders: number[][] = getMapItemsByType(this.levelMap, MapItems.Boulder);
-  const diamonds: number[][] = getMapItemsByType(this.levelMap, MapItems.Diamond);
-  const items: number[][] = [...boulders, ...diamonds];
+  const items: number[][] = getMapItemsByType(this.levelMap, [MapItems.Boulder, MapItems.Diamond]);
   let shouldRerender = false;
 
   if (!items.length || this.isExploding) {
@@ -39,20 +37,13 @@ function handleGravitation(): void {
       continue;
     }
 
-    if (this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
-      this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
-
-      shouldRerender = true;
-    }
-
-    if (this.levelMap[itemY + 1][itemX] === MapItems.Diamond || this.levelMap[itemY + 1][itemX] === MapItems.Boulder) {
+    if ([MapItems.Diamond, MapItems.Boulder].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
       if (
-        (this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace
+        ((this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace
           && this.levelMap[itemY + 1][itemX - 1] === MapItems.EmptySpace)
         ||
         (this.levelMap[itemY][itemX + 1] === MapItems.EmptySpace
-          && this.levelMap[itemY + 1][itemX + 1] === MapItems.EmptySpace)
+          && this.levelMap[itemY + 1][itemX + 1] === MapItems.EmptySpace))
       ) {
         const direction: number = this.levelMap[itemY][itemX - 1] === MapItems.EmptySpace ? - 1 : 1;
 
@@ -61,6 +52,13 @@ function handleGravitation(): void {
 
         shouldRerender = true;
       }
+    }
+
+    if (this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
+      this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
+
+      shouldRerender = true;
     }
   }
 
@@ -166,7 +164,11 @@ function tryMove(itemX: number, itemY: number, targetX: number, targetY: number)
 
   handleTarget.call(this, targetX, targetY);
 
-  if (this.levelMap[itemY - 1] && this.levelMap[itemY - 1][itemX] === MapItems.Boulder && itemX === targetX) {
+  if (
+    itemX === targetX
+    && this.levelMap[itemY - 1]
+    && [MapItems.Boulder, MapItems.Diamond].indexOf(this.levelMap[itemY - 1][itemX]) > -1
+  ) {
     this.isGameOver = true;
   }
 
