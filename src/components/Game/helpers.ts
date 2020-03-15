@@ -16,4 +16,11 @@ function getInitialOffset(): number[] {
   return [offsetY, offsetX];
 }
 
-export { getInitialOffset };
+function isEmptyCell(x: number, y: number): boolean {
+  return this.levelMap[y][x] === MapItems.EmptySpace;
+}
+
+export {
+  getInitialOffset,
+  isEmptyCell,
+};
