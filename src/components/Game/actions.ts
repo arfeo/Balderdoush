@@ -43,6 +43,10 @@ function handleGravitation(): void {
         this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
         this.levelMap = changeMapValue(this.levelMap, itemX - 1, itemY + 1, itemType);
 
+        if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX - 1] === MapItems.Avatar) {
+          this.isGameOver = true;
+        }
+
         shouldRerender = true;
       }
 
@@ -50,15 +54,23 @@ function handleGravitation(): void {
         this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
         this.levelMap = changeMapValue(this.levelMap, itemX + 1, itemY + 1, itemType);
 
+        if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX + 1] === MapItems.Avatar) {
+          this.isGameOver = true;
+        }
+
         shouldRerender = true;
       }
     }
 
     if (this.levelMap[itemY + 1][itemX] === MapItems.EmptySpace) {
-      this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
+      if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX] === MapItems.Avatar) {
+        this.isGameOver = true;
+      } else {
+        this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+        this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
 
-      shouldRerender = true;
+        shouldRerender = true;
+      }
     }
   }
 
