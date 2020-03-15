@@ -27,7 +27,7 @@ function handleGravitation(): void {
   const items: number[][] = [...boulders, ...diamonds];
   let shouldRerender = false;
 
-  if (!boulders.length || this.isExploding) {
+  if (!items.length || this.isExploding) {
     return;
   }
 
