@@ -23,11 +23,10 @@ function animateActiveExit(index: number, x: number, y: number): void {
 
 function animateExplosion(index: number, x: number, y: number): Promise<void> {
   return new Promise((resolve) => {
-    let alpha = 0;
-    let direction = 1;
+    let sizeDenominator = 20;
 
     const animate = (): void => {
-      if (alpha < 0) {
+      if (sizeDenominator <= 1) {
         cancelAnimationFrame(this.animations.explosions[index]);
 
         return resolve();
@@ -35,13 +34,9 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
 
       const [offsetY, offsetX] = this.offset;
 
-      renderExplosion.call(this, x - offsetX, y - offsetY, alpha);
+      renderExplosion.call(this, x - offsetX, y - offsetY, sizeDenominator);
 
-      alpha += direction * (direction === 1 ? 10 : 0.3) / 4;
-
-      if (alpha > 1) {
-        direction = -1;
-      }
+      sizeDenominator -= 2;
 
       this.animations.explosions[index] = requestAnimationFrame(animate);
     };
