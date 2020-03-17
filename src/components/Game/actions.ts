@@ -122,6 +122,8 @@ function handleGameOver(): void {
   Promise.all(explosionsPromises).then(() => {
     this.isExploding = false;
     this.lives -= 1;
+
+    renderMap.call(this);
   });
 }
 
