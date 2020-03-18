@@ -9,17 +9,47 @@ import { renderEmpty } from './render/empty';
 import { isEmptyCell } from './helpers';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
-  if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined) {
+  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+
+  if (this.levelMap[targetY] === undefined || this.levelMap[targetY][targetX] === undefined || !items.length) {
     return false;
   }
 
+  const [avatarY, avatarX] = items[0];
   const mapItem: number = this.levelMap[targetY][targetX];
+  const isNormalState: boolean = this.avatarState === 'idle' || this.avatarState === 'walk';
+  const isMovingLeft: boolean = avatarX > targetX;
+  const isMovingRight: boolean = avatarX < targetX;
   const isEmptySpace: boolean = mapItem === MapItems.EmptySpace;
   const isSoil: boolean = mapItem === MapItems.Soil;
   const isDiamond: boolean = mapItem === MapItems.Diamond;
   const isActiveExit: boolean = mapItem === MapItems.Exit && this.diamondsToGet === 0;
+  const isBoulder: boolean = mapItem === MapItems.Boulder;
 
-  return isEmptySpace || isSoil || isDiamond || isActiveExit;
+  if (isBoulder) {
+    if (isMovingLeft) {
+      this.avatarState = 'pushLeft';
+    }
+
+    if (isMovingRight) {
+      this.avatarState = 'pushRight';
+    }
+
+    if (avatarX === targetX && avatarY > targetY) {
+      this.avatarState = 'prop';
+    }
+  }
+
+  return (
+    isEmptySpace
+    || isSoil
+    || isDiamond
+    || isActiveExit
+    || (!isNormalState && (
+      (isMovingLeft && this.levelMap[targetY][targetX - 1] === MapItems.EmptySpace)
+      || (isMovingRight && this.levelMap[targetY][targetX + 1] === MapItems.EmptySpace)
+    ))
+  );
 }
 
 function handleGravitation(): void {
@@ -128,6 +158,13 @@ function handleGameOver(): void {
 }
 
 function handleTarget(targetX: number, targetY: number): void {
+  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+
+  if (!items.length) {
+    return;
+  }
+
+  const [, avatarX] = items[0];
   const mapItem: number = this.levelMap[targetY] && this.levelMap[targetY][targetX];
 
   switch (mapItem) {
@@ -136,6 +173,17 @@ function handleTarget(targetX: number, targetY: number): void {
         this.isLevelCompleted = true;
 
         new Alert(this, 'Level completed.');
+      }
+      break;
+    case MapItems.Boulder:
+      if (avatarX > targetX && this.levelMap[targetY][targetX - 1] === MapItems.EmptySpace) {
+        this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.EmptySpace);
+        this.levelMap = changeMapValue(this.levelMap, targetX - 1, targetY, MapItems.Boulder);
+      }
+
+      if (avatarX < targetX && this.levelMap[targetY][targetX + 1] === MapItems.EmptySpace) {
+        this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.EmptySpace);
+        this.levelMap = changeMapValue(this.levelMap, targetX + 1, targetY, MapItems.Boulder);
       }
       break;
     case MapItems.Diamond:
