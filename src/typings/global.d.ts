@@ -19,3 +19,5 @@ interface Level {
   time: number;
   levelMap: number[][];
 }
+
+type AvatarState = 'idle' | 'walkLeft' | 'walkRight' | 'pushLeft' | 'pushRight' | 'prop';

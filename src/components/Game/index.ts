@@ -4,7 +4,7 @@ import { CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderMap, renderPanel } from './render';
-import { onKeyDown } from './events';
+import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { handleGravitation, handleExits, handleGameOver } from './actions';
@@ -28,6 +28,7 @@ class Game extends PageComponent {
   protected isGameOver: boolean;
   protected isExploding: boolean;
   protected isLevelCompleted: boolean;
+  protected avatarState: AvatarState;
   public animations: {
     exits?: number[];
     explosions?: number[];
@@ -67,11 +68,18 @@ class Game extends PageComponent {
     this.isExploding = false;
     this.isLevelCompleted = false;
 
+    this.avatarState = 'idle';
+
     this.eventHandlers = [
       {
         target: document,
         type: 'keydown',
         listener: onKeyDown.bind(this),
+      },
+      {
+        target: document,
+        type: 'keyup',
+        listener: onKeyUp.bind(this),
       },
     ];
 

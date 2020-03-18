@@ -33,4 +33,11 @@ function onKeyDown(e: KeyboardEvent): void {
   }
 }
 
-export { onKeyDown };
+function onKeyUp(): void {
+  this.avatarState = 'idle';
+}
+
+export {
+  onKeyDown,
+  onKeyUp,
+};
