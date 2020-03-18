@@ -54,7 +54,7 @@ function animateTimer(): void {
   let start: number = performance.now();
 
   const animate = (time: number): void => {
-    if (this.isGameOver) {
+    if (this.isGameOver || this.isLevelCompleted) {
       return cancelAnimationFrame(this.animations.timer);
     }
 
