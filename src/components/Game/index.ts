@@ -8,6 +8,7 @@ import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { handleGravitation, handleExits, handleGameOver } from './actions';
+import { animateTimer } from './animations';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -32,6 +33,7 @@ class Game extends PageComponent {
   public animations: {
     exits?: number[];
     explosions?: number[];
+    timer?: number;
   };
 
   constructor(levelId = 1, score = 0, lives = 3) {
@@ -88,6 +90,7 @@ class Game extends PageComponent {
     this.animations = {
       exits: [],
       explosions: [],
+      timer: null,
     };
   }
 
@@ -95,6 +98,8 @@ class Game extends PageComponent {
     renderGameBoard.call(this);
     renderPanel.call(this);
     renderMap.call(this);
+
+    animateTimer.call(this);
   }
 
   public loop(): void {

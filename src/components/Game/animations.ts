@@ -1,5 +1,6 @@
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
+import { renderPanel } from './render';
 
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
@@ -49,7 +50,32 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
   });
 }
 
+function animateTimer(): void {
+  let start: number = performance.now();
+
+  const animate = (time: number): void => {
+    if (this.time === 0) {
+      this.isGameOver = true;
+
+      return cancelAnimationFrame(this.animations.timer);
+    }
+
+    if (time - start > 1000) {
+      start = time;
+
+      this.time -= 1;
+
+      renderPanel.call(this);
+    }
+
+    this.animations.timer = requestAnimationFrame(animate);
+  };
+
+  this.animations.timer = requestAnimationFrame(animate);
+}
+
 export {
   animateActiveExit,
   animateExplosion,
+  animateTimer,
 };
