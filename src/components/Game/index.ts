@@ -29,6 +29,7 @@ class Game extends PageComponent {
   protected isGameOver: boolean;
   protected isExploding: boolean;
   protected isLevelCompleted: boolean;
+  protected isPaused: boolean;
   protected avatarState: AvatarState;
   public animations: {
     exits?: number[];
@@ -69,6 +70,7 @@ class Game extends PageComponent {
     this.isGameOver = false;
     this.isExploding = false;
     this.isLevelCompleted = false;
+    this.isPaused = false;
 
     this.avatarState = 'idle';
 

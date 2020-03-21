@@ -1,6 +1,7 @@
 import { MapItems } from '../../constants/game';
 
 import { makeMove } from './actions';
+import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -29,12 +30,20 @@ function onKeyDown(e: KeyboardEvent): void {
       makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
       break;
     }
+    case 'p': {
+      this.isPaused = !this.isPaused;
+
+      renderPanel.call(this);
+      break;
+    }
     default: break;
   }
 }
 
 function onKeyUp(): void {
-  this.avatarState = 'idle';
+  if (!this.isPaused) {
+    this.avatarState = 'idle';
+  }
 }
 
 export {

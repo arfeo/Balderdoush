@@ -220,7 +220,7 @@ function adjustOffset(x: number, y: number): void {
 }
 
 function makeMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
-  if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver || this.isLevelCompleted) {
+  if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver || this.isLevelCompleted || this.isPaused) {
     return;
   }
 

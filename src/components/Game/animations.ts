@@ -11,7 +11,7 @@ function animateActiveExit(index: number, x: number, y: number): void {
 
     renderExitActive.call(this, x - offsetX, y - offsetY, state);
 
-    if (time - start > 300) {
+    if (!this.isPaused && time - start > 300) {
       start = time;
       state = state === 1 ? 2 : 1;
     }
@@ -58,7 +58,7 @@ function animateTimer(): void {
       return cancelAnimationFrame(this.animations.timer);
     }
 
-    if (time - start > 1000) {
+    if (!this.isPaused && time - start > 1000) {
       start = time;
 
       this.time -= 1;

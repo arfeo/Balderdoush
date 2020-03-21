@@ -42,9 +42,18 @@
     .-time {
       text-align: center;
 
-      .-label:before {
-        content: 'TIME';
-        margin-right: 3vmin;
+      .-label{
+        &:before {
+          content: 'TIME';
+          margin-right: 3vmin;
+        }
+
+        &.paused {
+          &:before {
+            content: '';
+            margin: 0;
+          }
+        }
       }
     }
 
