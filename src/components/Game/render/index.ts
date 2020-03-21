@@ -91,7 +91,7 @@ function renderPanel(): void {
 
   if (this.isPaused) {
     this.panelTime.classList.add('paused');
-    this.panelTime.innerText = '* PAUSED *';
+    this.panelTime.innerText = '*PAUSED*';
   } else {
     this.panelTime.classList.remove('paused');
     this.panelTime.innerText = this.time.toString().padStart(3, '0');
