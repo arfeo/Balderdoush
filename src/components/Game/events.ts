@@ -30,7 +30,8 @@ function onKeyDown(e: KeyboardEvent): void {
       makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
       break;
     }
-    case 'p': {
+    case 'p':
+    case 'P': {
       this.isPaused = !this.isPaused;
 
       renderPanel.call(this);
