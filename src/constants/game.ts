@@ -8,7 +8,7 @@ export const MAP_WIDTH = 20;
 export const MAP_HEIGHT = 13;
 
 export enum MapItems {
-  EmptySpace = 0,
+  EmptySpace = 0x0,
   Soil,
   Wall,
   Exit,
