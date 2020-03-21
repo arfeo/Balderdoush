@@ -1,4 +1,4 @@
-import { MAP_HEIGHT, MAP_WIDTH, MapItems } from '../../../constants/game';
+import { VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH, MapItems } from '../../../constants/game';
 
 import { renderWall } from './wall';
 import { renderSoil } from './soil';
@@ -29,8 +29,8 @@ function renderGameBoard(): void {
   gameMap.className = '-map';
   this.mapCanvas.className = '-map-canvas';
 
-  this.mapCanvas.width = this.cellSize * MAP_WIDTH;
-  this.mapCanvas.height = this.cellSize * MAP_HEIGHT;
+  this.mapCanvas.width = this.cellSize * VISIBLE_MAP_WIDTH;
+  this.mapCanvas.height = this.cellSize * VISIBLE_MAP_HEIGHT;
 
   this.appRoot.appendChild(gameContainer);
   gameContainer.appendChild(gamePanel);
