@@ -21,7 +21,15 @@ function getInitialOffset(): number[] {
 }
 
 function isEmptyCell(x: number, y: number): boolean {
-  return this.levelMap[y][x] === MapItems.EmptySpace;
+  return this.levelMap[y] && this.levelMap[y][x] === MapItems.EmptySpace;
+}
+
+function isAvatarInCell(x: number, y: number): boolean {
+  return this.levelMap[y] && this.levelMap[y][x] === MapItems.Avatar;
+}
+
+function isEmptyOrAvatar(x: number, y: number): boolean {
+  return isEmptyCell.call(this, x, y) || isAvatarInCell.call(this, x, y);
 }
 
 function moveMapItem(moveFrom: MapItemCoords, moveTo: MapItemCoords, value: number): number[][] {
@@ -75,6 +83,8 @@ function getMonsters(): Monsters {
 export {
   getInitialOffset,
   isEmptyCell,
+  isAvatarInCell,
+  isEmptyOrAvatar,
   moveMapItem,
   getMonsters,
 };
