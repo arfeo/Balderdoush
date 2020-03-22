@@ -88,14 +88,16 @@ function animateSquare(id: number): void {
     const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
     const [offsetY, offsetX] = this.offset;
 
-    if (time - start > 100) {
+    if (!this.isPaused && time - start > 200) {
       start = time;
       state += state < 4 ? 1 : -3;
-    }
 
-    squares.forEach((square: number[]) => {
-      renderSquare.call(this, square[1] - offsetX, square[0] - offsetY, state);
-    });
+      squares.forEach((square: number[]) => {
+        const [squareY, squareX] = square;
+
+        renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
+      });
+    }
 
     this.animations.monsters[id] = requestAnimationFrame(animate);
   };

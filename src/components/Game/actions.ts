@@ -107,6 +107,43 @@ function handleGravitation(): void {
   shouldRerender && renderMap.call(this);
 }
 
+function handleMonsters(): void {
+  if (this.isPaused) {
+    return;
+  }
+
+  const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
+  let shouldRerender = false;
+
+  squares.forEach((square: number[]) => {
+    const [squareY, squareX] = square;
+
+    if (isEmptyCell.call(this, squareX + 1, squareY)) {
+      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, squareX + 1, squareY, MapItems.Square);
+
+      shouldRerender = true;
+    } else if (isEmptyCell.call(this, squareX, squareY + 1)) {
+      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, squareX, squareY + 1, MapItems.Square);
+
+      shouldRerender = true;
+    } else if (isEmptyCell.call(this, squareX - 1, squareY)) {
+      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, squareX - 1, squareY, MapItems.Square);
+
+      shouldRerender = true;
+    } else if (isEmptyCell.call(this, squareX, squareY - 1)) {
+      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
+      this.levelMap = changeMapValue(this.levelMap, squareX, squareY - 1, MapItems.Square);
+
+      shouldRerender = true;
+    }
+  });
+
+  shouldRerender && renderMap.call(this);
+}
+
 function handleExits(): void {
   if (this.diamondsToGet > 0 || this.animations.exits.length) {
     return;
@@ -237,6 +274,7 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
 export {
   handleGravitation,
   handleGameOver,
+  handleMonsters,
   handleExits,
   makeMove,
 };
