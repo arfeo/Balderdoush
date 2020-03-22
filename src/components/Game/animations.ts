@@ -4,7 +4,7 @@ import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 import { renderPanel } from './render';
 import { renderSquare } from './render/square';
-import { getMapItemsByType } from '../../utils/game';
+import { isEmpty } from '../../utils/common';
 
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
@@ -85,15 +85,15 @@ function animateSquare(id: number): void {
   let state = 1;
 
   const animate = (time: number): void => {
-    const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
+    const squares: MonsterInfo[] = this.monsters[`monster-${MapItems.Square}`];
     const [offsetY, offsetX] = this.offset;
 
-    if (!this.isPaused && time - start > 200) {
+    if (!this.isPaused && time - start > 100) {
       start = time;
       state += state < 4 ? 1 : -3;
 
-      squares.forEach((square: number[]) => {
-        const [squareY, squareX] = square;
+      squares.forEach((square: MonsterInfo) => {
+        const [squareY, squareX] = square.position;
 
         renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
       });
@@ -106,11 +106,11 @@ function animateSquare(id: number): void {
 }
 
 function animateMonsters(): void {
-  const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
-
-  if (squares.length) {
-    animateSquare.call(this, this.animations.monsters.length);
+  if (isEmpty(this.monsters)) {
+    return;
   }
+
+  this.monsters[`monster-${MapItems.Square}`] && animateSquare.call(this, this.animations.monsters.length);
 }
 
 export {
