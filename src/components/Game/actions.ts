@@ -7,6 +7,7 @@ import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
 import { isEmptyCell, moveMapItem } from './helpers';
+import { isEmpty } from '../../utils/common';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -105,35 +106,55 @@ function handleGravitation(): void {
 }
 
 function handleMonsters(): void {
-  if (this.isPaused) {
+  if (this.isPaused || isEmpty(this.monsters)) {
     return;
   }
 
-  const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
+  handleSquareMonsters.call(this);
+}
+
+function handleSquareMonsters(): void {
+  const monsterType: number = MapItems.Square;
+  const squares: MonsterInfo[] = this.monsters[`monster-${monsterType}`];
+
+  if (!squares) {
+    return;
+  }
+
   let shouldRerender = false;
 
-  squares.forEach((square: number[]) => {
-    const [squareY, squareX] = square;
-    const itemType: number = MapItems.Square;
+  this.monsters = {
+    ...this.monsters,
+    [`monster-${monsterType}`]: squares.map((square: MonsterInfo): MonsterInfo => {
+      const [squareY, squareX] = square.position;
+      let newPosition: number[] = [];
 
-    if (isEmptyCell.call(this, squareX + 1, squareY)) {
-      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX + 1, y: squareY }, itemType);
+      if (isEmptyCell.call(this, squareX + 1, squareY)) {
+        newPosition = [squareY, squareX + 1];
+      } else if (isEmptyCell.call(this, squareX, squareY + 1)) {
+        newPosition = [squareY + 1, squareX];
+      } else if (isEmptyCell.call(this, squareX - 1, squareY)) {
+        newPosition = [squareY, squareX - 1];
+      } else if (isEmptyCell.call(this, squareX, squareY - 1)) {
+        newPosition = [squareY - 1, squareX];
+      }
 
-      shouldRerender = true;
-    } else if (isEmptyCell.call(this, squareX, squareY + 1)) {
-      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX, y: squareY + 1 }, itemType);
+      if (newPosition.length) {
+        this.levelMap = moveMapItem.call(
+          this,
+          { x: squareX, y: squareY },
+          { x: newPosition[1], y: newPosition[0] },
+          monsterType,
+        );
 
-      shouldRerender = true;
-    } else if (isEmptyCell.call(this, squareX - 1, squareY)) {
-      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX - 1, y: squareY }, itemType);
+        shouldRerender = true;
+      }
 
-      shouldRerender = true;
-    } else if (isEmptyCell.call(this, squareX, squareY - 1)) {
-      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX, y: squareY - 1 }, itemType);
-
-      shouldRerender = true;
-    }
-  });
+      return {
+        position: newPosition,
+      };
+    }),
+  };
 
   shouldRerender && renderMap.call(this);
 }
