@@ -88,7 +88,7 @@ function animateSquare(id: number): void {
     const squares: MonsterInfo[] = this.monsters[`monster-${MapItems.Square}`];
     const [offsetY, offsetX] = this.offset;
 
-    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > 25) {
+    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > this.loopTimeout / 4) {
       start = time;
       state += state < 4 ? 1 : -3;
 
