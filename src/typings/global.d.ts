@@ -20,4 +20,9 @@ interface Level {
   levelMap: number[][];
 }
 
+interface MapItemCoords {
+  x: number;
+  y: number;
+}
+
 type AvatarState = 'idle' | 'walkLeft' | 'walkRight' | 'pushLeft' | 'pushRight' | 'prop';

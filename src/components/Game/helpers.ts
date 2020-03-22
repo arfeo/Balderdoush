@@ -24,7 +24,18 @@ function isEmptyCell(x: number, y: number): boolean {
   return this.levelMap[y][x] === MapItems.EmptySpace;
 }
 
+function moveMapItem(moveFrom: MapItemCoords, moveTo: MapItemCoords, value: number): number[][] {
+  return this.levelMap.map((row: number[], rowIndex: number) => row.map((column: number, columnIndex: number) => {
+    if (rowIndex === moveFrom.y && columnIndex === moveFrom.x) {
+      return MapItems.EmptySpace;
+    }
+
+    return rowIndex === moveTo.y && columnIndex === moveTo.x ? value : this.levelMap[rowIndex][columnIndex];
+  }));
+}
+
 export {
   getInitialOffset,
   isEmptyCell,
+  moveMapItem,
 };
