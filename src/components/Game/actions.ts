@@ -69,7 +69,7 @@ function handleGravitation(): void {
       continue;
     }
 
-    if ([MapItems.Diamond, MapItems.Boulder].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
+    if ([MapItems.Diamond, MapItems.Boulder, MapItems.BrickWall].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
       if (isEmptyCell.call(this, itemX - 1, itemY) && isEmptyCell.call(this, itemX - 1, itemY + 1)) {
         this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX - 1, y: itemY + 1 }, itemType);
 
