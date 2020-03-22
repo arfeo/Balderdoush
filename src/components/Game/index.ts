@@ -91,7 +91,7 @@ class Game extends PageComponent {
       },
     ];
 
-    this.loopTimeout = 100;
+    this.loopTimeout = 80;
 
     this.animations = {
       exits: [],
