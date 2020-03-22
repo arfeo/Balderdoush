@@ -6,7 +6,7 @@ import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
-import { isEmptyCell } from './helpers';
+import { isEmptyCell, moveMapItem } from './helpers';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -70,8 +70,7 @@ function handleGravitation(): void {
 
     if ([MapItems.Diamond, MapItems.Boulder].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
       if (isEmptyCell.call(this, itemX - 1, itemY) && isEmptyCell.call(this, itemX - 1, itemY + 1)) {
-        this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-        this.levelMap = changeMapValue(this.levelMap, itemX - 1, itemY + 1, itemType);
+        this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX - 1, y: itemY + 1 }, itemType);
 
         if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX - 1] === MapItems.Avatar) {
           this.isGameOver = true;
@@ -81,8 +80,7 @@ function handleGravitation(): void {
       }
 
       if (isEmptyCell.call(this, itemX + 1, itemY) && isEmptyCell.call(this, itemX + 1, itemY + 1)) {
-        this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-        this.levelMap = changeMapValue(this.levelMap, itemX + 1, itemY + 1, itemType);
+        this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX + 1, y: itemY + 1 }, itemType);
 
         if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX + 1] === MapItems.Avatar) {
           this.isGameOver = true;
@@ -96,8 +94,7 @@ function handleGravitation(): void {
       if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX] === MapItems.Avatar) {
         this.isGameOver = true;
       } else {
-        this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-        this.levelMap = changeMapValue(this.levelMap, itemX, itemY + 1, itemType);
+        this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX, y: itemY + 1 }, itemType);
 
         shouldRerender = true;
       }
@@ -117,25 +114,22 @@ function handleMonsters(): void {
 
   squares.forEach((square: number[]) => {
     const [squareY, squareX] = square;
+    const itemType: number = MapItems.Square;
 
     if (isEmptyCell.call(this, squareX + 1, squareY)) {
-      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, squareX + 1, squareY, MapItems.Square);
+      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX + 1, y: squareY }, itemType);
 
       shouldRerender = true;
     } else if (isEmptyCell.call(this, squareX, squareY + 1)) {
-      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, squareX, squareY + 1, MapItems.Square);
+      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX, y: squareY + 1 }, itemType);
 
       shouldRerender = true;
     } else if (isEmptyCell.call(this, squareX - 1, squareY)) {
-      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, squareX - 1, squareY, MapItems.Square);
+      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX - 1, y: squareY }, itemType);
 
       shouldRerender = true;
     } else if (isEmptyCell.call(this, squareX, squareY - 1)) {
-      this.levelMap = changeMapValue(this.levelMap, squareX, squareY, MapItems.EmptySpace);
-      this.levelMap = changeMapValue(this.levelMap, squareX, squareY - 1, MapItems.Square);
+      this.levelMap = moveMapItem.call(this, { x: squareX, y: squareY }, { x: squareX, y: squareY - 1 }, itemType);
 
       shouldRerender = true;
     }
@@ -214,13 +208,11 @@ function handleTarget(targetX: number, targetY: number): void {
       break;
     case MapItems.Boulder:
       if (avatarX > targetX && this.levelMap[targetY][targetX - 1] === MapItems.EmptySpace) {
-        this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.EmptySpace);
-        this.levelMap = changeMapValue(this.levelMap, targetX - 1, targetY, MapItems.Boulder);
+        this.levelMap = moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
       }
 
       if (avatarX < targetX && this.levelMap[targetY][targetX + 1] === MapItems.EmptySpace) {
-        this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.EmptySpace);
-        this.levelMap = changeMapValue(this.levelMap, targetX + 1, targetY, MapItems.Boulder);
+        this.levelMap = moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
       }
       break;
     case MapItems.Diamond:
@@ -263,8 +255,7 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
 
   handleTarget.call(this, targetX, targetY);
 
-  this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
-  this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.Avatar);
+  this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
 
   adjustOffset.call(this, targetX, targetY);
 
