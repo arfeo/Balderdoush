@@ -6,7 +6,7 @@ import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
-import { isEmptyCell, moveMapItem } from './helpers';
+import { isAvatarInCell, isEmptyCell, isEmptyOrAvatar, moveMapItem } from './helpers';
 import { isEmpty } from '../../utils/common';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
@@ -73,7 +73,7 @@ function handleGravitation(): void {
       if (isEmptyCell.call(this, itemX - 1, itemY) && isEmptyCell.call(this, itemX - 1, itemY + 1)) {
         this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX - 1, y: itemY + 1 }, itemType);
 
-        if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX - 1] === MapItems.Avatar) {
+        if (isAvatarInCell.call(this, itemX - 1, itemY + 2)) {
           this.isGameOver = true;
         }
 
@@ -83,7 +83,7 @@ function handleGravitation(): void {
       if (isEmptyCell.call(this, itemX + 1, itemY) && isEmptyCell.call(this, itemX + 1, itemY + 1)) {
         this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX + 1, y: itemY + 1 }, itemType);
 
-        if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX + 1] === MapItems.Avatar) {
+        if (isAvatarInCell.call(this, itemX + 1, itemY + 2)) {
           this.isGameOver = true;
         }
 
@@ -92,7 +92,7 @@ function handleGravitation(): void {
     }
 
     if (isEmptyCell.call(this, itemX, itemY + 1)) {
-      if (this.levelMap[itemY + 2] && this.levelMap[itemY + 2][itemX] === MapItems.Avatar) {
+      if (isAvatarInCell.call(this, itemX, itemY + 2)) {
         this.isGameOver = true;
       } else {
         this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX, y: itemY + 1 }, itemType);
@@ -106,7 +106,7 @@ function handleGravitation(): void {
 }
 
 function handleMonsters(): void {
-  if (this.isPaused || isEmpty(this.monsters)) {
+  if (this.isPaused || this.isGameOver || this.isLevelCompleted || isEmpty(this.monsters)) {
     return;
   }
 
@@ -129,18 +129,71 @@ function handleSquareMonsters(): void {
       const { position, direction } = square;
       const [squareY, squareX] = position;
       let newPosition: number[] = [];
+      let newDirection: MonsterDirection = direction;
 
-      if (isEmptyCell.call(this, squareX + 1, squareY)) {
-        newPosition = [squareY, squareX + 1];
-      } else if (isEmptyCell.call(this, squareX, squareY + 1)) {
-        newPosition = [squareY + 1, squareX];
-      } else if (isEmptyCell.call(this, squareX - 1, squareY)) {
-        newPosition = [squareY, squareX - 1];
-      } else if (isEmptyCell.call(this, squareX, squareY - 1)) {
-        newPosition = [squareY - 1, squareX];
+      switch (direction) {
+        case 'up':
+          if (isEmptyOrAvatar.call(this, squareX - 1, squareY)) {
+            newPosition = [squareY, squareX - 1];
+            newDirection = 'left';
+          } else if (isEmptyOrAvatar.call(this, squareX + 1, squareY)) {
+            newPosition = [squareY, squareX + 1];
+            newDirection = 'right';
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY - 1)) {
+            newPosition = [squareY - 1, squareX];
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY + 1)) {
+            newPosition = [squareY + 1, squareX];
+            newDirection = 'down';
+          }
+          break;
+        case 'right':
+          if (isEmptyOrAvatar.call(this, squareX + 1, squareY)) {
+            newPosition = [squareY, squareX + 1];
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY + 1)) {
+            newPosition = [squareY + 1, squareX];
+            newDirection = 'down';
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY - 1)) {
+            newPosition = [squareY - 1, squareX];
+            newDirection = 'up';
+          } else if (isEmptyOrAvatar.call(this, squareX - 1, squareY)) {
+            newPosition = [squareY, squareX - 1];
+            newDirection = 'left';
+          }
+          break;
+        case 'down':
+          if (isEmptyOrAvatar.call(this, squareX - 1, squareY)) {
+            newPosition = [squareY, squareX - 1];
+            newDirection = 'left';
+          } else if (isEmptyOrAvatar.call(this, squareX + 1, squareY)) {
+            newPosition = [squareY, squareX + 1];
+            newDirection = 'right';
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY + 1)) {
+            newPosition = [squareY + 1, squareX];
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY - 1)) {
+            newPosition = [squareY - 1, squareX];
+            newDirection = 'up';
+          }
+          break;
+        case 'left':
+          if (isEmptyOrAvatar.call(this, squareX - 1, squareY)) {
+            newPosition = [squareY, squareX - 1];
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY - 1)) {
+            newPosition = [squareY - 1, squareX];
+            newDirection = 'up';
+          } else if (isEmptyOrAvatar.call(this, squareX, squareY + 1)) {
+            newPosition = [squareY + 1, squareX];
+            newDirection = 'down';
+          } else if (isEmptyOrAvatar.call(this, squareX + 1, squareY)) {
+            newPosition = [squareY, squareX + 1];
+            newDirection = 'right';
+          }
+          break;
+        default: break;
       }
 
-      if (newPosition.length) {
+      if (isAvatarInCell.call(this, newPosition[1], newPosition[0])) {
+        this.isGameOver = true;
+      } else if (newPosition.length) {
         this.levelMap = moveMapItem.call(
           this,
           { x: squareX, y: squareY },
@@ -153,7 +206,7 @@ function handleSquareMonsters(): void {
 
       return {
         position: newPosition,
-        direction,
+        direction: newDirection,
       };
     }),
   };
