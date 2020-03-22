@@ -6,7 +6,7 @@
  *  0x0 - Empty space
  *  0x1 - Wall
  *  0x2 - Boulder
- *  0x3 - Square monster
+ *  0x3 - Square
  *  0x4 - Avatar
  *  0x5 - Exit
  *  0x6 - Diamond

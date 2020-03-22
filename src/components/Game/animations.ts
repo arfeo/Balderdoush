@@ -1,6 +1,10 @@
+import { MapItems } from '../../constants/game';
+
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 import { renderPanel } from './render';
+import { renderSquare } from './render/square';
+import { getMapItemsByType } from '../../utils/game';
 
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
@@ -76,8 +80,40 @@ function animateTimer(): void {
   this.animations.timer = requestAnimationFrame(animate);
 }
 
+function animateSquare(id: number): void {
+  let start = performance.now();
+  let state = 1;
+
+  const animate = (time: number): void => {
+    const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
+    const [offsetY, offsetX] = this.offset;
+
+    if (time - start > 100) {
+      start = time;
+      state += state < 4 ? 1 : -3;
+    }
+
+    squares.forEach((square: number[]) => {
+      renderSquare.call(this, square[1] - offsetX, square[0] - offsetY, state);
+    });
+
+    this.animations.monsters[id] = requestAnimationFrame(animate);
+  };
+
+  this.animations.monsters[id] = requestAnimationFrame(animate);
+}
+
+function animateMonsters(): void {
+  const squares: number[][] = getMapItemsByType(this.levelMap, MapItems.Square);
+
+  if (squares.length) {
+    animateSquare.call(this, this.animations.monsters.length);
+  }
+}
+
 export {
   animateActiveExit,
   animateExplosion,
   animateTimer,
+  animateMonsters,
 };
