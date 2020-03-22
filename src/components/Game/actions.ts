@@ -47,8 +47,8 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
     || isDiamond
     || isActiveExit
     || (!isNormalState && (
-      (isMovingLeft && this.levelMap[targetY][targetX - 1] === MapItems.EmptySpace)
-      || (isMovingRight && this.levelMap[targetY][targetX + 1] === MapItems.EmptySpace)
+      (isMovingLeft && isEmptyCell.call(this, targetX - 1, targetY))
+      || (isMovingRight && isEmptyCell.call(this, targetX + 1, targetY))
     ))
   );
 }
@@ -283,11 +283,11 @@ function handleTarget(targetX: number, targetY: number): void {
       }
       break;
     case MapItems.Boulder:
-      if (avatarX > targetX && this.levelMap[targetY][targetX - 1] === MapItems.EmptySpace) {
+      if (avatarX > targetX && isEmptyCell.call(this, targetX - 1, targetY)) {
         this.levelMap = moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
       }
 
-      if (avatarX < targetX && this.levelMap[targetY][targetX + 1] === MapItems.EmptySpace) {
+      if (avatarX < targetX && isEmptyCell.call(this, targetX + 1, targetY)) {
         this.levelMap = moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
       }
       break;
