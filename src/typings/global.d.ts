@@ -31,6 +31,9 @@ interface Monsters {
 
 interface MonsterInfo {
   position: number[];
+  direction: MonsterDirection;
 }
+
+type MonsterDirection = 'up' | 'right' | 'down' | 'left';
 
 type AvatarState = 'idle' | 'walkLeft' | 'walkRight' | 'pushLeft' | 'pushRight' | 'prop';

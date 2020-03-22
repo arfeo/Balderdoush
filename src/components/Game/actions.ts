@@ -126,7 +126,8 @@ function handleSquareMonsters(): void {
   this.monsters = {
     ...this.monsters,
     [`monster-${monsterType}`]: squares.map((square: MonsterInfo): MonsterInfo => {
-      const [squareY, squareX] = square.position;
+      const { position, direction } = square;
+      const [squareY, squareX] = position;
       let newPosition: number[] = [];
 
       if (isEmptyCell.call(this, squareX + 1, squareY)) {
@@ -152,6 +153,7 @@ function handleSquareMonsters(): void {
 
       return {
         position: newPosition,
+        direction,
       };
     }),
   };

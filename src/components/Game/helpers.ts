@@ -42,18 +42,28 @@ function getMonsters(): Monsters {
 
   items.forEach((item: number[]) => {
     const [itemY, itemX] = item;
-    const itemType = `monster-${this.levelMap[itemY][itemX]}`;
+    const itemType: number = this.levelMap[itemY][itemX];
+    const itemName = `monster-${itemType}`;
 
-    if (!result[itemType]) {
-      result[itemType] = [];
+    const getInitialDirection = (): MonsterDirection => {
+      switch (itemType) {
+        case MapItems.Square:
+          return 'right';
+        default: break;
+      }
+    };
+
+    if (!result[itemName]) {
+      result[itemName] = [];
     }
 
     result = {
       ...result,
-      [itemType]: [
-        ...result[itemType],
+      [itemName]: [
+        ...result[itemName],
         {
           position: item,
+          direction: getInitialDirection(),
         },
       ],
     };
