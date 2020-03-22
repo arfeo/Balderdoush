@@ -17,6 +17,10 @@ export enum MapItems {
   Diamond,
   Soil,
   BrickWall,
-  Skull,
+  BrickWallS1,
   Butterfly,
+  GreenLava,
+  Skull,
+  BrickWallS2,
+  BrickWallS3,
 }

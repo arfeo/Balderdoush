@@ -77,6 +77,9 @@ function renderMap(): void {
           renderSoil.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.BrickWall:
+        case MapItems.BrickWallS1:
+        case MapItems.BrickWallS2:
+        case MapItems.BrickWallS3:
           renderBrickWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Skull:
