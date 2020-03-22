@@ -18,4 +18,5 @@ export enum MapItems {
   Soil,
   BrickWall,
   Skull,
+  Butterfly,
 }
