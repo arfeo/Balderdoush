@@ -26,8 +26,18 @@ function isEmpty(item: any): boolean {
   return isObject(item) && Object.keys(item).length === 0;
 }
 
+/**
+ * Delay the program’s execution for a given period of time (in milliseconds)
+ *
+ * @param delay
+ */
+function sleep(delay: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, delay));
+}
+
 export {
   getRandomNum,
   isObject,
   isEmpty,
+  sleep,
 };
