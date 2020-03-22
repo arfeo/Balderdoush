@@ -4,7 +4,7 @@ import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 import { renderPanel } from './render';
 import { renderSquare } from './render/square';
-import { isEmpty } from '../../utils/common';
+import { isEmpty, isObject } from '../../utils/common';
 
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
@@ -106,7 +106,7 @@ function animateSquare(id: number): void {
 }
 
 function animateMonsters(): void {
-  if (isEmpty(this.monsters)) {
+  if (!isObject(this.monsters) || isEmpty(this.monsters)) {
     return;
   }
 
