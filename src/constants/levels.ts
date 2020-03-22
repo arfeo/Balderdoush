@@ -12,12 +12,9 @@
  *  0x6 - Diamond
  *  0x7 - Soil
  *  0x8 - Brick wall
- *  0x9 - Brick wall (special 1)
+ *  0x9 - Brick wall (special)
  *  0xa - Butterfly
  *  0xb - Green lava
- *  0xc - Skull
- *  0xd - Brick wall (special 2)
- *  0xe - Brick wall (special 3)
  */
 export const LEVELS: Level[] = [
   {

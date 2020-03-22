@@ -9,7 +9,6 @@ import { renderExit } from './exit';
 import { renderDiamond } from './diamond';
 import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
-import { renderSkull } from './skull';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -77,13 +76,8 @@ function renderMap(): void {
           renderSoil.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.BrickWall:
-        case MapItems.BrickWallS1:
-        case MapItems.BrickWallS2:
-        case MapItems.BrickWallS3:
+        case MapItems.BrickWallSpecial:
           renderBrickWall.call(this, x - offsetX, y - offsetY);
-          break;
-        case MapItems.Skull:
-          renderSkull.call(this, x - offsetX, y - offsetY);
           break;
         default: break;
       }
