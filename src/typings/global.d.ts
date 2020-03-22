@@ -25,4 +25,12 @@ interface MapItemCoords {
   y: number;
 }
 
+interface Monsters {
+  [key: string]: MonsterInfo[];
+}
+
+interface MonsterInfo {
+  position: number[];
+}
+
 type AvatarState = 'idle' | 'walkLeft' | 'walkRight' | 'pushLeft' | 'pushRight' | 'prop';

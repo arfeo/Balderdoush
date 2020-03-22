@@ -5,7 +5,7 @@ import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown, onKeyUp } from './events';
-import { getInitialOffset } from './helpers';
+import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { handleGravitation, handleExits, handleGameOver, handleMonsters } from './actions';
 import { animateMonsters, animateTimer } from './animations';
@@ -31,6 +31,7 @@ class Game extends PageComponent {
   protected isLevelCompleted: boolean;
   protected isPaused: boolean;
   protected avatarState: AvatarState;
+  protected monsters: Monsters;
   public animations: {
     exits?: number[];
     explosions?: number[];
@@ -74,6 +75,8 @@ class Game extends PageComponent {
     this.isPaused = false;
 
     this.avatarState = 'idle';
+
+    this.monsters = getMonsters.call(this);
 
     this.eventHandlers = [
       {

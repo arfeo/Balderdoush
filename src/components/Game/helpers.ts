@@ -34,8 +34,37 @@ function moveMapItem(moveFrom: MapItemCoords, moveTo: MapItemCoords, value: numb
   }));
 }
 
+function getMonsters(): Monsters {
+  let result: Monsters = {};
+  const items: number[][] = getMapItemsByType(this.levelMap, [
+    MapItems.Square,
+  ]);
+
+  items.forEach((item: number[]) => {
+    const [itemY, itemX] = item;
+    const itemType = `monster-${this.levelMap[itemY][itemX]}`;
+
+    if (!result[itemType]) {
+      result[itemType] = [];
+    }
+
+    result = {
+      ...result,
+      [itemType]: [
+        ...result[itemType],
+        {
+          position: item,
+        },
+      ],
+    };
+  });
+
+  return result;
+}
+
 export {
   getInitialOffset,
   isEmptyCell,
   moveMapItem,
+  getMonsters,
 };
