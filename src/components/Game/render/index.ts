@@ -1,14 +1,15 @@
 import { VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH, MapItems } from '../../../constants/game';
 
+import { renderEmpty } from './empty';
 import { renderWall } from './wall';
+import { renderBoulder } from './boulder';
+import { renderSquare } from './square';
+import { renderAvatar } from './avatar';
+import { renderExit } from './exit';
+import { renderDiamond } from './diamond';
 import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
-import { renderBoulder } from './boulder';
-import { renderDiamond } from './diamond';
 import { renderSkull } from './skull';
-import { renderAvatar } from './avatar';
-import { renderEmpty } from './empty';
-import { renderExit } from './exit';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -54,26 +55,29 @@ function renderMap(): void {
         case MapItems.EmptySpace:
           renderEmpty.call(this, x - offsetX, y - offsetY);
           break;
-        case MapItems.Soil:
-          renderSoil.call(this, x - offsetX, y - offsetY);
-          break;
         case MapItems.Wall:
           renderWall.call(this, x - offsetX, y - offsetY);
-          break;
-        case MapItems.Exit:
-          this.diamondsToGet > 0 && renderExit.call(this, x - offsetX, y - offsetY);
-          break;
-        case MapItems.Avatar:
-          renderAvatar.call(this, x - offsetX, y - offsetY);
-          break;
-        case MapItems.BrickWall:
-          renderBrickWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Boulder:
           renderBoulder.call(this, x - offsetX, y - offsetY);
           break;
+        case MapItems.Square:
+          renderSquare.call(this, x - offsetX, y - offsetY, 1);
+          break;
+        case MapItems.Avatar:
+          renderAvatar.call(this, x - offsetX, y - offsetY);
+          break;
+        case MapItems.Exit:
+          this.diamondsToGet > 0 && renderExit.call(this, x - offsetX, y - offsetY);
+          break;
         case MapItems.Diamond:
           renderDiamond.call(this, x - offsetX, y - offsetY);
+          break;
+        case MapItems.Soil:
+          renderSoil.call(this, x - offsetX, y - offsetY);
+          break;
+        case MapItems.BrickWall:
+          renderBrickWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Skull:
           renderSkull.call(this, x - offsetX, y - offsetY);
