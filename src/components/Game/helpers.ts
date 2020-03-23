@@ -80,6 +80,25 @@ function getMonsters(): Monsters {
   return result;
 }
 
+function isItemFalling(x: number, y: number): boolean {
+  return this.fallingItems.filter((item: number[]) => item[0] === y && item[1] === x).length > 0;
+}
+
+function dropItem(initialX: number, initialY: number, targetX: number, targetY: number, itemType: number): void {
+  const fallingItemsCopy = isItemFalling.call(this, initialX, initialY)
+    ? removeFallingItem.call(this, initialX, initialY)
+    : [...this.fallingItems];
+
+  fallingItemsCopy.push([targetY, targetX]);
+
+  this.levelMap = moveMapItem.call(this, { x: initialX, y: initialY }, { x: targetX, y: targetY }, itemType);
+  this.fallingItems = fallingItemsCopy;
+}
+
+function removeFallingItem(x: number, y: number): number[][] {
+  return this.fallingItems.filter((item: number[]) => !(item[0] === y && item[1] === x));
+}
+
 export {
   getInitialOffset,
   isEmptyCell,
@@ -87,4 +106,7 @@ export {
   isEmptyOrAvatar,
   moveMapItem,
   getMonsters,
+  isItemFalling,
+  dropItem,
+  removeFallingItem,
 };
