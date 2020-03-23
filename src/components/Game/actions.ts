@@ -96,6 +96,8 @@ function handleGravitation(): void {
       shouldRerender = true;
     } else if (isAvatarInCell.call(this, itemX, itemY + 1) && isItemFalling.call(this, itemX, itemY)) {
       this.isGameOver = true;
+    } else if (this.levelMap[itemY + 1][itemX] === MapItems.Butterfly && isItemFalling.call(this, itemX, itemY)) {
+      handleButterflyExplosion.call(this, itemX, itemY + 1);
     } else {
       this.fallingItems = removeFallingItem.call(this, itemX, itemY);
     }
@@ -233,6 +235,35 @@ function handleExits(): void {
   }
 }
 
+function handleButterflyExplosion(x: number, y: number): void {
+  const [explosionsPromises, explosionsCoords] = getExplosionParams.call(this, x, y);
+  const itemName = `monster-${MapItems.Butterfly}`;
+
+  this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
+  this.isExploding = true;
+
+  this.monsters = {
+    ...this.monsters,
+    [itemName]: this.monsters[itemName].filter((monster: MonsterInfo): boolean => {
+      const { position } = monster;
+
+      return position[0] !== y && position[1] !== x;
+    }),
+  };
+
+  Promise.all(explosionsPromises).then(() => {
+    this.isExploding = false;
+
+    explosionsCoords.forEach((explosion: number[]) => {
+      const [explosionY, explosionX] = explosion;
+
+      this.levelMap = changeMapValue(this.levelMap, explosionX, explosionY, MapItems.Diamond);
+    });
+
+    renderMap.call(this);
+  });
+}
+
 function handleGameOver(): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
@@ -240,17 +271,30 @@ function handleGameOver(): void {
     return;
   }
 
-  const [offsetY, offsetX] = this.offset;
   const [avatarY, avatarX] = items[0];
-  const explosionsPromises = [];
-  let explosionIndex = 0;
+  const [explosionsPromises] = getExplosionParams.call(this, avatarX, avatarY);
 
   this.isExploding = true;
 
-  for (let y = avatarY - 1; y <= avatarY + 1; y += 1) {
-    for (let x = avatarX - 1; x <= avatarX + 1; x += 1) {
+  Promise.all(explosionsPromises).then(() => {
+    this.isExploding = false;
+    this.lives -= 1;
+
+    renderMap.call(this);
+  });
+}
+
+function getExplosionParams(centerX: number, centerY: number): [Promise<void>[], number[][]] {
+  const [offsetY, offsetX] = this.offset;
+  const explosionsPromises: Promise<void>[] = [];
+  const explosionsCoords: number[][] = [];
+  let explosionIndex = 0;
+
+  for (let y = centerY - 1; y <= centerY + 1; y += 1) {
+    for (let x = centerX - 1; x <= centerX + 1; x += 1) {
       if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall && this.levelMap[y][x] !== MapItems.Exit) {
         explosionsPromises.push(animateExplosion.call(this, explosionIndex, x, y));
+        explosionsCoords.push([y, x]);
 
         explosionIndex += 1;
 
@@ -262,15 +306,10 @@ function handleGameOver(): void {
     }
   }
 
-  Promise.all(explosionsPromises).then(() => {
-    this.isExploding = false;
-    this.lives -= 1;
-
-    renderMap.call(this);
-  });
+  return [explosionsPromises, explosionsCoords];
 }
 
-function handleTarget(targetX: number, targetY: number): void {
+function checkTarget(targetX: number, targetY: number): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
   if (!items.length) {
@@ -335,7 +374,7 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
     return;
   }
 
-  handleTarget.call(this, targetX, targetY);
+  checkTarget.call(this, targetX, targetY);
 
   this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
 
