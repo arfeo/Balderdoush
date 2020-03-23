@@ -81,7 +81,7 @@ function renderMap(): void {
           renderBrickWall.call(this, x - offsetX, y - offsetY);
           break;
         case MapItems.Butterfly:
-          renderButterfly.call(this, x - offsetX, y - offsetY);
+          renderButterfly.call(this, x - offsetX, y - offsetY, 1);
           break;
         default: break;
       }
