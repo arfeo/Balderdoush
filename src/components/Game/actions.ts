@@ -6,8 +6,17 @@ import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
-import { isAvatarInCell, isEmptyCell, isEmptyOrAvatar, moveMapItem } from './helpers';
 import { isEmpty } from '../../utils/common';
+
+import {
+  isAvatarInCell,
+  isEmptyCell,
+  isEmptyOrAvatar,
+  moveMapItem,
+  isItemFalling,
+  dropItem,
+  removeFallingItem,
+} from './helpers';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -71,34 +80,24 @@ function handleGravitation(): void {
 
     if ([MapItems.Diamond, MapItems.Boulder, MapItems.BrickWall].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
       if (isEmptyCell.call(this, itemX - 1, itemY) && isEmptyCell.call(this, itemX - 1, itemY + 1)) {
-        this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX - 1, y: itemY + 1 }, itemType);
-
-        if (isAvatarInCell.call(this, itemX - 1, itemY + 2)) {
-          this.isGameOver = true;
-        }
+        dropItem.call(this, itemX, itemY, itemX - 1, itemY + 1, itemType);
 
         shouldRerender = true;
-      }
-
-      if (isEmptyCell.call(this, itemX + 1, itemY) && isEmptyCell.call(this, itemX + 1, itemY + 1)) {
-        this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX + 1, y: itemY + 1 }, itemType);
-
-        if (isAvatarInCell.call(this, itemX + 1, itemY + 2)) {
-          this.isGameOver = true;
-        }
+      } else if (isEmptyCell.call(this, itemX + 1, itemY) && isEmptyCell.call(this, itemX + 1, itemY + 1)) {
+        dropItem.call(this, itemX, itemY, itemX + 1, itemY + 1, itemType);
 
         shouldRerender = true;
-      }
-    }
-
-    if (isEmptyCell.call(this, itemX, itemY + 1)) {
-      if (isAvatarInCell.call(this, itemX, itemY + 2)) {
-        this.isGameOver = true;
       } else {
-        this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: itemX, y: itemY + 1 }, itemType);
-
-        shouldRerender = true;
+        this.fallingItems = removeFallingItem.call(this, itemX, itemY);
       }
+    } else if (isEmptyCell.call(this, itemX, itemY + 1)) {
+      dropItem.call(this, itemX, itemY, itemX, itemY + 1, itemType);
+
+      shouldRerender = true;
+    } else if (isAvatarInCell.call(this, itemX, itemY + 1) && isItemFalling.call(this, itemX, itemY)) {
+      this.isGameOver = true;
+    } else {
+      this.fallingItems = removeFallingItem.call(this, itemX, itemY);
     }
   }
 
@@ -250,6 +249,7 @@ function handleGameOver(): void {
         explosionIndex += 1;
 
         this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
+        this.fallingItems = removeFallingItem.call(this, x, y);
 
         renderEmpty.call(this, x - offsetX, y - offsetY);
       }

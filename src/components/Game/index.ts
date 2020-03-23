@@ -32,6 +32,7 @@ class Game extends PageComponent {
   protected isPaused: boolean;
   protected avatarState: AvatarState;
   protected monsters: Monsters;
+  protected fallingItems: number[][];
   public animations: {
     exits?: number[];
     explosions?: number[];
@@ -75,8 +76,8 @@ class Game extends PageComponent {
     this.isPaused = false;
 
     this.avatarState = 'idle';
-
     this.monsters = getMonsters.call(this);
+    this.fallingItems = [];
 
     this.eventHandlers = [
       {
@@ -91,7 +92,7 @@ class Game extends PageComponent {
       },
     ];
 
-    this.loopTimeout = 80;
+    this.loopTimeout = 100;
 
     this.animations = {
       exits: [],
