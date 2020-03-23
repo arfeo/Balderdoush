@@ -10,6 +10,7 @@ import { renderDiamond } from './diamond';
 import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
 import { renderButterfly } from './butterfly';
+import { renderGreenLava } from './greenLava';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -83,6 +84,9 @@ function renderMap(): void {
         case MapItems.Butterfly:
           renderButterfly.call(this, x - offsetX, y - offsetY, 1);
           break;
+        case MapItems.GreenLava:
+          renderGreenLava.call(this, x - offsetX, y - offsetY, 1);
+          break;
         default: break;
       }
     }
@@ -112,9 +116,27 @@ function clearCells(ctx: CanvasRenderingContext2D, left: number, top: number, xC
   );
 }
 
+function getNoiseParams(cellSize: number): NoiseParam[] {
+  const result: NoiseParam[] = [];
+  const hmTimes = Math.round(cellSize * 1.3);
+
+  for (let i = 0; i <= hmTimes; i += 1) {
+    result.push({
+      randomX: Math.floor((Math.random() * cellSize) + 1),
+      randomY: Math.floor((Math.random() * cellSize) + 1),
+      randomSize: Math.floor((Math.random() * 1.5 * cellSize / 75) + 1),
+      randomOpacityOne: Math.floor((Math.random() * 7) + 1),
+      randomOpacityTwo: Math.floor((Math.random() * 7) + 1),
+    });
+  }
+
+  return result;
+}
+
 export {
   renderGameBoard,
   renderPanel,
   renderMap,
   clearCells,
+  getNoiseParams,
 };

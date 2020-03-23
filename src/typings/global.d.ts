@@ -34,6 +34,14 @@ interface MonsterInfo {
   direction: MonsterDirection;
 }
 
+interface NoiseParam {
+  randomX: number;
+  randomY: number;
+  randomSize: number;
+  randomOpacityOne: number;
+  randomOpacityTwo: number;
+}
+
 type MonsterDirection = 'up' | 'right' | 'down' | 'left';
 
 type AvatarState = 'idle' | 'walkLeft' | 'walkRight' | 'pushLeft' | 'pushRight' | 'prop';
