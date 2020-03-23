@@ -4,6 +4,7 @@ import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 import { renderPanel } from './render';
 import { renderSquare } from './render/square';
+import { renderButterfly } from './render/butterfly';
 import { isEmpty, isObject } from '../../utils/common';
 
 function animateActiveExit(index: number, x: number, y: number): void {
@@ -105,12 +106,38 @@ function animateSquare(id: number): void {
   this.animations.monsters[id] = requestAnimationFrame(animate);
 }
 
+function animateButterfly(id: number): void {
+  let start = performance.now();
+  let state = 1;
+
+  const animate = (time: number): void => {
+    const butterflies: MonsterInfo[] = this.monsters[`monster-${MapItems.Butterfly}`];
+    const [offsetY, offsetX] = this.offset;
+
+    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > this.loopTimeout / 2) {
+      start = time;
+      state = state === 1 ? 2 : 1;
+
+      butterflies.forEach((butterfly: MonsterInfo) => {
+        const [squareY, squareX] = butterfly.position;
+
+        renderButterfly.call(this, squareX - offsetX, squareY - offsetY, state);
+      });
+    }
+
+    this.animations.monsters[id] = requestAnimationFrame(animate);
+  };
+
+  this.animations.monsters[id] = requestAnimationFrame(animate);
+}
+
 function animateMonsters(): void {
   if (!isObject(this.monsters) || isEmpty(this.monsters)) {
     return;
   }
 
   this.monsters[`monster-${MapItems.Square}`] && animateSquare.call(this, this.animations.monsters.length);
+  this.monsters[`monster-${MapItems.Butterfly}`] && animateButterfly.call(this, this.animations.monsters.length);
 }
 
 export {
