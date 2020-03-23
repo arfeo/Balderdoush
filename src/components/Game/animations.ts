@@ -119,9 +119,9 @@ function animateButterfly(id: number): void {
       state = state === 1 ? 2 : 1;
 
       butterflies.forEach((butterfly: MonsterInfo) => {
-        const [squareY, squareX] = butterfly.position;
+        const [butterflyY, butterflyX] = butterfly.position;
 
-        renderButterfly.call(this, squareX - offsetX, squareY - offsetY, state);
+        renderButterfly.call(this, butterflyX - offsetX, butterflyY - offsetY, state);
       });
     }
 
