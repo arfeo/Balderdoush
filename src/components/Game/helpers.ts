@@ -46,6 +46,7 @@ function getMonsters(): Monsters {
   let result: Monsters = {};
   const items: number[][] = getMapItemsByType(this.levelMap, [
     MapItems.Square,
+    MapItems.Butterfly,
   ]);
 
   items.forEach((item: number[]) => {
@@ -56,6 +57,8 @@ function getMonsters(): Monsters {
     const getInitialDirection = (): MonsterDirection => {
       switch (itemType) {
         case MapItems.Square:
+          return 'right';
+        case MapItems.Butterfly:
           return 'right';
         default: break;
       }
