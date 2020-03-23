@@ -250,9 +250,9 @@ function handleButterflyExplosion(x: number, y: number): void {
   this.monsters = {
     ...this.monsters,
     [itemName]: this.monsters[itemName].filter((monster: MonsterInfo): boolean => {
-      const { position } = monster;
+      const [positionY, positionX] = monster.position || [];
 
-      return position[0] !== y && position[1] !== x;
+      return positionY !== y && positionX !== x;
     }),
   };
 
