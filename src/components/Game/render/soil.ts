@@ -19,7 +19,7 @@ function renderSoil(x: number, y: number): void {
     },
   );
 
-  if (noiseParams.length === 0) {
+  if (!noiseParams.length) {
     noiseParams = getNoiseParams(this.cellSize);
   }
 

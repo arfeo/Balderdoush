@@ -1,9 +1,9 @@
 import { drawRectangle } from '../../../utils/drawing';
 import { clearCells, getNoiseParams } from './';
 
-let noiseParams: { [key: number]: NoiseParam[] } = {};
+let noiseParams: NoiseParam[] = [];
 
-function renderGreenLava(x: number, y: number, state: number): void {
+function renderGreenLava(x: number, y: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
 
   clearCells.call(this, ctx, x, y);
@@ -19,14 +19,11 @@ function renderGreenLava(x: number, y: number, state: number): void {
     },
   );
 
-  if (Object.keys(noiseParams).length === 0) {
-    noiseParams = {
-      1: getNoiseParams(this.cellSize),
-      2: getNoiseParams(this.cellSize),
-    };
+  if (!noiseParams.length) {
+    noiseParams = getNoiseParams(this.cellSize);
   }
 
-  noiseParams[state] && noiseParams[state].forEach((param: NoiseParam) => {
+  noiseParams.forEach((param: NoiseParam) => {
     const { randomX, randomY, randomSize, randomOpacityOne, randomOpacityTwo } = param;
 
     ctx.fillStyle = `hsla(116.4, 57.1%, 34.7%, .${randomOpacityOne + randomOpacityTwo})`;
