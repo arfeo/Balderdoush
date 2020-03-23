@@ -197,14 +197,19 @@ function handleMonstersByType(monsterType: number): void {
       const { position, direction } = butterfly;
       const [squareY, squareX] = position;
       const [newPosition, newDirection] = setMonsterDirection.call(this, direction, squareX, squareY);
+      const [newPositionY, newPositionX] = newPosition;
 
-      if (isAvatarInCell.call(this, newPosition[1], newPosition[0])) {
+      if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
+        if (monsterType === MapItems.Butterfly) {
+          handleButterflyExplosion.call(this, newPositionX, newPositionY);
+        }
+
         this.isGameOver = true;
       } else if (newPosition.length) {
         this.levelMap = moveMapItem.call(
           this,
           { x: squareX, y: squareY },
-          { x: newPosition[1], y: newPosition[0] },
+          { x: newPositionX, y: newPositionY },
           monsterType,
         );
 
