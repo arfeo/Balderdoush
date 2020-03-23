@@ -9,6 +9,7 @@ import { renderExit } from './exit';
 import { renderDiamond } from './diamond';
 import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
+import { renderButterfly } from './butterfly';
 
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
@@ -78,6 +79,9 @@ function renderMap(): void {
         case MapItems.BrickWall:
         case MapItems.BrickWallSpecial:
           renderBrickWall.call(this, x - offsetX, y - offsetY);
+          break;
+        case MapItems.Butterfly:
+          renderButterfly.call(this, x - offsetX, y - offsetY);
           break;
         default: break;
       }
