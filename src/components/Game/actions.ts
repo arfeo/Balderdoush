@@ -255,7 +255,7 @@ function explodeMonster(x: number, y: number, itemType: number, onDone: (coords:
     [itemName]: this.monsters[itemName].filter((monster: MonsterInfo): boolean => {
       const [positionY, positionX] = monster.position || [];
 
-      return positionY !== y && positionX !== x;
+      return !(positionY === y && positionX === x);
     }),
   };
 
