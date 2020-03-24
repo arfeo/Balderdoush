@@ -6,15 +6,15 @@ import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
-import { isEmpty } from '../../utils/common';
+import { getRandomNum, isEmpty } from '../../utils/common';
 
 import {
+  dropItem,
   isAvatarInCell,
   isEmptyCell,
   isEmptyOrAvatar,
-  moveMapItem,
   isItemFalling,
-  dropItem,
+  moveMapItem,
   removeFallingItem,
 } from './helpers';
 
@@ -122,59 +122,64 @@ function setMonsterDirection(direction: MonsterDirection, x: number, y: number):
   let newPosition: number[] = [];
   let newDirection: MonsterDirection = direction;
 
+  const isAllowedCell = (cellX: number, cellY: number): boolean => {
+    return isEmptyOrAvatar.call(this, cellX, cellY)
+      || (this.levelMap[cellY] && this.levelMap[cellY][cellX] === MapItems.GreenLava);
+  };
+
   switch (direction) {
     case 'up':
-      if (isEmptyOrAvatar.call(this, x - 1, y)) {
+      if (isAllowedCell(x - 1, y)) {
         newPosition = [y, x - 1];
         newDirection = 'left';
-      } else if (isEmptyOrAvatar.call(this, x, y - 1)) {
+      } else if (isAllowedCell(x, y - 1)) {
         newPosition = [y - 1, x];
-      } else if (isEmptyOrAvatar.call(this, x + 1, y)) {
+      } else if (isAllowedCell(x + 1, y)) {
         newPosition = [y, x + 1];
         newDirection = 'right';
-      } else if (isEmptyOrAvatar.call(this, x, y + 1)) {
+      } else if (isAllowedCell(x, y + 1)) {
         newPosition = [y + 1, x];
         newDirection = 'down';
       }
       break;
     case 'right':
-      if (isEmptyOrAvatar.call(this, x, y - 1)) {
+      if (isAllowedCell(x, y - 1)) {
         newPosition = [y - 1, x];
         newDirection = 'up';
-      } else if (isEmptyOrAvatar.call(this, x + 1, y)) {
+      } else if (isAllowedCell(x + 1, y)) {
         newPosition = [y, x + 1];
-      } else if (isEmptyOrAvatar.call(this, x, y + 1)) {
+      } else if (isAllowedCell(x, y + 1)) {
         newPosition = [y + 1, x];
         newDirection = 'down';
-      } else if (isEmptyOrAvatar.call(this, x - 1, y)) {
+      } else if (isAllowedCell(x - 1, y)) {
         newPosition = [y, x - 1];
         newDirection = 'left';
       }
       break;
     case 'down':
-      if (isEmptyOrAvatar.call(this, x + 1, y)) {
+      if (isAllowedCell(x + 1, y)) {
         newPosition = [y, x + 1];
         newDirection = 'right';
-      } else if (isEmptyOrAvatar.call(this, x, y + 1)) {
+      } else if (isAllowedCell(x, y + 1)) {
         newPosition = [y + 1, x];
-      } else if (isEmptyOrAvatar.call(this, x - 1, y)) {
+      } else if (isAllowedCell(x - 1, y)) {
         newPosition = [y, x - 1];
         newDirection = 'left';
-      } else if (isEmptyOrAvatar.call(this, x, y - 1)) {
+      } else if (isAllowedCell(x, y - 1)) {
         newPosition = [y - 1, x];
         newDirection = 'up';
       }
       break;
     case 'left':
-      if (isEmptyOrAvatar.call(this, x, y + 1)) {
+      if (isAllowedCell(x, y + 1)) {
         newPosition = [y + 1, x];
         newDirection = 'down';
-      } else if (isEmptyOrAvatar.call(this, x - 1, y)) {
+      } else if (isAllowedCell(x - 1, y)) {
         newPosition = [y, x - 1];
-      } else if (isEmptyOrAvatar.call(this, x, y - 1)) {
+      } else if (isAllowedCell(x, y - 1)) {
         newPosition = [y - 1, x];
         newDirection = 'up';
-      } else if (isEmptyOrAvatar.call(this, x + 1, y)) {
+      } else if (isAllowedCell(x + 1, y)) {
         newPosition = [y, x + 1];
         newDirection = 'right';
       }
@@ -187,6 +192,7 @@ function setMonsterDirection(direction: MonsterDirection, x: number, y: number):
 
 function handleMonstersByType(monsterType: number): void {
   const monsters: MonsterInfo[] = this.monsters[`monster-${monsterType}`];
+  const result: MonsterInfo[] = [];
 
   if (!monsters) {
     return;
@@ -194,36 +200,46 @@ function handleMonstersByType(monsterType: number): void {
 
   let shouldRerender = false;
 
-  this.monsters = {
-    ...this.monsters,
-    [`monster-${monsterType}`]: monsters.map((butterfly: MonsterInfo): MonsterInfo => {
-      const { position, direction } = butterfly;
-      const [squareY, squareX] = position;
-      const [newPosition, newDirection] = setMonsterDirection.call(this, direction, squareX, squareY);
-      const [newPositionY, newPositionX] = newPosition;
+  monsters.forEach((butterfly: MonsterInfo): void => {
+    const { position, direction } = butterfly;
+    const [squareY, squareX] = position;
+    const [newPosition, newDirection] = setMonsterDirection.call(this, direction, squareX, squareY);
+    const [newPositionY, newPositionX] = newPosition;
 
-      if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
-        if (monsterType === MapItems.Butterfly) {
-          explodeButterfly.call(this, newPositionX, newPositionY);
-        }
-
-        this.isGameOver = true;
-      } else if (newPosition.length) {
-        this.levelMap = moveMapItem.call(
-          this,
-          { x: squareX, y: squareY },
-          { x: newPositionX, y: newPositionY },
-          monsterType,
-        );
-
-        shouldRerender = true;
+    if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
+      if (monsterType === MapItems.Butterfly) {
+        return explodeButterfly.call(this, newPositionX, newPositionY);
       }
 
-      return {
-        position: newPosition,
-        direction: newDirection,
-      };
-    }),
+      this.isGameOver = true;
+    } else if (this.levelMap[newPositionY] && this.levelMap[newPositionY][newPositionX] === MapItems.GreenLava) {
+      if (monsterType === MapItems.Square) {
+        return explodeSquare.call(this, squareX, squareY);
+      }
+
+      if (monsterType === MapItems.Butterfly) {
+        return explodeButterfly.call(this, squareX, squareY);
+      }
+    } else if (newPosition.length) {
+      this.levelMap = moveMapItem.call(
+        this,
+        { x: squareX, y: squareY },
+        { x: newPositionX, y: newPositionY },
+        monsterType,
+      );
+
+      shouldRerender = true;
+    }
+
+    result.push({
+      position: newPosition,
+      direction: newDirection,
+    });
+  });
+
+  this.monsters = {
+    ...this.monsters,
+    [`monster-${monsterType}`]: result,
   };
 
   shouldRerender && renderMap.call(this);
@@ -243,11 +259,75 @@ function handleExits(): void {
   }
 }
 
+function handleExtras(): void {
+  handleGreenLava.call(this);
+}
+
+function checkGreenLavaNeighbors(lavaItems: number[][]): number[][] {
+  const allowedCellTypes: number[] = [
+    MapItems.EmptySpace,
+    MapItems.Soil,
+  ];
+
+  const result: number[][] = [];
+
+  if (!lavaItems.length) {
+    return result;
+  }
+
+  const pushUnique = (itemX: number, itemY: number): void => {
+    if (result.some((item: number[]) => item[1] === itemX && item[0] === itemY)) {
+      return;
+    }
+
+    result.push([itemY, itemX]);
+  };
+
+  lavaItems.forEach((lava: number[]) => {
+    const [y, x] = lava;
+
+    if (this.levelMap[ y ]) {
+      if (allowedCellTypes.indexOf(this.levelMap[ y ][ x + 1 ]) > -1) {
+        pushUnique(x + 1, y);
+      }
+
+      if (allowedCellTypes.indexOf(this.levelMap[ y ][ x - 1 ]) > -1) {
+        pushUnique(x - 1, y);
+      }
+    }
+
+    if (this.levelMap[ y + 1 ] && allowedCellTypes.indexOf(this.levelMap[ y + 1 ][ x ]) > -1) {
+      pushUnique(x, y + 1);
+    }
+
+    if (this.levelMap[ y - 1 ] && allowedCellTypes.indexOf(this.levelMap[ y - 1 ][ x ]) > -1) {
+      pushUnique(x, y - 1);
+    }
+  });
+
+  return result;
+}
+
+function handleGreenLava(): void {
+  const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
+
+  if (!lavaItems.length) {
+    return;
+  }
+
+  const neighbors: number[][] = checkGreenLavaNeighbors.call(this, lavaItems);
+  const randomNeighbor: number[] = neighbors[getRandomNum(0, neighbors.length - 1)];
+  const [neighborY, neighborX] = randomNeighbor;
+
+  this.levelMap = changeMapValue(this.levelMap, neighborX, neighborY, MapItems.GreenLava);
+
+  renderMap.call(this);
+}
+
 function explodeMonster(x: number, y: number, itemType: number, onDone: (coords: number[][]) => void): void {
   const [explosionsPromises, explosionsCoords] = getExplosionParams.call(this, x, y);
   const itemName = `monster-${itemType}`;
 
-  this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
   this.isExploding = true;
 
   this.monsters = {
@@ -258,6 +338,8 @@ function explodeMonster(x: number, y: number, itemType: number, onDone: (coords:
       return !(positionY === y && positionX === x);
     }),
   };
+
+  this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
 
   Promise.all(explosionsPromises).then((): void => {
     typeof onDone === 'function' && onDone(explosionsCoords);
@@ -410,5 +492,6 @@ export {
   handleGameOver,
   handleMonsters,
   handleExits,
+  handleExtras,
   makeMove,
 };
