@@ -7,7 +7,7 @@ import { renderGameBoard, renderMap, renderPanel } from './render';
 import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
-import { handleGravitation, handleExits, handleGameOver, handleMonsters } from './actions';
+import { handleGravitation, handleExits, handleGameOver, handleMonsters, handleExtras } from './actions';
 import { animateMonsters, animateTimer } from './animations';
 
 class Game extends PageComponent {
@@ -116,6 +116,7 @@ class Game extends PageComponent {
     handleGravitation.call(this);
     handleMonsters.call(this);
     handleExits.call(this);
+    handleExtras.call(this);
   }
 }
 
