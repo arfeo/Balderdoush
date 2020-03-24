@@ -98,9 +98,9 @@ function handleGravitation(): void {
     } else if (isAvatarInCell.call(this, itemX, itemY + 1) && isFalling) {
       this.isGameOver = true;
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Square && isFalling) {
-      handleSquareExplosion.call(this, itemX, itemY + 1);
+      explodeSquare.call(this, itemX, itemY + 1);
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Butterfly && isFalling) {
-      handleButterflyExplosion.call(this, itemX, itemY + 1);
+      explodeButterfly.call(this, itemX, itemY + 1);
     } else {
       this.fallingItems = removeFallingItem.call(this, itemX, itemY);
     }
@@ -204,7 +204,7 @@ function handleMonstersByType(monsterType: number): void {
 
       if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
         if (monsterType === MapItems.Butterfly) {
-          handleButterflyExplosion.call(this, newPositionX, newPositionY);
+          explodeButterfly.call(this, newPositionX, newPositionY);
         }
 
         this.isGameOver = true;
@@ -243,7 +243,7 @@ function handleExits(): void {
   }
 }
 
-function handleMonsterExplosion(x: number, y: number, itemType: number, onDone: (coords: number[][]) => void): void {
+function explodeMonster(x: number, y: number, itemType: number, onDone: (coords: number[][]) => void): void {
   const [explosionsPromises, explosionsCoords] = getExplosionParams.call(this, x, y);
   const itemName = `monster-${itemType}`;
 
@@ -264,16 +264,16 @@ function handleMonsterExplosion(x: number, y: number, itemType: number, onDone: 
   });
 }
 
-function handleSquareExplosion(x: number, y: number): void {
-  handleMonsterExplosion.call(this, x, y, MapItems.Square, () => {
+function explodeSquare(x: number, y: number): void {
+  explodeMonster.call(this, x, y, MapItems.Square, () => {
     this.isExploding = false;
 
     renderMap.call(this);
   });
 }
 
-function handleButterflyExplosion(x: number, y: number): void {
-  handleMonsterExplosion.call(this, x, y, MapItems.Butterfly, (explosionsCoords: number[][]) => {
+function explodeButterfly(x: number, y: number): void {
+  explodeMonster.call(this, x, y, MapItems.Butterfly, (explosionsCoords: number[][]) => {
     this.isExploding = false;
 
     explosionsCoords.forEach((explosion: number[]) => {
