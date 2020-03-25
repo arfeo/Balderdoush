@@ -2,10 +2,11 @@ import { MapItems } from '../../constants/game';
 
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
-import { renderMap, renderPanel } from './render';
+import { renderPanel } from './render';
 import { renderBrickWall } from './render/brickWall';
 import { renderSquare } from './render/square';
 import { renderButterfly } from './render/butterfly';
+import { renderGreenLava } from './render/greenLava';
 import { getRandomNum, isEmpty, isObject } from '../../utils/common';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { checkGreenLavaNeighbors } from './actions';
@@ -176,7 +177,7 @@ function animateGreenLavaFlow(): void {
       start = time;
       wait = getRandomNum(250, 1500);
 
-      renderMap.call(this);
+      renderGreenLava.call(this, neighborX, neighborY);
     }
 
     this.animations.greenLava = requestAnimationFrame(animate);
