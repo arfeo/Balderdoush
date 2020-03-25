@@ -1,5 +1,29 @@
 @import '../../assets/styles/variables';
 
+.start-screen-container {
+  display: flex;
+  flex-direction: column;
+
+  .-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(#{$cellSize * $mapWidth});
+    height: calc(#{$cellSize * $mapHeight});
+    font-size: $largeFontSize;
+    color: $white;
+    text-align: center;
+  }
+
+  .-continue {
+    width: calc(#{$cellSize * $mapWidth});
+    height: $cellSize;
+    font-size: $largeFontSize;
+    color: $white;
+    text-align: center;
+  }
+}
+
 .game-container {
   display: flex;
   flex-direction: column;
@@ -17,7 +41,7 @@
     .-time,
     .-score {
       width: 30%;
-      font-size: 4.5vmin;
+      font-size: $largeFontSize;
       color: $white;
 
       .-label {

@@ -12,6 +12,32 @@ import { renderBrickWall } from './brickWall';
 import { renderButterfly } from './butterfly';
 import { renderGreenLava } from './greenLava';
 
+function renderStartScreen(): void {
+  const startScreenContainer: HTMLElement = document.createElement('div');
+  const startScreenStat: HTMLElement = document.createElement('div');
+  const startScreenContinue: HTMLElement = document.createElement('div');
+
+  startScreenContainer.className = 'start-screen-container';
+  startScreenStat.className = '-stat';
+  startScreenContinue.className = '-continue';
+
+  startScreenStat.innerText = (`
+    LEVEL ${this.levelId.toString().padStart(2, '0')}
+    
+    LIVES ${this.lives}
+    
+    SCORE ${this.score.toString().padStart(6, '0')}
+  `);
+
+  startScreenContinue.innerText = 'PRESS SPACEBAR TO CONTINUE';
+
+  this.appRoot.innerHTML = '';
+
+  this.appRoot.appendChild(startScreenContainer);
+  startScreenContainer.appendChild(startScreenStat);
+  startScreenContainer.appendChild(startScreenContinue);
+}
+
 function renderGameBoard(): void {
   const gameContainer: HTMLElement = document.createElement('div');
   const gamePanel: HTMLElement = document.createElement('div');
@@ -33,6 +59,8 @@ function renderGameBoard(): void {
 
   this.mapCanvas.width = this.cellSize * VISIBLE_MAP_WIDTH;
   this.mapCanvas.height = this.cellSize * VISIBLE_MAP_HEIGHT;
+
+  this.appRoot.innerHTML = '';
 
   this.appRoot.appendChild(gameContainer);
   gameContainer.appendChild(gamePanel);
@@ -134,6 +162,7 @@ function getNoiseParams(cellSize: number): NoiseParam[] {
 }
 
 export {
+  renderStartScreen,
   renderGameBoard,
   renderPanel,
   renderMap,
