@@ -102,6 +102,10 @@ function removeFallingItem(x: number, y: number): number[][] {
   return this.fallingItems.filter((item: number[]) => !(item[0] === y && item[1] === x));
 }
 
+function isGameActive(): boolean {
+  return !this.isPaused && !this.isGameOver && !this.isLevelCompleted;
+}
+
 export {
   getInitialOffset,
   isEmptyCell,
@@ -112,4 +116,5 @@ export {
   isItemFalling,
   dropItem,
   removeFallingItem,
+  isGameActive,
 };
