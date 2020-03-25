@@ -30,6 +30,10 @@ function renderBrickWall(x: number, y: number, state: number): void {
       },
     );
 
+    if (a === 8) {
+      break;
+    }
+
     for (let b = 0; b < 4; b += 1) {
       const brickSeamsOffset: number = state === 1 && a % 2 !== 0
         ? this.cellSize / 8
