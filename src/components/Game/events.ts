@@ -1,9 +1,11 @@
+import { Game } from './index';
+import { Alert } from '../common/Alert';
+
 import { APP, MapItems } from '../../constants/game';
 
 import { makeMove } from './actions';
 import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
-import { Game } from './index';
 
 function onKeyDown(e: KeyboardEvent): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -42,10 +44,15 @@ function onKeyDown(e: KeyboardEvent): void {
 
         this.renderGame();
       } else {
-        if (this.isGameOver && this.lives > 0 && !this.isExploding) {
+        if (this.isGameOver) {
           this.destroy();
 
-          APP.pageInstance = new Game(this.levelId, this.score, this.lives);
+          if (this.lives > 0) {
+            APP.pageInstance = new Game(this.levelId, this.score, this.lives);
+          } else {
+            // TODO: modal dialog
+            new Alert(this, 'Game over.');
+          }
         }
       }
       break;

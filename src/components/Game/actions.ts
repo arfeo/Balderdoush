@@ -1,6 +1,8 @@
+import { Game } from './index';
 import { Alert } from '../common/Alert';
 
-import { MapItems } from '../../constants/game';
+import { APP, MapItems } from '../../constants/game';
+import { LEVELS } from '../../constants/levels';
 
 import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
@@ -428,7 +430,14 @@ function checkTarget(targetX: number, targetY: number): void {
       if (this.diamondsToGet === 0) {
         this.isLevelCompleted = true;
 
-        new Alert(this, 'Level completed.');
+        this.destroy();
+
+        if (LEVELS.some((level: Level) => level.id === this.levelId + 1)) {
+          APP.pageInstance = new Game(this.levelId + 1, this.score, this.lives);
+        } else {
+          // TODO: modal dialog
+          new Alert(this, 'Game over.');
+        }
       }
       break;
     case MapItems.Boulder:
