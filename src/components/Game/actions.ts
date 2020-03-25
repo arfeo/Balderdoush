@@ -103,13 +103,14 @@ function handleGravitation(): void {
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Butterfly && isFalling) {
       explodeButterfly.call(this, itemX, itemY + 1);
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.BrickWallSpecial && isFalling) {
-      if (!this.isBrickWallSpecialActive) {
+      if (!this.isBrickWallSpecialActive && !this.isBrickWallSpecialUsed) {
         this.isBrickWallSpecialActive = true;
+        this.isBrickWallSpecialUsed = true;
       }
 
       this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
 
-      if (isEmptyCell.call(this, itemX, itemY + 2)) {
+      if (isEmptyCell.call(this, itemX, itemY + 2) && this.isBrickWallSpecialActive) {
         this.levelMap = changeMapValue(
           this.levelMap,
           itemX,

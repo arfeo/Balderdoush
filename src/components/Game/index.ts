@@ -29,6 +29,7 @@ class Game extends PageComponent {
   protected isGameOver: boolean;
   protected isExploding: boolean;
   protected isBrickWallSpecialActive: boolean;
+  protected isBrickWallSpecialUsed: boolean;
   protected isLevelCompleted: boolean;
   protected isPaused: boolean;
   protected avatarState: AvatarState;
@@ -76,6 +77,7 @@ class Game extends PageComponent {
     this.isGameOver = false;
     this.isExploding = false;
     this.isBrickWallSpecialActive = false;
+    this.isBrickWallSpecialUsed = false;
     this.isLevelCompleted = false;
     this.isPaused = false;
 
