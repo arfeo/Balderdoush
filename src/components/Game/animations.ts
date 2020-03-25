@@ -156,6 +156,17 @@ function animateGreenLavaFlow(): void {
       }
 
       const neighbors: number[][] = checkGreenLavaNeighbors.call(this, lavaItems);
+
+      if (!neighbors.length) {
+        lavaItems.forEach((lavaItem: number[]) => {
+          const [itemY, itemX] = lavaItem;
+
+          this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.Diamond);
+        });
+
+        return cancelAnimationFrame(this.animations.greenLava);
+      }
+
       const randomNeighbor: number[] = neighbors[getRandomNum(0, neighbors.length - 1)];
       const [neighborY, neighborX] = randomNeighbor;
 
