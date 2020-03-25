@@ -12,11 +12,11 @@ import {
   dropItem,
   isAvatarInCell,
   isEmptyCell,
-  isLavaInCell,
+  isGameActive,
   isItemFalling,
+  isLavaInCell,
   moveMapItem,
   removeFallingItem,
-  isGameActive,
 } from './helpers';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
@@ -102,6 +102,23 @@ function handleGravitation(): void {
       explodeSquare.call(this, itemX, itemY + 1);
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Butterfly && isFalling) {
       explodeButterfly.call(this, itemX, itemY + 1);
+    } else if (this.levelMap[itemY + 1][itemX] === MapItems.BrickWallSpecial && isFalling) {
+      if (!this.isBrickWallSpecialActive) {
+        this.isBrickWallSpecialActive = true;
+      }
+
+      this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.EmptySpace);
+
+      if (isEmptyCell.call(this, itemX, itemY + 2)) {
+        this.levelMap = changeMapValue(
+          this.levelMap,
+          itemX,
+          itemY + 2,
+          itemType === MapItems.Diamond ? MapItems.Boulder : MapItems.Diamond,
+        );
+      }
+
+      shouldRerender = true;
     } else {
       this.fallingItems = removeFallingItem.call(this, itemX, itemY);
     }
@@ -284,21 +301,21 @@ function checkGreenLavaNeighbors(lavaItems: number[][]): number[][] {
   lavaItems.forEach((lava: number[]) => {
     const [y, x] = lava;
 
-    if (this.levelMap[ y ]) {
-      if (allowedCellTypes.indexOf(this.levelMap[ y ][ x + 1 ]) > -1) {
+    if (this.levelMap[y]) {
+      if (allowedCellTypes.indexOf(this.levelMap[y][x + 1]) > -1) {
         pushUnique(x + 1, y);
       }
 
-      if (allowedCellTypes.indexOf(this.levelMap[ y ][ x - 1 ]) > -1) {
+      if (allowedCellTypes.indexOf(this.levelMap[y][x - 1]) > -1) {
         pushUnique(x - 1, y);
       }
     }
 
-    if (this.levelMap[ y + 1 ] && allowedCellTypes.indexOf(this.levelMap[ y + 1 ][ x ]) > -1) {
+    if (this.levelMap[y + 1] && allowedCellTypes.indexOf(this.levelMap[y + 1][x]) > -1) {
       pushUnique(x, y + 1);
     }
 
-    if (this.levelMap[ y - 1 ] && allowedCellTypes.indexOf(this.levelMap[ y - 1 ][ x ]) > -1) {
+    if (this.levelMap[y - 1] && allowedCellTypes.indexOf(this.levelMap[y - 1][x]) > -1) {
       pushUnique(x, y - 1);
     }
   });

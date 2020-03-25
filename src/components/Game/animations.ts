@@ -200,14 +200,14 @@ function animateBrickWallSpecial(): void {
         return;
       }
 
-      start = time;
-      state = state === 1 ? 2 : 1;
-
       brickWallSpecialItems.forEach((item: number[]) => {
         const [itemY, itemX] = item;
 
         renderBrickWall.call(this, itemX - offsetX, itemY - offsetY, 2);
       });
+
+      start = time;
+      state = state === 1 ? 2 : 1;
 
       if (time - memorisedStart > 100000) {
         this.isBrickWallSpecialActive = false;

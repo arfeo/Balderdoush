@@ -75,7 +75,7 @@ class Game extends PageComponent {
 
     this.isGameOver = false;
     this.isExploding = false;
-    this.isBrickWallSpecialActive = true;
+    this.isBrickWallSpecialActive = false;
     this.isLevelCompleted = false;
     this.isPaused = false;
 
