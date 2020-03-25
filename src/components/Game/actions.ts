@@ -16,6 +16,7 @@ import {
   isItemFalling,
   moveMapItem,
   removeFallingItem,
+  isGameActive,
 } from './helpers';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
@@ -110,7 +111,7 @@ function handleGravitation(): void {
 }
 
 function handleMonsters(): void {
-  if (this.isPaused || this.isGameOver || this.isLevelCompleted || isEmpty(this.monsters)) {
+  if (!isGameActive.call(this) || isEmpty(this.monsters)) {
     return;
   }
 
@@ -455,7 +456,7 @@ function adjustOffset(x: number, y: number): void {
 }
 
 function makeMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
-  if (!checkMovePossibility.call(this, targetX, targetY) || this.isGameOver || this.isLevelCompleted || this.isPaused) {
+  if (!checkMovePossibility.call(this, targetX, targetY) || !isGameActive.call(this)) {
     return;
   }
 

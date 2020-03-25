@@ -8,6 +8,7 @@ import { renderButterfly } from './render/butterfly';
 import { getRandomNum, isEmpty, isObject } from '../../utils/common';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { checkGreenLavaNeighbors } from './actions';
+import { isGameActive } from './helpers';
 
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
@@ -18,7 +19,7 @@ function animateActiveExit(index: number, x: number, y: number): void {
 
     renderExitActive.call(this, x - offsetX, y - offsetY, state);
 
-    if (!this.isPaused && time - start > 300) {
+    if (isGameActive.call(this) && time - start > 300) {
       start = time;
       state = state === 1 ? 2 : 1;
     }
@@ -91,7 +92,7 @@ function animateSquare(id: number): void {
     const squares: MonsterInfo[] = this.monsters[`monster-${MapItems.Square}`];
     const [offsetY, offsetX] = this.offset;
 
-    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > this.loopTimeout / 4) {
+    if (isGameActive.call(this) && time - start > this.loopTimeout / 4) {
       start = time;
       state += state < 4 ? 1 : -3;
 
@@ -116,7 +117,7 @@ function animateButterfly(id: number): void {
     const butterflies: MonsterInfo[] = this.monsters[`monster-${MapItems.Butterfly}`];
     const [offsetY, offsetX] = this.offset;
 
-    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > this.loopTimeout / 2) {
+    if (isGameActive.call(this) && time - start > this.loopTimeout / 2) {
       start = time;
       state = state === 1 ? 2 : 1;
 
@@ -147,7 +148,7 @@ function animateGreenLavaFlow(): void {
   let wait = getRandomNum(250, 1500);
 
   const animate = (time: number): void => {
-    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > wait) {
+    if (isGameActive.call(this) && time - start > wait) {
       const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
 
       if (!lavaItems.length) {
