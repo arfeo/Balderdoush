@@ -3,7 +3,7 @@ import { PageComponent } from '../core/Page';
 import { CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
-import { renderGameBoard, renderMap, renderPanel } from './render';
+import { renderGameBoard, renderMap, renderPanel, renderStartScreen } from './render';
 import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
@@ -26,6 +26,7 @@ class Game extends PageComponent {
   protected panelScore: HTMLElement;
   protected mapCanvas: HTMLCanvasElement;
   protected offset: number[];
+  protected isGameStarted: boolean;
   protected isGameOver: boolean;
   protected isExploding: boolean;
   protected isBrickWallSpecialActive: boolean;
@@ -74,6 +75,7 @@ class Game extends PageComponent {
 
     this.offset = getInitialOffset.call(this);
 
+    this.isGameStarted = false;
     this.isGameOver = false;
     this.isExploding = false;
     this.isBrickWallSpecialActive = false;
@@ -110,11 +112,15 @@ class Game extends PageComponent {
     };
   }
 
-  public render(): void {
+  private renderGame(): void {
     renderGameBoard.call(this);
     renderPanel.call(this);
     renderMap.call(this);
     startAnimations.call(this);
+  }
+
+  public render(): void {
+    renderStartScreen.call(this);
   }
 
   public loop(): void {

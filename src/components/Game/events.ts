@@ -1,42 +1,54 @@
-import { MapItems } from '../../constants/game';
+import { APP, MapItems } from '../../constants/game';
 
 import { makeMove } from './actions';
 import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
+import { Game } from './index';
 
 function onKeyDown(e: KeyboardEvent): void {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
-  if (!e || !items.length) {
+  if (!e) {
     return;
   }
 
-  const [avatarY, avatarX] = items[0];
+  const gameKeysActive: boolean = items.length && this.isGameStarted;
+  const [avatarY, avatarX] = items.length ? items[0] : [];
 
   switch (e.key) {
-    case 'ArrowLeft': {
-      makeMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
+    case 'ArrowLeft':
+      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
       break;
-    }
-    case 'ArrowRight': {
-      makeMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
+    case 'ArrowRight':
+      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
       break;
-    }
-    case 'ArrowUp': {
-      makeMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
+    case 'ArrowUp':
+      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
       break;
-    }
-    case 'ArrowDown': {
-      makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
+    case 'ArrowDown':
+      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
       break;
-    }
     case 'p':
-    case 'P': {
-      this.isPaused = !this.isPaused;
+    case 'P':
+      if (gameKeysActive) {
+        this.isPaused = !this.isPaused;
 
-      renderPanel.call(this);
+        renderPanel.call(this);
+      }
       break;
-    }
+    case ' ':
+      if (!this.isGameStarted) {
+        this.isGameStarted = true;
+
+        this.renderGame();
+      } else {
+        if (this.isGameOver && this.lives > 0 && !this.isExploding) {
+          this.destroy();
+
+          APP.pageInstance = new Game(this.levelId, this.score, this.lives);
+        }
+      }
+      break;
     default: break;
   }
 }
