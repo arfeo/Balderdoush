@@ -28,6 +28,7 @@ class Game extends PageComponent {
   protected offset: number[];
   protected isGameOver: boolean;
   protected isExploding: boolean;
+  protected isBrickWallSpecialActive: boolean;
   protected isLevelCompleted: boolean;
   protected isPaused: boolean;
   protected avatarState: AvatarState;
@@ -39,6 +40,7 @@ class Game extends PageComponent {
     timer?: number;
     monsters?: number[];
     greenLava?: number;
+    brickWallSpecial?: number;
   };
 
   constructor(levelId = 1, score = 0, lives = 3) {
@@ -73,6 +75,7 @@ class Game extends PageComponent {
 
     this.isGameOver = false;
     this.isExploding = false;
+    this.isBrickWallSpecialActive = true;
     this.isLevelCompleted = false;
     this.isPaused = false;
 
@@ -101,6 +104,7 @@ class Game extends PageComponent {
       timer: null,
       monsters: [],
       greenLava: null,
+      brickWallSpecial: null,
     };
   }
 

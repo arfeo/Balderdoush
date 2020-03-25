@@ -3,6 +3,7 @@ import { MapItems } from '../../constants/game';
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 import { renderMap, renderPanel } from './render';
+import { renderBrickWall } from './render/brickWall';
 import { renderSquare } from './render/square';
 import { renderButterfly } from './render/butterfly';
 import { getRandomNum, isEmpty, isObject } from '../../utils/common';
@@ -158,8 +159,8 @@ function animateGreenLavaFlow(): void {
       const neighbors: number[][] = checkGreenLavaNeighbors.call(this, lavaItems);
 
       if (!neighbors.length) {
-        lavaItems.forEach((lavaItem: number[]) => {
-          const [itemY, itemX] = lavaItem;
+        lavaItems.forEach((item: number[]) => {
+          const [itemY, itemX] = item;
 
           this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.Diamond);
         });
@@ -184,13 +185,49 @@ function animateGreenLavaFlow(): void {
   this.animations.greenLava = requestAnimationFrame(animate);
 }
 
+function animateBrickWallSpecial(): void {
+  const memorisedStart = performance.now();
+  let start = memorisedStart;
+  let state = 1;
+
+  const animate = (time: number): void => {
+    if (isGameActive.call(this) && this.isBrickWallSpecialActive && time - start > this.loopTimeout * 2) {
+      const brickWallSpecialItems: number[][] = getMapItemsByType(this.levelMap, MapItems.BrickWallSpecial);
+      const [offsetY, offsetX] = this.offset;
+
+      if (!brickWallSpecialItems.length) {
+        return;
+      }
+
+      start = time;
+      state = state === 1 ? 2 : 1;
+
+      brickWallSpecialItems.forEach((item: number[]) => {
+        const [itemY, itemX] = item;
+
+        renderBrickWall.call(this, itemX - offsetX, itemY - offsetY, 2);
+      });
+
+      if (time - memorisedStart > 100000) {
+        this.isBrickWallSpecialActive = false;
+      }
+    }
+
+    this.animations.brickWallSpecial = requestAnimationFrame(animate);
+  };
+
+  this.animations.brickWallSpecial = requestAnimationFrame(animate);
+}
+
 function startAnimations(): void {
   const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
+  const brickWallSpecialItems: number[][] = getMapItemsByType(this.levelMap, MapItems.BrickWallSpecial);
 
   animateTimer.call(this);
   animateMonsters.call(this);
 
   lavaItems.length && animateGreenLavaFlow.call(this);
+  brickWallSpecialItems.length && animateBrickWallSpecial.call(this);
 }
 
 export {
