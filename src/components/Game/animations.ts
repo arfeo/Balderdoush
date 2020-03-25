@@ -184,8 +184,11 @@ function animateGreenLavaFlow(): void {
   this.animations.greenLava = requestAnimationFrame(animate);
 }
 
-function animateExtras(): void {
+function startAnimations(): void {
   const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
+
+  animateTimer.call(this);
+  animateMonsters.call(this);
 
   lavaItems.length && animateGreenLavaFlow.call(this);
 }
@@ -193,7 +196,5 @@ function animateExtras(): void {
 export {
   animateActiveExit,
   animateExplosion,
-  animateTimer,
-  animateMonsters,
-  animateExtras,
+  startAnimations,
 };

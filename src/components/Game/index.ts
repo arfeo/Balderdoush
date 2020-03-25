@@ -8,7 +8,7 @@ import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { handleGravitation, handleExits, handleGameOver, handleMonsters } from './actions';
-import { animateExtras, animateMonsters, animateTimer } from './animations';
+import { startAnimations } from './animations';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -108,10 +108,7 @@ class Game extends PageComponent {
     renderGameBoard.call(this);
     renderPanel.call(this);
     renderMap.call(this);
-
-    animateTimer.call(this);
-    animateMonsters.call(this);
-    animateExtras.call(this);
+    startAnimations.call(this);
   }
 
   public loop(): void {
