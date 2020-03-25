@@ -12,7 +12,7 @@ import {
   dropItem,
   isAvatarInCell,
   isEmptyCell,
-  isEmptyOrAvatar,
+  isLavaInCell,
   isItemFalling,
   moveMapItem,
   removeFallingItem,
@@ -123,8 +123,9 @@ function setMonsterDirection(direction: MonsterDirection, x: number, y: number):
   let newDirection: MonsterDirection = direction;
 
   const isAllowedCell = (cellX: number, cellY: number): boolean => {
-    return isEmptyOrAvatar.call(this, cellX, cellY)
-      || (this.levelMap[cellY] && this.levelMap[cellY][cellX] === MapItems.GreenLava);
+    return isEmptyCell.call(this, cellX, cellY)
+      || isAvatarInCell.call(this, cellX, cellY)
+      || isLavaInCell.call(this, cellX, cellY);
   };
 
   switch (direction) {

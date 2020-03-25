@@ -28,8 +28,8 @@ function isAvatarInCell(x: number, y: number): boolean {
   return this.levelMap[y] && this.levelMap[y][x] === MapItems.Avatar;
 }
 
-function isEmptyOrAvatar(x: number, y: number): boolean {
-  return isEmptyCell.call(this, x, y) || isAvatarInCell.call(this, x, y);
+function isLavaInCell(x: number, y: number): boolean {
+  return this.levelMap[y] && this.levelMap[y][x] === MapItems.GreenLava;
 }
 
 function moveMapItem(moveFrom: MapItemCoords, moveTo: MapItemCoords, value: number): number[][] {
@@ -106,7 +106,7 @@ export {
   getInitialOffset,
   isEmptyCell,
   isAvatarInCell,
-  isEmptyOrAvatar,
+  isLavaInCell,
   moveMapItem,
   getMonsters,
   isItemFalling,

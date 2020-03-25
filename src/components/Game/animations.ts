@@ -147,7 +147,7 @@ function animateGreenLavaFlow(): void {
   let wait = getRandomNum(250, 1500);
 
   const animate = (time: number): void => {
-    if (time - start > wait) {
+    if (!this.isPaused && !this.isGameOver && !this.isLevelCompleted && time - start > wait) {
       const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
 
       if (!lavaItems.length) {
