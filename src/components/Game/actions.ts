@@ -6,7 +6,7 @@ import { renderMap, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { renderEmpty } from './render/empty';
-import { getRandomNum, isEmpty } from '../../utils/common';
+import { isEmpty } from '../../utils/common';
 
 import {
   dropItem,
@@ -259,10 +259,6 @@ function handleExits(): void {
   }
 }
 
-function handleExtras(): void {
-  handleGreenLava.call(this);
-}
-
 function checkGreenLavaNeighbors(lavaItems: number[][]): number[][] {
   const allowedCellTypes: number[] = [
     MapItems.EmptySpace,
@@ -306,22 +302,6 @@ function checkGreenLavaNeighbors(lavaItems: number[][]): number[][] {
   });
 
   return result;
-}
-
-function handleGreenLava(): void {
-  const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
-
-  if (!lavaItems.length) {
-    return;
-  }
-
-  const neighbors: number[][] = checkGreenLavaNeighbors.call(this, lavaItems);
-  const randomNeighbor: number[] = neighbors[getRandomNum(0, neighbors.length - 1)];
-  const [neighborY, neighborX] = randomNeighbor;
-
-  this.levelMap = changeMapValue(this.levelMap, neighborX, neighborY, MapItems.GreenLava);
-
-  renderMap.call(this);
 }
 
 function explodeMonster(x: number, y: number, itemType: number, onDone: (coords: number[][]) => void): void {
@@ -492,6 +472,6 @@ export {
   handleGameOver,
   handleMonsters,
   handleExits,
-  handleExtras,
+  checkGreenLavaNeighbors,
   makeMove,
 };

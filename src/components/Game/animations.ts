@@ -2,10 +2,12 @@ import { MapItems } from '../../constants/game';
 
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
-import { renderPanel } from './render';
+import { renderMap, renderPanel } from './render';
 import { renderSquare } from './render/square';
 import { renderButterfly } from './render/butterfly';
-import { isEmpty, isObject } from '../../utils/common';
+import { getRandomNum, isEmpty, isObject } from '../../utils/common';
+import { changeMapValue, getMapItemsByType } from '../../utils/game';
+import { checkGreenLavaNeighbors } from './actions';
 
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
@@ -140,9 +142,46 @@ function animateMonsters(): void {
   this.monsters[`monster-${MapItems.Butterfly}`] && animateButterfly.call(this, this.animations.monsters.length);
 }
 
+function animateGreenLavaFlow(): void {
+  let start = performance.now();
+  let wait = getRandomNum(250, 1500);
+
+  const animate = (time: number): void => {
+    if (time - start > wait) {
+      const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
+
+      if (!lavaItems.length) {
+        return;
+      }
+
+      const neighbors: number[][] = checkGreenLavaNeighbors.call(this, lavaItems);
+      const randomNeighbor: number[] = neighbors[getRandomNum(0, neighbors.length - 1)];
+      const [neighborY, neighborX] = randomNeighbor;
+
+      this.levelMap = changeMapValue(this.levelMap, neighborX, neighborY, MapItems.GreenLava);
+
+      start = time;
+      wait = getRandomNum(250, 1500);
+
+      renderMap.call(this);
+    }
+
+    this.animations.greenLava = requestAnimationFrame(animate);
+  };
+
+  this.animations.greenLava = requestAnimationFrame(animate);
+}
+
+function animateExtras(): void {
+  const lavaItems: number[][] = getMapItemsByType(this.levelMap, MapItems.GreenLava);
+
+  lavaItems.length && animateGreenLavaFlow.call(this);
+}
+
 export {
   animateActiveExit,
   animateExplosion,
   animateTimer,
   animateMonsters,
+  animateExtras,
 };
