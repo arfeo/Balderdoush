@@ -21,11 +21,11 @@ function renderStartScreen(): void {
   startScreenStat.className = '-stat';
   startScreenContinue.className = '-continue';
 
-  startScreenStat.innerText = (`
-    LEVEL ${this.levelId.toString().padStart(2, '0')}
-    LIVES ${this.lives}
-    SCORE ${this.score.toString().padStart(6, '0')}
-  `);
+  startScreenStat.innerText = (
+    `LEVEL ${this.levelId.toString().padStart(2, '0')}
+    LIVES ${this.lives} 
+    SCORE ${this.score.toString().padStart(6, '0')}`
+  );
 
   startScreenContinue.innerText = 'PRESS SPACE TO CONTINUE';
 
