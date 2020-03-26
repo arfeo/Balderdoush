@@ -2,7 +2,6 @@ export const APP: App = {
   pageInstance: null,
 };
 
-export const MENU_CELL_SIZE_VMIN = 20;
 export const GAME_CELL_SIZE_VMIN = 6;
 
 export const VISIBLE_MAP_WIDTH = 20;

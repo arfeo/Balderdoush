@@ -1,0 +1,16 @@
+@import '../../assets/styles/variables';
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: $largeFontSize;
+  color: $white;
+  text-align: center;
+  user-select: none;
+
+  .-controls {
+    margin-top: 2.5vmin;
+  }
+}
