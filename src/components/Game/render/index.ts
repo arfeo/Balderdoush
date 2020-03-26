@@ -27,7 +27,7 @@ function renderStartScreen(): void {
     SCORE ${this.score.toString().padStart(6, '0')}
   `);
 
-  startScreenContinue.innerText = 'PRESS SPACEBAR TO CONTINUE';
+  startScreenContinue.innerText = 'PRESS SPACE TO CONTINUE';
 
   this.appRoot.innerHTML = '';
 
