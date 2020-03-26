@@ -1,6 +1,6 @@
 import { PageComponent } from '../core/Page';
 
-import { CELL_SIZE_VMIN } from '../../constants/game';
+import { GAME_CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderMap, renderPanel, renderStartScreen } from './render';
@@ -56,7 +56,7 @@ class Game extends PageComponent {
       throw 'Incorrect level id.';
     }
 
-    this.cellSize = getCellSize(CELL_SIZE_VMIN);
+    this.cellSize = getCellSize(GAME_CELL_SIZE_VMIN);
 
     this.levelId = levelId;
     this.diamondsToGet = level.diamondsToGet;

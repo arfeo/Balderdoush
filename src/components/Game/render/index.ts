@@ -23,9 +23,7 @@ function renderStartScreen(): void {
 
   startScreenStat.innerText = (`
     LEVEL ${this.levelId.toString().padStart(2, '0')}
-    
     LIVES ${this.lives}
-    
     SCORE ${this.score.toString().padStart(6, '0')}
   `);
 
