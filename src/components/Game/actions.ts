@@ -229,11 +229,11 @@ function handleMonstersByType(monsterType: number): void {
     const [newPositionY, newPositionX] = newPosition;
 
     if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
+      this.isGameOver = true;
+
       if (monsterType === MapItems.Butterfly) {
         return explodeButterfly.call(this, newPositionX, newPositionY);
       }
-
-      this.isGameOver = true;
     } else if (this.levelMap[newPositionY] && this.levelMap[newPositionY][newPositionX] === MapItems.GreenLava) {
       if (monsterType === MapItems.Square) {
         return explodeSquare.call(this, squareX, squareY);
