@@ -1,5 +1,5 @@
 import { Game } from './index';
-import { Alert } from '../common/Alert';
+import { Menu } from '../Menu';
 
 import { APP, MapItems } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
@@ -435,8 +435,7 @@ function checkTarget(targetX: number, targetY: number): void {
         if (LEVELS.some((level: Level) => level.id === this.levelId + 1)) {
           APP.pageInstance = new Game(this.levelId + 1, this.score, this.lives);
         } else {
-          // TODO: modal dialog
-          new Alert(this, 'Game over.');
+          APP.pageInstance = new Menu();
         }
       }
       break;

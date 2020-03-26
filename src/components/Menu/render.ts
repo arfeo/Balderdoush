@@ -8,12 +8,16 @@ function renderMenu(): void {
   menuControls.className = '-controls';
   menuControlsCol1.className = '-col';
   menuControlsCol2.className = '-col';
+  this.lowerLevelButton.className = '-lower';
   this.levelIdContainer.className = '-level-id';
+  this.higherLevelButton.className = '-higher';
 
   menuContainer.innerText = 'Balderdoush';
   this.startGameButton.innerText = 'Start game';
   this.lowerLevelButton.innerHTML = '<span class="arrow arrow-left"></span>';
   this.higherLevelButton.innerHTML = '<span class="arrow arrow-right"></span>';
+
+  this.appRoot.innerHTML = '';
 
   this.appRoot.appendChild(menuContainer);
   menuContainer.appendChild(menuControls);

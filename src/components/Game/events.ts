@@ -1,5 +1,5 @@
 import { Game } from './index';
-import { Alert } from '../common/Alert';
+import { Menu } from '../Menu';
 
 import { APP, MapItems } from '../../constants/game';
 
@@ -38,6 +38,13 @@ function onKeyDown(e: KeyboardEvent): void {
         renderPanel.call(this);
       }
       break;
+    case 'Escape':
+      if (gameKeysActive) {
+        this.destroy();
+
+        APP.pageInstance = new Menu();
+      }
+      break;
     case ' ':
       if (!this.isGameStarted) {
         this.isGameStarted = true;
@@ -50,8 +57,7 @@ function onKeyDown(e: KeyboardEvent): void {
           if (this.lives > 0) {
             APP.pageInstance = new Game(this.levelId, this.score, this.lives);
           } else {
-            // TODO: modal dialog
-            new Alert(this, 'Game over.');
+            APP.pageInstance = new Menu();
           }
         }
       }

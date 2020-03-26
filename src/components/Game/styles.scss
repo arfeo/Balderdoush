@@ -3,7 +3,6 @@
 .start-screen-container {
   display: flex;
   flex-direction: column;
-  user-select: none;
 
   .-stat {
     display: flex;
@@ -14,6 +13,7 @@
     font-size: $largeFontSize;
     color: $white;
     text-align: center;
+    user-select: none;
   }
 
   .-continue {
@@ -22,6 +22,7 @@
     font-size: $largeFontSize;
     color: $white;
     text-align: center;
+    user-select: none;
   }
 }
 
