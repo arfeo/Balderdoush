@@ -9,7 +9,6 @@ class Menu extends PageComponent {
   protected lowerLevelButton: HTMLButtonElement;
   protected levelIdContainer: HTMLElement;
   protected higherLevelButton: HTMLButtonElement;
-  protected bestScoresButton: HTMLButtonElement;
   protected levelId: number;
 
   public init(): void {
@@ -18,7 +17,6 @@ class Menu extends PageComponent {
     this.lowerLevelButton = document.createElement('button');
     this.levelIdContainer = document.createElement('div');
     this.higherLevelButton = document.createElement('button');
-    this.bestScoresButton = document.createElement('button');
 
     this.levelId = 1;
 
