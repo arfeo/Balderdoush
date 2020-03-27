@@ -4,8 +4,11 @@ import { APP } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderLevelId } from './render';
+import { saveStorageData } from '../../utils/storage';
 
 function onStartGame(): void {
+  saveStorageData('levelId', this.levelId);
+
   this.destroy();
 
   APP.pageInstance = new Game(this.levelId);

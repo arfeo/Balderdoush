@@ -2,6 +2,8 @@ export const APP: App = {
   pageInstance: null,
 };
 
+export const STORAGE_PREFIX = 'balderdoush';
+
 export const GAME_CELL_SIZE_VMIN = 6;
 
 export const VISIBLE_MAP_WIDTH = 20;
