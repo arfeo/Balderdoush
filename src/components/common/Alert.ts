@@ -1,13 +1,12 @@
 import { ModalComponent } from '../core/Modal';
 import { PageComponent } from '../core/Page';
-import { MenuComponent } from '../core/Menu';
 
 class Alert extends ModalComponent {
   protected alertLabel: HTMLElement;
   protected alertSubmitContainer: HTMLElement;
   protected alertSubmitClose: HTMLButtonElement;
 
-  public constructor(page: PageComponent | MenuComponent, text: string, size?: 'large' | 'medium' | 'small') {
+  public constructor(page: PageComponent, text: string, size?: 'large' | 'medium' | 'small') {
     super(page, text, size);
   }
 
