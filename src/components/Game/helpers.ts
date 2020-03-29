@@ -32,14 +32,16 @@ function isLavaInCell(x: number, y: number): boolean {
   return this.levelMap[y] && this.levelMap[y][x] === MapItems.GreenLava;
 }
 
-function moveMapItem(moveFrom: MapItemCoords, moveTo: MapItemCoords, value: number): number[][] {
-  return this.levelMap.map((row: number[], rowIndex: number) => row.map((column: number, columnIndex: number) => {
-    if (rowIndex === moveFrom.y && columnIndex === moveFrom.x) {
-      return MapItems.EmptySpace;
-    }
+function moveMapItem(moveFrom: MapItemCoords, moveTo: MapItemCoords, value: number): void {
+  this.levelMap = this.levelMap.map((row: number[], rowIndex: number) => {
+    return row.map((column: number, columnIndex: number) => {
+      if (rowIndex === moveFrom.y && columnIndex === moveFrom.x) {
+        return MapItems.EmptySpace;
+      }
 
-    return rowIndex === moveTo.y && columnIndex === moveTo.x ? value : this.levelMap[rowIndex][columnIndex];
-  }));
+      return rowIndex === moveTo.y && columnIndex === moveTo.x ? value : this.levelMap[rowIndex][columnIndex];
+    });
+  });
 }
 
 function getMonsters(): Monsters {
@@ -94,7 +96,8 @@ function dropItem(initialX: number, initialY: number, targetX: number, targetY: 
 
   fallingItemsCopy.push([targetY, targetX]);
 
-  this.levelMap = moveMapItem.call(this, { x: initialX, y: initialY }, { x: targetX, y: targetY }, itemType);
+  moveMapItem.call(this, { x: initialX, y: initialY }, { x: targetX, y: targetY }, itemType);
+
   this.fallingItems = fallingItemsCopy;
 }
 

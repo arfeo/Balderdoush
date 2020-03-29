@@ -243,7 +243,7 @@ function handleMonstersByType(monsterType: number): void {
         return explodeButterfly.call(this, squareX, squareY);
       }
     } else if (newPosition.length) {
-      this.levelMap = moveMapItem.call(
+      moveMapItem.call(
         this,
         { x: squareX, y: squareY },
         { x: newPositionX, y: newPositionY },
@@ -441,11 +441,11 @@ function checkTarget(targetX: number, targetY: number): void {
       break;
     case MapItems.Boulder:
       if (avatarX > targetX && isEmptyCell.call(this, targetX - 1, targetY)) {
-        this.levelMap = moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
+        moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
       }
 
       if (avatarX < targetX && isEmptyCell.call(this, targetX + 1, targetY)) {
-        this.levelMap = moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
+        moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
       }
       break;
     case MapItems.Diamond:
@@ -487,11 +487,8 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
   }
 
   checkTarget.call(this, targetX, targetY);
-
-  this.levelMap = moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
-
+  moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
   adjustOffset.call(this, targetX, targetY);
-
   renderMap.call(this);
 }
 
