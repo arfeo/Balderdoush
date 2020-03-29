@@ -20,6 +20,7 @@ import {
   moveMapItem,
   removeFallingItem,
 } from './helpers';
+import { renderAvatar } from './render/avatar';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -461,24 +462,31 @@ function checkTarget(targetX: number, targetY: number): void {
   }
 }
 
-function adjustOffset(x: number, y: number): void {
+function adjustOffset(x: number, y: number): boolean {
   const [offsetY, offsetX] = this.offset;
+  let isAdjusted = false;
 
   if ((x - offsetX) < 3 && offsetX > 0) {
     this.offset = [offsetY, offsetX - 1];
+    isAdjusted = true;
   }
 
   if ((x - offsetX) >= 17 && this.levelMap && this.levelMap[0] && (offsetX + 20) < this.levelMap[0].length) {
     this.offset = [offsetY, offsetX + 1];
+    isAdjusted = true;
   }
 
   if ((y - offsetY) < 3 && offsetY > 0) {
     this.offset = [offsetY - 1, offsetX];
+    isAdjusted = true;
   }
 
   if ((y - offsetY) >= 10 && this.levelMap && (offsetY + 13) < this.levelMap.length) {
     this.offset = [offsetY + 1, offsetX];
+    isAdjusted = true;
   }
+
+  return isAdjusted;
 }
 
 function makeMove(itemX: number, itemY: number, targetX: number, targetY: number): void {
@@ -488,8 +496,15 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
 
   checkTarget.call(this, targetX, targetY);
   moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
-  adjustOffset.call(this, targetX, targetY);
-  renderMap.call(this);
+
+  if (adjustOffset.call(this, targetX, targetY)) {
+    renderMap.call(this);
+  } else {
+    const [offsetY, offsetX] = this.offset;
+
+    renderEmpty.call(this, itemX - offsetX, itemY - offsetY);
+    renderAvatar.call(this, targetX - offsetX, targetY - offsetY);
+  }
 }
 
 export {
