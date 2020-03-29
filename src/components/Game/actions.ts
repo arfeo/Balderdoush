@@ -5,9 +5,12 @@ import { APP, MapItems } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderMap, renderPanel } from './render';
+import { renderEmpty } from './render/empty';
+import { renderAvatar } from './render/avatar';
+import { renderBoulder } from './render/boulder';
+import { renderDiamond } from './render/diamond';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
-import { renderEmpty } from './render/empty';
 import { isEmpty } from '../../utils/common';
 
 import {
@@ -20,7 +23,6 @@ import {
   moveMapItem,
   removeFallingItem,
 } from './helpers';
-import { renderAvatar } from './render/avatar';
 
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -68,7 +70,6 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
 
 function handleGravitation(): void {
   const items: number[][] = getMapItemsByType(this.levelMap, [MapItems.Boulder, MapItems.Diamond]);
-  let shouldRerender = false;
 
   if (!items.length || this.isExploding) {
     return;
@@ -78,6 +79,7 @@ function handleGravitation(): void {
     const [itemY, itemX] = item;
     const itemType: number = this.levelMap[itemY][itemX];
     const isFalling: boolean = isItemFalling.call(this, itemX, itemY);
+    const [offsetY, offsetX] = this.offset;
 
     if (this.levelMap[itemY + 1] === undefined) {
       continue;
@@ -86,19 +88,13 @@ function handleGravitation(): void {
     if ([MapItems.Diamond, MapItems.Boulder, MapItems.BrickWall].indexOf(this.levelMap[itemY + 1][itemX]) > -1) {
       if (isEmptyCell.call(this, itemX - 1, itemY) && isEmptyCell.call(this, itemX - 1, itemY + 1)) {
         dropItem.call(this, itemX, itemY, itemX - 1, itemY + 1, itemType);
-
-        shouldRerender = true;
       } else if (isEmptyCell.call(this, itemX + 1, itemY) && isEmptyCell.call(this, itemX + 1, itemY + 1)) {
         dropItem.call(this, itemX, itemY, itemX + 1, itemY + 1, itemType);
-
-        shouldRerender = true;
       } else {
         this.fallingItems = removeFallingItem.call(this, itemX, itemY);
       }
     } else if (isEmptyCell.call(this, itemX, itemY + 1)) {
       dropItem.call(this, itemX, itemY, itemX, itemY + 1, itemType);
-
-      shouldRerender = true;
     } else if (isAvatarInCell.call(this, itemX, itemY + 1) && isFalling) {
       this.isGameOver = true;
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Square && isFalling) {
@@ -120,15 +116,23 @@ function handleGravitation(): void {
           itemY + 2,
           itemType === MapItems.Diamond ? MapItems.Boulder : MapItems.Diamond,
         );
+
+        switch (itemType) {
+          case MapItems.Boulder:
+            renderDiamond.call(this, itemX - offsetX, itemY + 2 - offsetY);
+            break;
+          case MapItems.Diamond:
+            renderBoulder.call(this, itemX - offsetX, itemY + 2 - offsetY);
+            break;
+          default: break;
+        }
       }
 
-      shouldRerender = true;
+      renderEmpty.call(this, itemX - offsetX, itemY - offsetY);
     } else {
       this.fallingItems = removeFallingItem.call(this, itemX, itemY);
     }
   }
-
-  shouldRerender && renderMap.call(this);
 }
 
 function handleMonsters(): void {
