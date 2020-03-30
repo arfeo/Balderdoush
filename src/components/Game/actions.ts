@@ -132,7 +132,7 @@ function handleMonsters(): void {
 }
 
 function setMonsterDirection(direction: MonsterDirection, x: number, y: number): [number[], MonsterDirection] {
-  let newPosition: number[] = [];
+  let newPosition: number[] = [y, x];
   let newDirection: MonsterDirection = direction;
 
   const isAllowedCell = (cellX: number, cellY: number): boolean => {
@@ -232,7 +232,7 @@ function handleMonstersByType(monsterType: number): void {
       if (monsterType === MapItems.Butterfly) {
         return explodeButterfly.call(this, monsterX, monsterY);
       }
-    } else if (newPos.length) {
+    } else if (!(newPosX === monsterX && newPosY === monsterY)) {
       moveMapItem.call(
         this,
         { x: monsterX, y: monsterY },
