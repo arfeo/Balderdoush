@@ -220,6 +220,7 @@ function handleMonstersByType(monsterType: number): void {
 
     if (isAvatarInCell.call(this, newPosX, newPosY)) {
       this.isGameOver = true;
+      this.lives -= 1;
 
       if (monsterType === MapItems.Butterfly) {
         return explodeButterfly.call(this, newPosX, newPosY);
