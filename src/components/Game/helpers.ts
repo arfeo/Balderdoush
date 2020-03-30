@@ -1,9 +1,7 @@
 import { MapItems, VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH } from '../../constants/game';
 
 import { getMapItemsByType } from '../../utils/game';
-import { renderEmpty } from './render/empty';
-import { renderBoulder } from './render/boulder';
-import { renderDiamond } from './render/diamond';
+import { renderMapItem } from './render';
 
 function getInitialOffset(): number[] {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -93,7 +91,6 @@ function isItemFalling(x: number, y: number): boolean {
 }
 
 function dropItem(initialX: number, initialY: number, targetX: number, targetY: number, itemType: number): void {
-  const [offsetY, offsetX] = this.offset;
   const fallingItemsCopy = isItemFalling.call(this, initialX, initialY)
     ? removeFallingItem.call(this, initialX, initialY)
     : [...this.fallingItems];
@@ -101,18 +98,8 @@ function dropItem(initialX: number, initialY: number, targetX: number, targetY: 
   fallingItemsCopy.push([targetY, targetX]);
 
   moveMapItem.call(this, { x: initialX, y: initialY }, { x: targetX, y: targetY }, itemType);
-
-  renderEmpty.call(this, initialX - offsetX, initialY - offsetY);
-
-  switch (itemType) {
-    case MapItems.Boulder:
-      renderBoulder.call(this, targetX - offsetX, targetY - offsetY);
-      break;
-    case MapItems.Diamond:
-      renderDiamond.call(this, targetX - offsetX, targetY - offsetY);
-      break;
-    default: break;
-  }
+  renderMapItem.call(this, initialX, initialY);
+  renderMapItem.call(this, targetX, targetY);
 
   this.fallingItems = fallingItemsCopy;
 }
