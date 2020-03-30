@@ -9,6 +9,8 @@ import { renderEmpty } from './render/empty';
 import { renderAvatar } from './render/avatar';
 import { renderBoulder } from './render/boulder';
 import { renderDiamond } from './render/diamond';
+import { renderSquare } from './render/square';
+import { renderButterfly } from './render/butterfly';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { isEmpty } from '../../utils/common';
@@ -218,6 +220,7 @@ function setMonsterDirection(direction: MonsterDirection, x: number, y: number):
 }
 
 function handleMonstersByType(monsterType: number): void {
+  const [offsetY, offsetX] = this.offset;
   const monsters: MonsterInfo[] = this.monsters[`monster-${monsterType}`];
   const result: MonsterInfo[] = [];
 
@@ -225,12 +228,10 @@ function handleMonstersByType(monsterType: number): void {
     return;
   }
 
-  let shouldRerender = false;
-
-  monsters.forEach((butterfly: MonsterInfo): void => {
-    const { position, direction } = butterfly;
-    const [squareY, squareX] = position;
-    const [newPosition, newDirection] = setMonsterDirection.call(this, direction, squareX, squareY);
+  monsters.forEach((monster: MonsterInfo): void => {
+    const { position, direction } = monster;
+    const [monsterY, monsterX] = position;
+    const [newPosition, newDirection] = setMonsterDirection.call(this, direction, monsterX, monsterY);
     const [newPositionY, newPositionX] = newPosition;
 
     if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
@@ -241,21 +242,31 @@ function handleMonstersByType(monsterType: number): void {
       }
     } else if (this.levelMap[newPositionY] && this.levelMap[newPositionY][newPositionX] === MapItems.GreenLava) {
       if (monsterType === MapItems.Square) {
-        return explodeSquare.call(this, squareX, squareY);
+        return explodeSquare.call(this, monsterX, monsterY);
       }
 
       if (monsterType === MapItems.Butterfly) {
-        return explodeButterfly.call(this, squareX, squareY);
+        return explodeButterfly.call(this, monsterX, monsterY);
       }
     } else if (newPosition.length) {
       moveMapItem.call(
         this,
-        { x: squareX, y: squareY },
+        { x: monsterX, y: monsterY },
         { x: newPositionX, y: newPositionY },
         monsterType,
       );
 
-      shouldRerender = true;
+      renderEmpty.call(this, monsterX - offsetX, monsterY - offsetY);
+
+      switch (monsterType) {
+        case MapItems.Square:
+          renderSquare.call(this, newPositionX - offsetX, newPositionY - offsetY);
+          break;
+        case MapItems.Butterfly:
+          renderButterfly.call(this, newPositionX - offsetX, newPositionY - offsetY);
+          break;
+        default: break;
+      }
     }
 
     result.push({
@@ -268,8 +279,6 @@ function handleMonstersByType(monsterType: number): void {
     ...this.monsters,
     [`monster-${monsterType}`]: result,
   };
-
-  shouldRerender && renderMap.call(this);
 }
 
 function handleExits(): void {
