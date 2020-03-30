@@ -6,6 +6,8 @@ Quite a playable prototype lacking some graphic elements.
 
 Work in progress.
 
+[Live demo](https://tests.arfeo.net/balderdoush/)
+
 ## Installation
 
 Clone the project:
