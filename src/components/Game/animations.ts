@@ -101,7 +101,7 @@ function animateSquare(id: number): void {
       squares.forEach((square: MonsterInfo) => {
         const [squareY, squareX] = square.position;
 
-        renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
+        !this.shouldRerenderMap && renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
       });
     }
 
@@ -126,7 +126,7 @@ function animateButterfly(id: number): void {
       butterflies.forEach((butterfly: MonsterInfo) => {
         const [butterflyY, butterflyX] = butterfly.position;
 
-        renderButterfly.call(this, butterflyX - offsetX, butterflyY - offsetY, state);
+        !this.shouldRerenderMap && renderButterfly.call(this, butterflyX - offsetX, butterflyY - offsetY, state);
       });
     }
 
@@ -171,13 +171,14 @@ function animateGreenLavaFlow(): void {
 
       const randomNeighbor: number[] = neighbors[getRandomNum(0, neighbors.length - 1)];
       const [neighborY, neighborX] = randomNeighbor;
+      const [offsetY, offsetX] = this.offset;
 
       this.levelMap = changeMapValue(this.levelMap, neighborX, neighborY, MapItems.GreenLava);
 
       start = time;
       wait = getRandomNum(250, 1500);
 
-      renderGreenLava.call(this, neighborX, neighborY);
+      renderGreenLava.call(this, neighborX - offsetX, neighborY - offsetY);
     }
 
     this.animations.greenLava = requestAnimationFrame(animate);
