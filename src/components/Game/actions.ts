@@ -424,6 +424,10 @@ function getExplosionParams(centerX: number, centerY: number): [Promise<void>[],
 
         explosionIndex += 1;
 
+        if (this.levelMap[y][x] === MapItems.Avatar) {
+          this.isGameOver = true;
+        }
+
         this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
         this.fallingItems = removeFallingItem.call(this, x, y);
 
