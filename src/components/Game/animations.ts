@@ -204,7 +204,7 @@ function animateBrickWallSpecial(): void {
       brickWallSpecialItems.forEach((item: number[]) => {
         const [itemY, itemX] = item;
 
-        renderBrickWall.call(this, itemX - offsetX, itemY - offsetY, 2);
+        renderBrickWall.call(this, itemX - offsetX, itemY - offsetY, state);
       });
 
       start = time;
