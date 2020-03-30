@@ -7,8 +7,15 @@ import { renderGameBoard, renderMap, renderPanel, renderStartScreen } from './re
 import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
-import { handleGravitation, handleExits, handleGameOver, handleMonsters } from './actions';
 import { startAnimations } from './animations';
+
+import {
+  handleGravitation,
+  handleExits,
+  handleGameOver,
+  handleMonsters,
+  handleRerenderMap,
+} from './actions';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -33,6 +40,7 @@ class Game extends PageComponent {
   protected isBrickWallSpecialUsed: boolean;
   protected isLevelCompleted: boolean;
   protected isPaused: boolean;
+  protected shouldRerenderMap: boolean;
   protected avatarState: AvatarState;
   protected monsters: Monsters;
   protected fallingItems: number[][];
@@ -82,6 +90,7 @@ class Game extends PageComponent {
     this.isBrickWallSpecialUsed = false;
     this.isLevelCompleted = false;
     this.isPaused = false;
+    this.shouldRerenderMap = false;
 
     this.avatarState = 'idle';
     this.monsters = getMonsters.call(this);
@@ -128,6 +137,7 @@ class Game extends PageComponent {
     handleGravitation.call(this);
     handleMonsters.call(this);
     handleExits.call(this);
+    handleRerenderMap.call(this);
   }
 }
 

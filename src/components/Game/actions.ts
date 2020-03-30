@@ -365,8 +365,7 @@ function explodeMonster(x: number, y: number, itemType: number, onDone: (coords:
 function explodeSquare(x: number, y: number): void {
   explodeMonster.call(this, x, y, MapItems.Square, () => {
     this.isExploding = false;
-
-    renderMap.call(this);
+    this.shouldRerenderMap = true;
   });
 }
 
@@ -380,7 +379,7 @@ function explodeButterfly(x: number, y: number): void {
       this.levelMap = changeMapValue(this.levelMap, explosionX, explosionY, MapItems.Diamond);
     });
 
-    renderMap.call(this);
+    this.shouldRerenderMap = true;
   });
 }
 
@@ -399,9 +398,16 @@ function handleGameOver(): void {
   Promise.all(explosionsPromises).then(() => {
     this.isExploding = false;
     this.lives -= 1;
-
-    renderMap.call(this);
+    this.shouldRerenderMap = true;
   });
+}
+
+function handleRerenderMap(): void {
+  if (this.shouldRerenderMap) {
+    renderMap.call(this);
+
+    this.shouldRerenderMap = false;
+  }
 }
 
 function getExplosionParams(centerX: number, centerY: number): [Promise<void>[], number[][]] {
@@ -516,7 +522,7 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
   moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
 
   if (adjustOffset.call(this, targetX, targetY)) {
-    renderMap.call(this);
+    this.shouldRerenderMap = true;
   } else {
     const [offsetY, offsetX] = this.offset;
 
@@ -530,6 +536,7 @@ export {
   handleGameOver,
   handleMonsters,
   handleExits,
+  handleRerenderMap,
   checkGreenLavaNeighbors,
   makeMove,
 };
