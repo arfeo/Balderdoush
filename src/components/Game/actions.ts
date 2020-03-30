@@ -436,6 +436,7 @@ function checkTarget(targetX: number, targetY: number): void {
     return;
   }
 
+  const [offsetY, offsetX] = this.offset;
   const [, avatarX] = items[0];
   const mapItem: number = this.levelMap[targetY] && this.levelMap[targetY][targetX];
 
@@ -456,10 +457,14 @@ function checkTarget(targetX: number, targetY: number): void {
     case MapItems.Boulder:
       if (avatarX > targetX && isEmptyCell.call(this, targetX - 1, targetY)) {
         moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
+
+        renderBoulder.call(this, targetX - 1 - offsetX, targetY - offsetY);
       }
 
       if (avatarX < targetX && isEmptyCell.call(this, targetX + 1, targetY)) {
         moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
+
+        renderBoulder.call(this, targetX + 1 - offsetX, targetY - offsetY);
       }
       break;
     case MapItems.Diamond:
