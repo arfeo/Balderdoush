@@ -4,13 +4,7 @@ import { Menu } from '../Menu';
 import { APP, MapItems } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
-import { renderMap, renderPanel } from './render';
-import { renderEmpty } from './render/empty';
-import { renderAvatar } from './render/avatar';
-import { renderBoulder } from './render/boulder';
-import { renderDiamond } from './render/diamond';
-import { renderSquare } from './render/square';
-import { renderButterfly } from './render/butterfly';
+import { renderMap, renderMapItem, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { isEmpty } from '../../utils/common';
@@ -81,7 +75,6 @@ function handleGravitation(): void {
     const [itemY, itemX] = item;
     const itemType: number = this.levelMap[itemY][itemX];
     const isFalling: boolean = isItemFalling.call(this, itemX, itemY);
-    const [offsetY, offsetX] = this.offset;
 
     if (this.levelMap[itemY + 1] === undefined) {
       continue;
@@ -119,18 +112,10 @@ function handleGravitation(): void {
           itemType === MapItems.Diamond ? MapItems.Boulder : MapItems.Diamond,
         );
 
-        switch (itemType) {
-          case MapItems.Boulder:
-            renderDiamond.call(this, itemX - offsetX, itemY + 2 - offsetY);
-            break;
-          case MapItems.Diamond:
-            renderBoulder.call(this, itemX - offsetX, itemY + 2 - offsetY);
-            break;
-          default: break;
-        }
+        renderMapItem.call(this, itemX, itemY + 2);
       }
 
-      renderEmpty.call(this, itemX - offsetX, itemY - offsetY);
+      renderMapItem.call(this, itemX, itemY);
     } else {
       this.fallingItems = removeFallingItem.call(this, itemX, itemY);
     }
@@ -220,7 +205,6 @@ function setMonsterDirection(direction: MonsterDirection, x: number, y: number):
 }
 
 function handleMonstersByType(monsterType: number): void {
-  const [offsetY, offsetX] = this.offset;
   const monsters: MonsterInfo[] = this.monsters[`monster-${monsterType}`];
   const result: MonsterInfo[] = [];
 
@@ -231,16 +215,16 @@ function handleMonstersByType(monsterType: number): void {
   monsters.forEach((monster: MonsterInfo): void => {
     const { position, direction } = monster;
     const [monsterY, monsterX] = position;
-    const [newPosition, newDirection] = setMonsterDirection.call(this, direction, monsterX, monsterY);
-    const [newPositionY, newPositionX] = newPosition;
+    const [newPos, newDir] = setMonsterDirection.call(this, direction, monsterX, monsterY);
+    const [newPosY, newPosX] = newPos;
 
-    if (isAvatarInCell.call(this, newPositionX, newPositionY)) {
+    if (isAvatarInCell.call(this, newPosX, newPosY)) {
       this.isGameOver = true;
 
       if (monsterType === MapItems.Butterfly) {
-        return explodeButterfly.call(this, newPositionX, newPositionY);
+        return explodeButterfly.call(this, newPosX, newPosY);
       }
-    } else if (this.levelMap[newPositionY] && this.levelMap[newPositionY][newPositionX] === MapItems.GreenLava) {
+    } else if (this.levelMap[newPosY] !== undefined && this.levelMap[newPosY][newPosX] === MapItems.GreenLava) {
       if (monsterType === MapItems.Square) {
         return explodeSquare.call(this, monsterX, monsterY);
       }
@@ -248,30 +232,21 @@ function handleMonstersByType(monsterType: number): void {
       if (monsterType === MapItems.Butterfly) {
         return explodeButterfly.call(this, monsterX, monsterY);
       }
-    } else if (newPosition.length) {
+    } else if (newPos.length) {
       moveMapItem.call(
         this,
         { x: monsterX, y: monsterY },
-        { x: newPositionX, y: newPositionY },
+        { x: newPosX, y: newPosY },
         monsterType,
       );
 
-      renderEmpty.call(this, monsterX - offsetX, monsterY - offsetY);
-
-      switch (monsterType) {
-        case MapItems.Square:
-          renderSquare.call(this, newPositionX - offsetX, newPositionY - offsetY);
-          break;
-        case MapItems.Butterfly:
-          renderButterfly.call(this, newPositionX - offsetX, newPositionY - offsetY);
-          break;
-        default: break;
-      }
+      renderMapItem.call(this, monsterX, monsterY);
+      renderMapItem.call(this, newPosX, newPosY);
     }
 
     result.push({
-      position: newPosition,
-      direction: newDirection,
+      position: newPos,
+      direction: newDir,
     });
   });
 
@@ -318,7 +293,7 @@ function checkGreenLavaNeighbors(lavaItems: number[][]): number[][] {
   lavaItems.forEach((lava: number[]) => {
     const [y, x] = lava;
 
-    if (this.levelMap[y]) {
+    if (this.levelMap[y] !== undefined) {
       if (allowedCellTypes.indexOf(this.levelMap[y][x + 1]) > -1) {
         pushUnique(x + 1, y);
       }
@@ -328,11 +303,11 @@ function checkGreenLavaNeighbors(lavaItems: number[][]): number[][] {
       }
     }
 
-    if (this.levelMap[y + 1] && allowedCellTypes.indexOf(this.levelMap[y + 1][x]) > -1) {
+    if (this.levelMap[y + 1] !== undefined && allowedCellTypes.indexOf(this.levelMap[y + 1][x]) > -1) {
       pushUnique(x, y + 1);
     }
 
-    if (this.levelMap[y - 1] && allowedCellTypes.indexOf(this.levelMap[y - 1][x]) > -1) {
+    if (this.levelMap[y - 1] !== undefined && allowedCellTypes.indexOf(this.levelMap[y - 1][x]) > -1) {
       pushUnique(x, y - 1);
     }
   });
@@ -411,14 +386,17 @@ function handleRerenderMap(): void {
 }
 
 function getExplosionParams(centerX: number, centerY: number): [Promise<void>[], number[][]] {
-  const [offsetY, offsetX] = this.offset;
   const explosionsPromises: Promise<void>[] = [];
   const explosionsCoords: number[][] = [];
   let explosionIndex = 0;
 
   for (let y = centerY - 1; y <= centerY + 1; y += 1) {
     for (let x = centerX - 1; x <= centerX + 1; x += 1) {
-      if (this.levelMap[y] && this.levelMap[y][x] !== MapItems.Wall && this.levelMap[y][x] !== MapItems.Exit) {
+      if (
+        this.levelMap[y] !== undefined
+        && this.levelMap[y][x] !== MapItems.Wall
+        && this.levelMap[y][x] !== MapItems.Exit
+      ) {
         explosionsPromises.push(animateExplosion.call(this, explosionIndex, x, y));
         explosionsCoords.push([y, x]);
 
@@ -431,7 +409,7 @@ function getExplosionParams(centerX: number, centerY: number): [Promise<void>[],
         this.levelMap = changeMapValue(this.levelMap, x, y, MapItems.EmptySpace);
         this.fallingItems = removeFallingItem.call(this, x, y);
 
-        renderEmpty.call(this, x - offsetX, y - offsetY);
+        renderMapItem.call(this, x, y);
       }
     }
   }
@@ -446,7 +424,6 @@ function checkTarget(targetX: number, targetY: number): void {
     return;
   }
 
-  const [offsetY, offsetX] = this.offset;
   const [, avatarX] = items[0];
   const mapItem: number = this.levelMap[targetY] && this.levelMap[targetY][targetX];
 
@@ -467,14 +444,12 @@ function checkTarget(targetX: number, targetY: number): void {
     case MapItems.Boulder:
       if (avatarX > targetX && isEmptyCell.call(this, targetX - 1, targetY)) {
         moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
-
-        renderBoulder.call(this, targetX - 1 - offsetX, targetY - offsetY);
+        renderMapItem.call(this, targetX - 1, targetY);
       }
 
       if (avatarX < targetX && isEmptyCell.call(this, targetX + 1, targetY)) {
         moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
-
-        renderBoulder.call(this, targetX + 1 - offsetX, targetY - offsetY);
+        renderMapItem.call(this, targetX + 1, targetY);
       }
       break;
     case MapItems.Diamond:
@@ -528,10 +503,8 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
   if (adjustOffset.call(this, targetX, targetY)) {
     this.shouldRerenderMap = true;
   } else {
-    const [offsetY, offsetX] = this.offset;
-
-    renderEmpty.call(this, itemX - offsetX, itemY - offsetY);
-    renderAvatar.call(this, targetX - offsetX, targetY - offsetY);
+    renderMapItem.call(this, itemX, itemY);
+    renderMapItem.call(this, targetX, targetY);
   }
 }
 
