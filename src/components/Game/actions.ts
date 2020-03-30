@@ -158,56 +158,56 @@ function setMonsterDirection(direction: MonsterDirection, x: number, y: number):
 
   switch (direction) {
     case 'up':
-      if (isAllowedCell(x - 1, y)) {
-        newPosition = [y, x - 1];
-        newDirection = 'left';
-      } else if (isAllowedCell(x, y - 1)) {
-        newPosition = [y - 1, x];
-      } else if (isAllowedCell(x + 1, y)) {
+      if (isAllowedCell(x + 1, y)) {
         newPosition = [y, x + 1];
         newDirection = 'right';
+      } else if (isAllowedCell(x, y - 1)) {
+        newPosition = [y - 1, x];
+      } else if (isAllowedCell(x - 1, y)) {
+        newPosition = [y, x - 1];
+        newDirection = 'left';
       } else if (isAllowedCell(x, y + 1)) {
         newPosition = [y + 1, x];
         newDirection = 'down';
       }
       break;
     case 'right':
-      if (isAllowedCell(x, y - 1)) {
-        newPosition = [y - 1, x];
-        newDirection = 'up';
-      } else if (isAllowedCell(x + 1, y)) {
-        newPosition = [y, x + 1];
-      } else if (isAllowedCell(x, y + 1)) {
+      if (isAllowedCell(x, y + 1)) {
         newPosition = [y + 1, x];
         newDirection = 'down';
+      } else if (isAllowedCell(x + 1, y)) {
+        newPosition = [y, x + 1];
+      } else if (isAllowedCell(x, y - 1)) {
+        newPosition = [y - 1, x];
+        newDirection = 'up';
       } else if (isAllowedCell(x - 1, y)) {
         newPosition = [y, x - 1];
         newDirection = 'left';
       }
       break;
     case 'down':
-      if (isAllowedCell(x + 1, y)) {
-        newPosition = [y, x + 1];
-        newDirection = 'right';
-      } else if (isAllowedCell(x, y + 1)) {
-        newPosition = [y + 1, x];
-      } else if (isAllowedCell(x - 1, y)) {
+      if (isAllowedCell(x - 1, y)) {
         newPosition = [y, x - 1];
         newDirection = 'left';
+      } else if (isAllowedCell(x, y + 1)) {
+        newPosition = [y + 1, x];
+      } else if (isAllowedCell(x + 1, y)) {
+        newPosition = [y, x + 1];
+        newDirection = 'right';
       } else if (isAllowedCell(x, y - 1)) {
         newPosition = [y - 1, x];
         newDirection = 'up';
       }
       break;
     case 'left':
-      if (isAllowedCell(x, y + 1)) {
-        newPosition = [y + 1, x];
-        newDirection = 'down';
-      } else if (isAllowedCell(x - 1, y)) {
-        newPosition = [y, x - 1];
-      } else if (isAllowedCell(x, y - 1)) {
+      if (isAllowedCell(x, y - 1)) {
         newPosition = [y - 1, x];
         newDirection = 'up';
+      } else if (isAllowedCell(x - 1, y)) {
+        newPosition = [y, x - 1];
+      } else if (isAllowedCell(x, y + 1)) {
+        newPosition = [y + 1, x];
+        newDirection = 'down';
       } else if (isAllowedCell(x + 1, y)) {
         newPosition = [y, x + 1];
         newDirection = 'right';

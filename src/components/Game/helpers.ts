@@ -64,7 +64,7 @@ function getMonsters(): Monsters {
         case MapItems.Square:
           return 'right';
         case MapItems.Butterfly:
-          return 'right';
+          return 'left';
         default: break;
       }
     };
