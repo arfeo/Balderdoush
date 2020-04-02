@@ -89,7 +89,7 @@ class Game extends PageComponent {
     this.monsters = getMonsters.call(this);
     this.fallingItems = [];
 
-    this.loopTimeout = 60;
+    this.loopTimeout = 70;
     this.loopThrottle = 0;
 
     this.eventHandlers = [
