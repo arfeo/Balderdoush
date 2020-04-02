@@ -12,7 +12,7 @@ Work in progress.
 
 - Arrow keys: move
 - P: pause
-- Q: quit the game and return to the main menu
+- Esc: quit the game and return to the main menu
 
 ## Installation
 
