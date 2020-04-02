@@ -532,7 +532,9 @@ function handleKeysPressed(): void {
     newAvatarX -= 1;
   }
 
-  makeMove.call(this, avatarX, avatarY, newAvatarX, newAvatarY);
+  if (newAvatarX !== avatarX || newAvatarY !== avatarY) {
+    makeMove.call(this, avatarX, avatarY, newAvatarX, newAvatarY);
+  }
 }
 
 export {
