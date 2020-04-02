@@ -12,6 +12,13 @@ interface EventHandler {
   listener: EventListener;
 }
 
+interface KeysPressed  {
+  ArrowUp: boolean;
+  ArrowRight: boolean;
+  ArrowDown: boolean;
+  ArrowLeft: boolean;
+}
+
 interface Level {
   id: number;
   diamondsToGet: number;

@@ -8,14 +8,7 @@ import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { startAnimations } from './animations';
-
-import {
-  handleGravitation,
-  handleExits,
-  handleGameOver,
-  handleMonsters,
-  handleRerenderMap,
-} from './actions';
+import { handleGravitation, handleExits, handleGameOver, handleMonsters, handleKeysPressed } from './actions';
 
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
@@ -40,11 +33,12 @@ class Game extends PageComponent {
   protected isBrickWallSpecialUsed: boolean;
   protected isLevelCompleted: boolean;
   protected isPaused: boolean;
-  protected shouldRerenderMap: boolean;
   protected avatarState: AvatarState;
   protected monsters: Monsters;
   protected fallingItems: number[][];
+  protected keysPressed: KeysPressed;
   public animations: {
+    keys?: number;
     exits?: number[];
     explosions?: number[];
     timer?: number;
@@ -90,7 +84,6 @@ class Game extends PageComponent {
     this.isBrickWallSpecialUsed = false;
     this.isLevelCompleted = false;
     this.isPaused = false;
-    this.shouldRerenderMap = false;
 
     this.avatarState = 'idle';
     this.monsters = getMonsters.call(this);
@@ -111,7 +104,15 @@ class Game extends PageComponent {
 
     this.loopTimeout = 100;
 
+    this.keysPressed = {
+      ArrowUp: false,
+      ArrowRight: false,
+      ArrowDown: false,
+      ArrowLeft: false,
+    };
+
     this.animations = {
+      keys: null,
       exits: [],
       explosions: [],
       timer: null,
@@ -137,7 +138,7 @@ class Game extends PageComponent {
     handleGravitation.call(this);
     handleMonsters.call(this);
     handleExits.call(this);
-    handleRerenderMap.call(this);
+    handleKeysPressed.call(this);
   }
 }
 

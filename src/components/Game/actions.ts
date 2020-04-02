@@ -343,7 +343,8 @@ function explodeMonster(x: number, y: number, itemType: number, onDone: (coords:
 function explodeSquare(x: number, y: number): void {
   explodeMonster.call(this, x, y, MapItems.Square, () => {
     this.isExploding = false;
-    this.shouldRerenderMap = true;
+
+    renderMap.call(this);
   });
 }
 
@@ -357,7 +358,7 @@ function explodeButterfly(x: number, y: number): void {
       this.levelMap = changeMapValue(this.levelMap, explosionX, explosionY, MapItems.Diamond);
     });
 
-    this.shouldRerenderMap = true;
+    renderMap.call(this);
   });
 }
 
@@ -376,16 +377,9 @@ function handleGameOver(): void {
   Promise.all(explosionsPromises).then(() => {
     this.isExploding = false;
     this.lives -= 1;
-    this.shouldRerenderMap = true;
-  });
-}
 
-function handleRerenderMap(): void {
-  if (this.shouldRerenderMap) {
     renderMap.call(this);
-
-    this.shouldRerenderMap = false;
-  }
+  });
 }
 
 function getExplosionParams(centerX: number, centerY: number): [Promise<void>[], number[][]] {
@@ -508,10 +502,32 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
   moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
 
   if (adjustOffset.call(this, targetX, targetY)) {
-    this.shouldRerenderMap = true;
+    renderMap.call(this);
   } else {
     renderMapItem.call(this, itemX, itemY);
     renderMapItem.call(this, targetX, targetY);
+  }
+}
+
+function handleKeysPressed(): void {
+  const { ArrowUp, ArrowRight, ArrowDown, ArrowLeft } = this.keysPressed;
+  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+  const [avatarY, avatarX] = items.length ? items[0] : [];
+
+  if (ArrowUp) {
+    makeMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
+  }
+
+  if (ArrowRight) {
+    makeMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
+  }
+
+  if (ArrowDown) {
+    makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
+  }
+
+  if (ArrowLeft) {
+    makeMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
   }
 }
 
@@ -520,7 +536,7 @@ export {
   handleGameOver,
   handleMonsters,
   handleExits,
-  handleRerenderMap,
+  handleKeysPressed,
   checkGreenLavaNeighbors,
   makeMove,
 };

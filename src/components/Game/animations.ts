@@ -101,7 +101,7 @@ function animateSquare(id: number): void {
       squares.forEach((square: MonsterInfo) => {
         const [squareY, squareX] = square.position;
 
-        !this.shouldRerenderMap && renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
+        renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
       });
     }
 
@@ -126,7 +126,7 @@ function animateButterfly(id: number): void {
       butterflies.forEach((butterfly: MonsterInfo) => {
         const [butterflyY, butterflyX] = butterfly.position;
 
-        !this.shouldRerenderMap && renderButterfly.call(this, butterflyX - offsetX, butterflyY - offsetY, state);
+        renderButterfly.call(this, butterflyX - offsetX, butterflyY - offsetY, state);
       });
     }
 

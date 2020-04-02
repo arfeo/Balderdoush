@@ -3,32 +3,29 @@ import { Menu } from '../Menu';
 
 import { APP, MapItems } from '../../constants/game';
 
-import { makeMove } from './actions';
 import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
 
 function onKeyDown(e: KeyboardEvent): void {
-  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
-
   if (!e) {
     return;
   }
 
+  const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
   const gameKeysActive: boolean = items.length && this.isGameStarted;
-  const [avatarY, avatarX] = items.length ? items[0] : [];
+  const { key } = e;
 
-  switch (e.key) {
-    case 'ArrowLeft':
-      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
-      break;
-    case 'ArrowRight':
-      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
-      break;
+  switch (key) {
     case 'ArrowUp':
-      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
-      break;
+    case 'ArrowRight':
     case 'ArrowDown':
-      gameKeysActive && makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
+    case 'ArrowLeft':
+      if (gameKeysActive) {
+        this.keysPressed = {
+          ...this.keysPressed,
+          [key]: true,
+        };
+      }
       break;
     case 'p':
     case 'P':
@@ -66,9 +63,22 @@ function onKeyDown(e: KeyboardEvent): void {
   }
 }
 
-function onKeyUp(): void {
+function onKeyUp(e: KeyboardEvent): void {
+  if (!e) {
+    return;
+  }
+
   if (!this.isPaused) {
     this.avatarState = 'idle';
+  }
+
+  const { key } = e;
+
+  if (['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'].indexOf(key) > -1) {
+    this.keysPressed = {
+      ...this.keysPressed,
+      [key]: false,
+    };
   }
 }
 
