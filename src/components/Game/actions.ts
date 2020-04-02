@@ -513,22 +513,26 @@ function handleKeysPressed(): void {
   const { ArrowUp, ArrowRight, ArrowDown, ArrowLeft } = this.keysPressed;
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
   const [avatarY, avatarX] = items.length ? items[0] : [];
+  let newAvatarX = avatarX;
+  let newAvatarY = avatarY;
 
   if (ArrowUp) {
-    makeMove.call(this, avatarX, avatarY, avatarX, avatarY - 1);
+    newAvatarY -= 1;
   }
 
   if (ArrowRight) {
-    makeMove.call(this, avatarX, avatarY, avatarX + 1, avatarY);
+    newAvatarX += 1;
   }
 
   if (ArrowDown) {
-    makeMove.call(this, avatarX, avatarY, avatarX, avatarY + 1);
+    newAvatarY += 1;
   }
 
   if (ArrowLeft) {
-    makeMove.call(this, avatarX, avatarY, avatarX - 1, avatarY);
+    newAvatarX -= 1;
   }
+
+  makeMove.call(this, avatarX, avatarY, newAvatarX, newAvatarY);
 }
 
 export {
