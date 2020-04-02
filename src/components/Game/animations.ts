@@ -94,7 +94,7 @@ function animateSquare(id: number): void {
     const squares: MonsterInfo[] = this.monsters[`monster-${MapItems.Square}`];
     const [offsetY, offsetX] = this.offset;
 
-    if (isGameActive.call(this) && time - start > this.loopTimeout / 4) {
+    if (isGameActive.call(this) && time - start > this.loopTimeout) {
       start = time;
       state += state < 4 ? 1 : -3;
 
@@ -119,7 +119,7 @@ function animateButterfly(id: number): void {
     const butterflies: MonsterInfo[] = this.monsters[`monster-${MapItems.Butterfly}`];
     const [offsetY, offsetX] = this.offset;
 
-    if (isGameActive.call(this) && time - start > this.loopTimeout / 2) {
+    if (isGameActive.call(this) && time - start > this.loopTimeout) {
       start = time;
       state = state === 1 ? 2 : 1;
 
