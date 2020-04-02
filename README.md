@@ -8,6 +8,12 @@ Work in progress.
 
 [Live demo](https://tests.arfeo.net/balderdoush/)
 
+## Controls
+
+- Arrow keys: move
+- P: pause
+- Q: quit the game and return to the main menu
+
 ## Installation
 
 Clone the project:
