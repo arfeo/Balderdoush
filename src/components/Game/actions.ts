@@ -8,6 +8,7 @@ import { renderMap, renderMapItem, renderPanel } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { isEmpty } from '../../utils/common';
+import { saveStorageData } from '../../utils/storage';
 
 import {
   dropItem,
@@ -432,12 +433,16 @@ function checkTarget(targetX: number, targetY: number): void {
   switch (mapItem) {
     case MapItems.Exit:
       if (this.diamondsToGet === 0) {
+        const nextLevelId: number = this.levelId + 1;
+
         this.isLevelCompleted = true;
 
         this.destroy();
 
-        if (LEVELS.some((level: Level) => level.id === this.levelId + 1)) {
-          APP.pageInstance = new Game(this.levelId + 1, this.score, this.lives);
+        if (LEVELS.some((level: Level) => level.id === nextLevelId)) {
+          saveStorageData('levelId', nextLevelId);
+
+          APP.pageInstance = new Game(nextLevelId, this.score, this.lives);
         } else {
           APP.pageInstance = new Menu();
         }
