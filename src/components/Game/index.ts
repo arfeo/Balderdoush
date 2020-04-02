@@ -36,9 +36,9 @@ class Game extends PageComponent {
   protected avatarState: AvatarState;
   protected monsters: Monsters;
   protected fallingItems: number[][];
+  protected loopThrottle: number;
   protected keysPressed: KeysPressed;
   public animations: {
-    keys?: number;
     exits?: number[];
     explosions?: number[];
     timer?: number;
@@ -89,6 +89,9 @@ class Game extends PageComponent {
     this.monsters = getMonsters.call(this);
     this.fallingItems = [];
 
+    this.loopTimeout = 60;
+    this.loopThrottle = 0;
+
     this.eventHandlers = [
       {
         target: document,
@@ -102,8 +105,6 @@ class Game extends PageComponent {
       },
     ];
 
-    this.loopTimeout = 100;
-
     this.keysPressed = {
       ArrowUp: false,
       ArrowRight: false,
@@ -112,7 +113,6 @@ class Game extends PageComponent {
     };
 
     this.animations = {
-      keys: null,
       exits: [],
       explosions: [],
       timer: null,
@@ -134,9 +134,16 @@ class Game extends PageComponent {
   }
 
   public loop(): void {
+    this.loopThrottle += 1;
+
+    if (this.loopThrottle === 2) {
+      handleMonsters.call(this);
+
+      this.loopThrottle = 0;
+    }
+
     handleGameOver.call(this);
     handleGravitation.call(this);
-    handleMonsters.call(this);
     handleExits.call(this);
     handleKeysPressed.call(this);
   }
