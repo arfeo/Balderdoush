@@ -3,8 +3,8 @@ function renderMenu(): void {
   const menuControls: HTMLElement = document.createElement('div');
   const menuControlsCol1: HTMLElement = document.createElement('div');
   const menuControlsCol2: HTMLElement = document.createElement('div');
-  const lowerLevelIcon: HTMLElement = document.createElement('i');
-  const higherLevelIcon: HTMLElement = document.createElement('i');
+  const lowerLevelIcon: HTMLElement = document.createElement('span');
+  const higherLevelIcon: HTMLElement = document.createElement('span');
 
   menuContainer.className = 'menu-container';
   menuControls.className = '-controls';
@@ -13,8 +13,8 @@ function renderMenu(): void {
   this.lowerLevelButton.className = '-lower';
   this.levelIdContainer.className = '-level-id';
   this.higherLevelButton.className = '-higher';
-  lowerLevelIcon.classList.add('arrow', 'arrow-left');
-  higherLevelIcon.classList.add('arrow', 'arrow-right');
+  lowerLevelIcon.innerText = '⮜';
+  higherLevelIcon.innerText = '⮞';
 
   menuContainer.innerText = 'Balderdoush';
   this.startGameButton.innerText = 'Start game';
