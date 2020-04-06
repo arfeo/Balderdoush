@@ -13,8 +13,6 @@ function renderMenu(): void {
   this.lowerLevelButton.className = '-lower';
   this.levelIdContainer.className = '-level-id';
   this.higherLevelButton.className = '-higher';
-  lowerLevelIcon.innerText = '⮜';
-  higherLevelIcon.innerText = '⮞';
 
   menuContainer.innerText = 'Balderdoush';
   this.startGameButton.innerText = 'Start game';
