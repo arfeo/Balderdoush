@@ -1,15 +1,18 @@
 /**
  * Function returns the cell size (atomic canvas measure)
  * depending on the screen size and the given vmin value.
+ * If the `denom` param passed, the result will be a multiple of it (rounding up).
  *
  * @param vmin
+ * @param denom
  */
-function getCellSize(vmin: number): number {
+function getCellSize(vmin: number, denom?: number): number {
   const vpWidth: number = window.innerWidth;
   const vpHeight: number = window.innerHeight;
   const vMin: number = vpWidth >= vpHeight ? (vpHeight / 100) : (vpWidth / 100);
+  const result: number = Math.round(vMin * vmin  / 10) * 10;
 
-  return Math.round(vMin * vmin  / 10) * 10;
+  return !denom || result % denom === 0 ? result : denom * (Math.abs(result / denom) + 1);
 }
 
 /**
