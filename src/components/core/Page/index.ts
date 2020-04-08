@@ -1,10 +1,7 @@
-export interface Images {
-  [key: string]: Image;
-}
+import { ImageProps } from '../../../utils/types';
 
-export interface Image {
-  element: HTMLImageElement;
-  src: string;
+export interface Images {
+  [key: string]: ImageProps;
 }
 
 const DEFAULT_LOOP_TIMEOUT = 4;
@@ -56,6 +53,14 @@ export abstract class PageComponent {
       images[key].element.src = images[key].src;
 
       images[key].element.onload = () => {
+        images[key].loaded = true;
+
+        return resolve();
+      };
+
+      images[key].element.onerror = () => {
+        images[key].loaded = false;
+
         return resolve();
       };
     })));

@@ -10,6 +10,8 @@ import { getCellSize } from '../../utils/game';
 import { startAnimations } from './animations';
 import { handleGravitation, handleExits, handleGameOver, handleMonsters, handleKeysPressed } from './actions';
 
+import { ImageProps } from '../../utils/types';
+
 class Game extends PageComponent {
   protected appRoot: HTMLElement;
   protected cellSize: number;
@@ -38,6 +40,9 @@ class Game extends PageComponent {
   protected fallingItems: number[][];
   protected loopThrottle: number;
   protected keysPressed: KeysPressed;
+  public images: {
+    avatarIdle: ImageProps;
+  };
   public animations: {
     exits?: number[];
     explosions?: number[];
@@ -58,7 +63,7 @@ class Game extends PageComponent {
       throw 'Incorrect level id.';
     }
 
-    this.cellSize = getCellSize(GAME_CELL_SIZE_VMIN);
+    this.cellSize = getCellSize(GAME_CELL_SIZE_VMIN, 32);
 
     this.levelId = levelId;
     this.diamondsToGet = level.diamondsToGet;
@@ -91,6 +96,13 @@ class Game extends PageComponent {
 
     this.loopTimeout = 70;
     this.loopThrottle = 0;
+
+    this.images = {
+      avatarIdle: {
+        element: new Image(),
+        src: './static/avatar-idle.png',
+      },
+    };
 
     this.eventHandlers = [
       {

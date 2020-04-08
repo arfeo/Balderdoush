@@ -1,4 +1,4 @@
-import { drawStar } from '../../../utils/drawing';
+import { drawImage } from '../../../utils/drawing';
 import { clearCells } from './';
 
 function renderAvatar(x: number, y: number): void {
@@ -6,15 +6,15 @@ function renderAvatar(x: number, y: number): void {
 
   clearCells.call(this, ctx, x, y);
 
-  drawStar(
+  drawImage(
     ctx,
-    this.cellSize * x + this.cellSize / 2,
-    this.cellSize * y + this.cellSize / 2,
-    5,
-    this.cellSize / 2,
-    this.cellSize / 5,
+    this.images.avatarIdle,
+    this.cellSize * x,
+    this.cellSize * y,
+    this.cellSize,
+    this.cellSize,
     {
-      fillColor: 'rgb(0, 218, 179)',
+      smooth: false,
     },
   );
 }
