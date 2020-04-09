@@ -63,13 +63,19 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
 
 function animateAvatar(): void {
   const animate = (): void => {
-    const avatarItems: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+    if (this.storedAvatarState !== this.avatarState) {
+      const avatarItems: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
-    if (avatarItems.length) {
+      if (!avatarItems.length) {
+        return cancelAnimationFrame(this.animations.avatar);
+      }
+
       const [offsetY, offsetX] = this.offset;
       const [avatarY, avatarX] = avatarItems[0];
 
       renderAvatar.call(this, avatarX - offsetX, avatarY - offsetY);
+
+      this.storedAvatarState = this.avatarState;
     }
 
     this.animations.avatar = requestAnimationFrame(animate);

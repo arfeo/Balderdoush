@@ -36,6 +36,7 @@ class Game extends PageComponent {
   protected isLevelCompleted: boolean;
   protected isPaused: boolean;
   protected avatarState: AvatarState;
+  protected storedAvatarState: AvatarState;
   protected monsters: Monsters;
   protected fallingItems: number[][];
   protected loopThrottle: number;
@@ -94,7 +95,7 @@ class Game extends PageComponent {
     this.isLevelCompleted = false;
     this.isPaused = false;
 
-    this.avatarState = 'idle';
+    this.avatarState = this.storedAvatarState = 'idle';
     this.monsters = getMonsters.call(this);
     this.fallingItems = [];
 

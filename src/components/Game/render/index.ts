@@ -4,6 +4,7 @@ import { renderEmpty } from './empty';
 import { renderWall } from './wall';
 import { renderBoulder } from './boulder';
 import { renderSquare } from './square';
+import { renderAvatar } from './avatar';
 import { renderExit } from './exit';
 import { renderDiamond } from './diamond';
 import { renderSoil } from './soil';
@@ -101,6 +102,9 @@ function renderMapItem(x: number, y: number): void {
       break;
     case MapItems.Square:
       renderSquare.call(this, x - offsetX, y - offsetY, 1);
+      break;
+    case MapItems.Avatar:
+      renderAvatar.call(this, x - offsetX, y - offsetY);
       break;
     case MapItems.Exit:
       this.diamondsToGet > 0 && renderExit.call(this, x - offsetX, y - offsetY);
