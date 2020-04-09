@@ -505,8 +505,9 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
     renderMap.call(this);
   } else {
     renderMapItem.call(this, itemX, itemY);
-    renderMapItem.call(this, targetX, targetY);
   }
+
+  this.avatarState = 'idle';
 }
 
 function handleKeysPressed(): void {
