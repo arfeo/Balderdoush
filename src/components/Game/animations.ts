@@ -3,6 +3,7 @@ import { MapItems } from '../../constants/game';
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
 import { renderPanel } from './render';
+import { renderAvatar } from './render/avatar';
 import { renderBrickWall } from './render/brickWall';
 import { renderSquare } from './render/square';
 import { renderButterfly } from './render/butterfly';
@@ -58,6 +59,23 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
 
     this.animations.explosions[index] = requestAnimationFrame(animate);
   });
+}
+
+function animateAvatar(): void {
+  const animate = (): void => {
+    const avatarItems: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+
+    if (avatarItems.length) {
+      const [offsetY, offsetX] = this.offset;
+      const [avatarY, avatarX] = avatarItems[0];
+
+      renderAvatar.call(this, avatarX - offsetX, avatarY - offsetY);
+    }
+
+    this.animations.avatar = requestAnimationFrame(animate);
+  };
+
+  this.animations.avatar = requestAnimationFrame(animate);
 }
 
 function animateTimer(): void {
@@ -226,6 +244,7 @@ function startAnimations(): void {
   const brickWallSpecialItems: number[][] = getMapItemsByType(this.levelMap, MapItems.BrickWallSpecial);
 
   animateTimer.call(this);
+  animateAvatar.call(this);
   animateMonsters.call(this);
 
   lavaItems.length && animateGreenLavaFlow.call(this);

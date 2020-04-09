@@ -42,8 +42,12 @@ class Game extends PageComponent {
   protected keysPressed: KeysPressed;
   public images: {
     avatarIdle: ImageProps;
+    avatarProp: ImageProps;
+    avatarPushLeft: ImageProps;
+    avatarPushRight: ImageProps;
   };
   public animations: {
+    avatar?: number;
     exits?: number[];
     explosions?: number[];
     timer?: number;
@@ -102,6 +106,18 @@ class Game extends PageComponent {
         element: new Image(),
         src: './static/avatar-idle.png',
       },
+      avatarProp: {
+        element: new Image(),
+        src: './static/avatar-prop.png',
+      },
+      avatarPushLeft: {
+        element: new Image(),
+        src: './static/avatar-push-left.png',
+      },
+      avatarPushRight: {
+        element: new Image(),
+        src: './static/avatar-push-right.png',
+      },
     };
 
     this.eventHandlers = [
@@ -125,6 +141,7 @@ class Game extends PageComponent {
     };
 
     this.animations = {
+      avatar: null,
       exits: [],
       explosions: [],
       timer: null,

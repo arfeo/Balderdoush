@@ -28,7 +28,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
     return false;
   }
 
-  const [avatarY, avatarX] = items[0];
+  const [, avatarX] = items[0];
   const mapItem: number = this.levelMap[targetY][targetX];
   const isNormalState: boolean = this.avatarState === 'idle' || this.avatarState === 'walk';
   const isMovingLeft: boolean = avatarX > targetX;
@@ -46,10 +46,6 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
 
     if (isMovingRight) {
       this.avatarState = 'pushRight';
-    }
-
-    if (avatarX === targetX && avatarY > targetY) {
-      this.avatarState = 'prop';
     }
   }
 
@@ -91,8 +87,12 @@ function handleGravitation(): void {
       }
     } else if (isEmptyCell.call(this, itemX, itemY + 1)) {
       dropItem.call(this, itemX, itemY, itemX, itemY + 1, itemType);
-    } else if (isAvatarInCell.call(this, itemX, itemY + 1) && isFalling) {
-      this.isGameOver = true;
+    } else if (isAvatarInCell.call(this, itemX, itemY + 1)) {
+      if (isFalling) {
+        this.isGameOver = true;
+      } else {
+        this.avatarState = 'prop';
+      }
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Square && isFalling) {
       explodeSquare.call(this, itemX, itemY + 1);
     } else if (this.levelMap[itemY + 1][itemX] === MapItems.Butterfly && isFalling) {
