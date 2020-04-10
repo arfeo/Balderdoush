@@ -1,7 +1,7 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { APP, MapItems } from '../../constants/game';
+import { APP, MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderMap, renderMapItem, renderPanel } from './render';
@@ -501,13 +501,14 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
   this.avatarState = 'idle';
 
   checkTarget.call(this, targetX, targetY);
+
   moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
 
+  renderMapItem.call(this, itemX, itemY);
+  renderMapItem.call(this, targetX, targetY);
+
   if (adjustOffset.call(this, targetX, targetY)) {
-    renderMap.call(this);
-  } else {
-    renderMapItem.call(this, itemX, itemY);
-    renderMapItem.call(this, targetX, targetY);
+    moveMapCanvas.call(this);
   }
 }
 
@@ -539,6 +540,14 @@ function handleKeysPressed(): void {
   }
 }
 
+function moveMapCanvas(): void {
+  const actualCellSize: number = this.mapCanvas.getBoundingClientRect().width / TOTAL_MAP_WIDTH;
+  const [offsetY, offsetX] = this.offset;
+
+  this.mapCanvas.style.top = `${-actualCellSize * offsetY}px`;
+  this.mapCanvas.style.left = `${-actualCellSize * offsetX}px`;
+}
+
 export {
   handleGravitation,
   handleGameOver,
@@ -547,4 +556,5 @@ export {
   handleKeysPressed,
   checkGreenLavaNeighbors,
   makeMove,
+  moveMapCanvas,
 };
