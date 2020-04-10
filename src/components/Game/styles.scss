@@ -8,8 +8,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(#{$gameCellSize * $mapWidth});
-    height: calc(#{$gameCellSize * $mapHeight});
+    width: calc(#{$gameCellSize * $mapVisibleWidth});
+    height: calc(#{$gameCellSize * $mapVisibleHeight});
     font-size: $largeFontSize;
     color: $white;
     text-align: center;
@@ -17,7 +17,7 @@
   }
 
   .-continue {
-    width: calc(#{$gameCellSize * $mapWidth});
+    width: calc(#{$gameCellSize * $mapVisibleWidth});
     height: $gameCellSize;
     font-size: $largeFontSize;
     color: $white;
@@ -29,15 +29,15 @@
 .game-container {
   display: flex;
   flex-direction: column;
-  width: calc(#{$gameCellSize * $mapWidth});
-  height: calc(#{$gameCellSize * ($mapHeight + 1)});
+  width: calc(#{$gameCellSize * $mapVisibleWidth});
+  height: calc(#{$gameCellSize * ($mapVisibleHeight + 1)});
   user-select: none;
 
   .-panel {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(#{$gameCellSize * $mapWidth});
+    width: calc(#{$gameCellSize * $mapVisibleWidth});
     height: $gameCellSize;
 
     .-diamonds,
@@ -96,15 +96,16 @@
 
   .-map {
     position: relative;
-    width: calc(#{$gameCellSize * $mapWidth});
-    height: calc(#{$gameCellSize * $mapHeight});
+    width: calc(#{$gameCellSize * $mapVisibleWidth});
+    height: calc(#{$gameCellSize * $mapVisibleHeight});
+    overflow: hidden;
 
     .-map-canvas {
       position: absolute;
       top: 0;
       left: 0;
-      width: calc(#{$gameCellSize * $mapWidth});
-      height: calc(#{$gameCellSize * $mapHeight});
+      width: calc(#{$gameCellSize * $mapTotalWidth});
+      height: calc(#{$gameCellSize * $mapTotalHeight});
     }
   }
 }

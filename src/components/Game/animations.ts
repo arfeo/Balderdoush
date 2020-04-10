@@ -18,9 +18,7 @@ function animateActiveExit(index: number, x: number, y: number): void {
   let state = 1;
 
   const animate = (time: number): void => {
-    const [offsetY, offsetX] = this.offset;
-
-    renderExitActive.call(this, x - offsetX, y - offsetY, state);
+    renderExitActive.call(this, x, y, state);
 
     if (isGameActive.call(this) && time - start > 300) {
       start = time;
@@ -39,10 +37,8 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
     let sizeNumerator = 1;
 
     const animate = (time: number): void => {
-      const [offsetY, offsetX] = this.offset;
-
       if (time - start > 5) {
-        renderExplosion.call(this, x - offsetX, y - offsetY, sizeNumerator);
+        renderExplosion.call(this, x, y, sizeNumerator);
 
         start = time;
         sizeNumerator += sizeNumerator <= 20 ? 6 : 1;
@@ -70,10 +66,9 @@ function animateAvatar(): void {
         return cancelAnimationFrame(this.animations.avatar);
       }
 
-      const [offsetY, offsetX] = this.offset;
       const [avatarY, avatarX] = avatarItems[0];
 
-      renderAvatar.call(this, avatarX - offsetX, avatarY - offsetY);
+      renderAvatar.call(this, avatarX, avatarY);
 
       this.storedAvatarState = this.avatarState;
     }
@@ -116,7 +111,6 @@ function animateSquare(id: number): void {
 
   const animate = (time: number): void => {
     const squares: MonsterInfo[] = this.monsters[`monster-${MapItems.Square}`];
-    const [offsetY, offsetX] = this.offset;
 
     if (isGameActive.call(this) && time - start > this.loopTimeout) {
       start = time;
@@ -125,7 +119,7 @@ function animateSquare(id: number): void {
       squares.forEach((square: MonsterInfo) => {
         const [squareY, squareX] = square.position;
 
-        renderSquare.call(this, squareX - offsetX, squareY - offsetY, state);
+        renderSquare.call(this, squareX, squareY, state);
       });
     }
 
@@ -141,7 +135,6 @@ function animateButterfly(id: number): void {
 
   const animate = (time: number): void => {
     const butterflies: MonsterInfo[] = this.monsters[`monster-${MapItems.Butterfly}`];
-    const [offsetY, offsetX] = this.offset;
 
     if (isGameActive.call(this) && time - start > this.loopTimeout) {
       start = time;
@@ -150,7 +143,7 @@ function animateButterfly(id: number): void {
       butterflies.forEach((butterfly: MonsterInfo) => {
         const [butterflyY, butterflyX] = butterfly.position;
 
-        renderButterfly.call(this, butterflyX - offsetX, butterflyY - offsetY, state);
+        renderButterfly.call(this, butterflyX, butterflyY, state);
       });
     }
 
@@ -195,14 +188,13 @@ function animateGreenLavaFlow(): void {
 
       const randomNeighbor: number[] = neighbors[getRandomNum(0, neighbors.length - 1)];
       const [neighborY, neighborX] = randomNeighbor;
-      const [offsetY, offsetX] = this.offset;
 
       this.levelMap = changeMapValue(this.levelMap, neighborX, neighborY, MapItems.GreenLava);
 
       start = time;
       wait = getRandomNum(250, 1500);
 
-      renderGreenLava.call(this, neighborX - offsetX, neighborY - offsetY);
+      renderGreenLava.call(this, neighborX, neighborY);
     }
 
     this.animations.greenLava = requestAnimationFrame(animate);
@@ -219,7 +211,6 @@ function animateBrickWallSpecial(): void {
   const animate = (time: number): void => {
     if (isGameActive.call(this) && this.isBrickWallSpecialActive && time - start > this.loopTimeout * 2) {
       const brickWallSpecialItems: number[][] = getMapItemsByType(this.levelMap, MapItems.BrickWallSpecial);
-      const [offsetY, offsetX] = this.offset;
 
       if (!brickWallSpecialItems.length) {
         return;
@@ -228,7 +219,7 @@ function animateBrickWallSpecial(): void {
       brickWallSpecialItems.forEach((item: number[]) => {
         const [itemY, itemX] = item;
 
-        renderBrickWall.call(this, itemX - offsetX, itemY - offsetY, state);
+        renderBrickWall.call(this, itemX, itemY, state);
       });
 
       start = time;

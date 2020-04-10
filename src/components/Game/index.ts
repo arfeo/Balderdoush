@@ -8,7 +8,15 @@ import { onKeyDown, onKeyUp } from './events';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
 import { startAnimations } from './animations';
-import { handleGravitation, handleExits, handleGameOver, handleMonsters, handleKeysPressed } from './actions';
+
+import {
+  handleGravitation,
+  handleExits,
+  handleGameOver,
+  handleMonsters,
+  handleKeysPressed,
+  moveMapCanvas,
+} from './actions';
 
 import { ImageProps } from '../../utils/types';
 
@@ -132,6 +140,11 @@ class Game extends PageComponent {
         type: 'keyup',
         listener: onKeyUp.bind(this),
       },
+      {
+        target: window,
+        type: 'resize',
+        listener: moveMapCanvas.bind(this),
+      },
     ];
 
     this.keysPressed = {
@@ -156,6 +169,9 @@ class Game extends PageComponent {
     renderGameBoard.call(this);
     renderPanel.call(this);
     renderMap.call(this);
+
+    moveMapCanvas.call(this);
+
     startAnimations.call(this);
   }
 

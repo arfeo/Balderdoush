@@ -1,4 +1,4 @@
-import { VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH, MapItems } from '../../../constants/game';
+import { MapItems, TOTAL_MAP_WIDTH, TOTAL_MAP_HEIGHT } from '../../../constants/game';
 
 import { renderEmpty } from './empty';
 import { renderWall } from './wall';
@@ -55,8 +55,8 @@ function renderGameBoard(): void {
   gameMap.className = '-map';
   this.mapCanvas.className = '-map-canvas';
 
-  this.mapCanvas.width = this.cellSize * VISIBLE_MAP_WIDTH;
-  this.mapCanvas.height = this.cellSize * VISIBLE_MAP_HEIGHT;
+  this.mapCanvas.width = this.cellSize * TOTAL_MAP_WIDTH;
+  this.mapCanvas.height = this.cellSize * TOTAL_MAP_HEIGHT;
 
   this.appRoot.innerHTML = '';
 
@@ -74,56 +74,52 @@ function renderGameBoard(): void {
 }
 
 function renderMap(): void {
-  const [offsetY, offsetX] = this.offset;
-
-  for (let y = offsetY; y < offsetY + 13; y += 1) {
-    for (let x = offsetX; x < offsetX + 20; x += 1) {
+  for (let y = 0; y < TOTAL_MAP_HEIGHT; y += 1) {
+    for (let x = 0; x < TOTAL_MAP_WIDTH; x += 1) {
       renderMapItem.call(this, x, y);
     }
   }
 }
 
 function renderMapItem(x: number, y: number): void {
-  const [offsetY, offsetX] = this.offset;
-
   if (this.levelMap[y] === undefined) {
     return;
   }
 
   switch (this.levelMap[y][x]) {
     case MapItems.EmptySpace:
-      renderEmpty.call(this, x - offsetX, y - offsetY);
+      renderEmpty.call(this, x, y);
       break;
     case MapItems.Wall:
-      renderWall.call(this, x - offsetX, y - offsetY);
+      renderWall.call(this, x, y);
       break;
     case MapItems.Boulder:
-      renderBoulder.call(this, x - offsetX, y - offsetY);
+      renderBoulder.call(this, x, y);
       break;
     case MapItems.Square:
-      renderSquare.call(this, x - offsetX, y - offsetY, 1);
+      renderSquare.call(this, x, y, 1);
       break;
     case MapItems.Avatar:
-      renderAvatar.call(this, x - offsetX, y - offsetY);
+      renderAvatar.call(this, x, y);
       break;
     case MapItems.Exit:
-      this.diamondsToGet > 0 && renderExit.call(this, x - offsetX, y - offsetY);
+      this.diamondsToGet > 0 && renderExit.call(this, x, y);
       break;
     case MapItems.Diamond:
-      renderDiamond.call(this, x - offsetX, y - offsetY);
+      renderDiamond.call(this, x, y);
       break;
     case MapItems.Soil:
-      renderSoil.call(this, x - offsetX, y - offsetY);
+      renderSoil.call(this, x, y);
       break;
     case MapItems.BrickWall:
     case MapItems.BrickWallSpecial:
-      renderBrickWall.call(this, x - offsetX, y - offsetY, 1);
+      renderBrickWall.call(this, x, y, 1);
       break;
     case MapItems.Butterfly:
-      renderButterfly.call(this, x - offsetX, y - offsetY, 1);
+      renderButterfly.call(this, x, y, 1);
       break;
     case MapItems.GreenLava:
-      renderGreenLava.call(this, x - offsetX, y - offsetY, 1);
+      renderGreenLava.call(this, x, y, 1);
       break;
     default: break;
   }
@@ -169,6 +165,26 @@ function getNoiseParams(cellSize: number): NoiseParam[] {
   return result;
 }
 
+function rerenderCellWithNeighbors(x: number, y: number): void {
+  const rerenderCoords: number[][] = [
+    [y, x],
+    [y, x + 1],
+    [y + 1, x + 1],
+    [y + 1, x],
+    [y + 1, x - 1],
+    [y, x - 1],
+    [y - 1, x - 1],
+    [y - 1, x],
+    [y - 1, x + 1],
+  ];
+
+  rerenderCoords.forEach((item: number[]) => {
+    const [itemY, itemX] = item;
+
+    renderMapItem.call(this, itemX, itemY);
+  });
+}
+
 export {
   renderStartScreen,
   renderGameBoard,
@@ -177,4 +193,5 @@ export {
   renderMapItem,
   clearCells,
   getNoiseParams,
+  rerenderCellWithNeighbors,
 };
