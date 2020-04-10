@@ -166,15 +166,23 @@ function getNoiseParams(cellSize: number): NoiseParam[] {
 }
 
 function rerenderCellWithNeighbors(x: number, y: number): void {
-  renderMapItem.call(this, x, y);
-  renderMapItem.call(this, x + 1, y);
-  renderMapItem.call(this, x + 1, y + 1);
-  renderMapItem.call(this, x, y + 1);
-  renderMapItem.call(this, x - 1, y + 1);
-  renderMapItem.call(this, x - 1, y);
-  renderMapItem.call(this, x - 1, y - 1);
-  renderMapItem.call(this, x, y - 1);
-  renderMapItem.call(this, x + 1, y - 1);
+  const rerenderCoords: number[][] = [
+    [y, x],
+    [y, x + 1],
+    [y + 1, x + 1],
+    [y + 1, x],
+    [y + 1, x - 1],
+    [y, x - 1],
+    [y - 1, x - 1],
+    [y - 1, x],
+    [y - 1, x + 1],
+  ];
+
+  rerenderCoords.forEach((item: number[]) => {
+    const [itemY, itemX] = item;
+
+    renderMapItem.call(this, itemX, itemY);
+  });
 }
 
 export {
