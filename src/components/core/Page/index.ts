@@ -146,7 +146,7 @@ export abstract class PageComponent {
       });
     }
 
-    cancelAnimationFrame(this.loopRequestId);
+    window.cancelAnimationFrame(this.loopRequestId);
 
     if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
       this.removeEventHandlers();
