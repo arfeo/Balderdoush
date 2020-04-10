@@ -93,10 +93,8 @@ export abstract class PageComponent {
 
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
-      const isTargetElement: boolean = target instanceof Element;
-      const isTargetHTMLDocument: boolean = target instanceof HTMLDocument;
-      const isTargetWindow: boolean = target instanceof Window;
-      const element: HTMLElement = isTargetElement || isTargetHTMLDocument || isTargetWindow
+      const isTargetElement: boolean = target instanceof Element || target instanceof HTMLDocument;
+      const element: HTMLElement = isTargetElement || target instanceof Window
         ? target as HTMLElement
         : document.getElementById(target as string);
 
