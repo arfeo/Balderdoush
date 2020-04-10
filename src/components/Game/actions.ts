@@ -4,7 +4,7 @@ import { Menu } from '../Menu';
 import { APP, MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
-import { renderMap, renderMapItem, renderPanel } from './render';
+import { renderMapItem, renderPanel, rerenderCellWithNeighbors } from './render';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { isEmpty } from '../../utils/common';
@@ -341,10 +341,14 @@ function explodeMonster(x: number, y: number, itemType: number, onDone: (coords:
 }
 
 function explodeSquare(x: number, y: number): void {
-  explodeMonster.call(this, x, y, MapItems.Square, () => {
+  explodeMonster.call(this, x, y, MapItems.Square, (explosionsCoords: number[][]) => {
     this.isExploding = false;
 
-    renderMap.call(this);
+    explosionsCoords.map((explosion: number[]) => {
+      const [explosionY, explosionX] = explosion;
+
+      rerenderCellWithNeighbors.call(this, explosionX, explosionY);
+    });
   });
 }
 
@@ -356,9 +360,9 @@ function explodeButterfly(x: number, y: number): void {
       const [explosionY, explosionX] = explosion;
 
       this.levelMap = changeMapValue(this.levelMap, explosionX, explosionY, MapItems.Diamond);
-    });
 
-    renderMap.call(this);
+      rerenderCellWithNeighbors.call(this, explosionX, explosionY);
+    });
   });
 }
 
@@ -370,7 +374,7 @@ function handleGameOver(): void {
   }
 
   const [avatarY, avatarX] = items[0];
-  const [explosionsPromises] = getExplosionParams.call(this, avatarX, avatarY);
+  const [explosionsPromises, explosionsCoords] = getExplosionParams.call(this, avatarX, avatarY);
 
   this.isExploding = true;
 
@@ -378,7 +382,11 @@ function handleGameOver(): void {
     this.isExploding = false;
     this.lives -= 1;
 
-    renderMap.call(this);
+    explosionsCoords.forEach((explosion: number[]) => {
+      const [explosionY, explosionX] = explosion;
+
+      rerenderCellWithNeighbors.call(this, explosionX, explosionY);
+    });
   });
 }
 

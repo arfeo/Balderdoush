@@ -11,7 +11,6 @@ import { renderSoil } from './soil';
 import { renderBrickWall } from './brickWall';
 import { renderButterfly } from './butterfly';
 import { renderGreenLava } from './greenLava';
-import { moveMapCanvas } from '../actions';
 
 function renderStartScreen(): void {
   const startScreenContainer: HTMLElement = document.createElement('div');
@@ -80,8 +79,6 @@ function renderMap(): void {
       renderMapItem.call(this, x, y);
     }
   }
-
-  moveMapCanvas.call(this);
 }
 
 function renderMapItem(x: number, y: number): void {
@@ -168,6 +165,18 @@ function getNoiseParams(cellSize: number): NoiseParam[] {
   return result;
 }
 
+function rerenderCellWithNeighbors(x: number, y: number): void {
+  renderMapItem.call(this, x, y);
+  renderMapItem.call(this, x + 1, y);
+  renderMapItem.call(this, x + 1, y + 1);
+  renderMapItem.call(this, x, y + 1);
+  renderMapItem.call(this, x - 1, y + 1);
+  renderMapItem.call(this, x - 1, y);
+  renderMapItem.call(this, x - 1, y - 1);
+  renderMapItem.call(this, x, y - 1);
+  renderMapItem.call(this, x + 1, y - 1);
+}
+
 export {
   renderStartScreen,
   renderGameBoard,
@@ -176,4 +185,5 @@ export {
   renderMapItem,
   clearCells,
   getNoiseParams,
+  rerenderCellWithNeighbors,
 };

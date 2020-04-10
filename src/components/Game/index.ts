@@ -169,6 +169,9 @@ class Game extends PageComponent {
     renderGameBoard.call(this);
     renderPanel.call(this);
     renderMap.call(this);
+
+    moveMapCanvas.call(this);
+
     startAnimations.call(this);
   }
 
