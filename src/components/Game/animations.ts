@@ -75,7 +75,7 @@ function animateAvatar(): void {
 
       this.storedAvatarState = this.avatarState;
     } else {
-      if (time - start > 500) {
+      if (time - start > 250) {
         if (['pushLeft', 'pushRight', 'walkLeft', 'walkRight'].indexOf(this.avatarState) > -1) {
           const avatarItems: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
