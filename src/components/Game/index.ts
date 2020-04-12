@@ -83,7 +83,7 @@ class Game extends PageComponent<State> {
       isGameStarted: false,
     };
 
-    this.cellSize = getCellSize(GAME_CELL_SIZE_VMIN, 32);
+    this.cellSize = getCellSize(GAME_CELL_SIZE_VMIN);
 
     this.levelId = levelId;
     this.diamondsToGet = level.diamondsToGet;
@@ -121,19 +121,19 @@ class Game extends PageComponent<State> {
     this.images = {
       avatarIdle: {
         element: new Image(),
-        src: './static/avatar-idle.png',
+        src: './static/avatar-idle.svg',
       },
       avatarProp: {
         element: new Image(),
-        src: './static/avatar-prop.png',
+        src: './static/avatar-prop.svg',
       },
       avatarPushLeft: {
         element: new Image(),
-        src: './static/avatar-push-left.png',
+        src: './static/avatar-push-left.svg',
       },
       avatarPushRight: {
         element: new Image(),
-        src: './static/avatar-push-right.png',
+        src: './static/avatar-push-right.svg',
       },
     };
 

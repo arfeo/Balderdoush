@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0beta2 (2b71d25, 2019-12-03)"
+   sodipodi:docname="avatar-push-left.svg"
+   id="svg68"
+   viewBox="0 0 367 379"
+   style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+   version="1.1"
+   height="11.2932mm"
+   width="10.936mm"
+   xml:space="preserve"><metadata
+   id="metadata72"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   inkscape:current-layer="svg68"
+   inkscape:window-maximized="0"
+   inkscape:window-y="23"
+   inkscape:window-x="0"
+   inkscape:cy="21.341479"
+   inkscape:cx="20.666456"
+   inkscape:zoom="19.258271"
+   showgrid="false"
+   id="namedview70"
+   inkscape:window-height="897"
+   inkscape:window-width="1815"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0"
+   guidetolerance="10"
+   gridtolerance="10"
+   objecttolerance="10"
+   borderopacity="1"
+   inkscape:document-rotation="0"
+   bordercolor="#666666"
+   pagecolor="#ffffff" />
+ <defs
+   id="defs18">
+  <style
+   id="style10"
+   type="text/css">
+   <![CDATA[
+    .str0 {stroke:black;stroke-width:8.3865;stroke-linecap:round}
+    .fil0 {fill:none}
+    .fil5 {fill:black}
+    .fil7 {fill:#00B387}
+    .fil6 {fill:#00B3FF}
+    .fil8 {fill:#00DAB3}
+    .fil9 {fill:#545400}
+    .fil4 {fill:#B38754}
+    .fil3 {fill:red}
+    .fil1 {fill:#FFDAB3}
+    .fil2 {fill:white}
+   ]]>
+  </style>
+    <clipPath
+   id="id0">
+     <path
+   id="path12"
+   d="M147 123c12,1 22,-16 30,-4 2,3 4,30 5,34 4,9 6,20 6,32 0,5 1,41 0,46 -5,26 -22,14 -41,15 -25,2 -44,-25 -41,-61 2,-18 8,-33 12,-46 0,-1 1,-7 2,-8 5,-11 17,-8 27,-7z" />
+    </clipPath>
+    <clipPath
+   id="id1">
+     <path
+   id="path15"
+   d="M136 20c41,0 74,25 74,56 0,31 -33,56 -74,56 -41,0 -74,-25 -74,-56 0,-31 33,-56 74,-56z" />
+    </clipPath>
+ </defs>
+ <g
+   transform="matrix(-1,0,0,1,367,0)"
+   id="Слой_x0020_1">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <g
+   id="_693040096">
+   <rect
+   y="0"
+   x="0"
+   id="rect21"
+   height="379"
+   width="367"
+   class="fil0" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path23"
+   d="m 137,118 c -3,1 -7,4 -17,8 -10,4 -27,9 -41,11 -15,3 -27,3 -38,3 -11,0 -20,0 -25,-1 -5,-1 -4,-3 -5,-5 -1,-2 -2,-4 -4,-5 -2,-1 -4,-1 -5,1 -1,2 -1,6 -1,11 0,5 0,11 1,15 1,4 2,6 15,6 13,1 36,1 55,0 19,-1 33,-3 46,-6 13,-3 23,-8 30,-13 6,-5 8,-9 8,-12 -1,-4 -4,-8 -7,-11 -3,-3 -7,-5 -10,-4 z"
+   class="fil1" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path25"
+   d="m 147,123 c 12,1 22,-16 30,-4 2,3 4,30 5,34 4,9 6,20 6,32 0,5 1,41 0,46 -5,26 -22,14 -41,15 -25,2 -44,-25 -41,-61 2,-18 8,-33 12,-46 0,-1 1,-7 2,-8 5,-11 17,-8 27,-7 z"
+   class="fil2" />
+   <g
+   id="g33"
+   clip-path="url(#id0)">
+    <g
+   id="g31">
+     <rect
+   id="rect27"
+   height="23.9653"
+   width="253.588"
+   y="141"
+   x="2"
+   class="fil3" />
+     <rect
+   id="rect29"
+   height="25.400999"
+   width="152.326"
+   y="187"
+   x="63"
+   class="fil3" />
+    </g>
+   </g>
+   <path
+   inkscape:connector-curvature="0"
+   id="path35"
+   d="m 147,123 c 12,1 22,-16 30,-4 2,3 4,30 5,34 4,9 6,20 6,32 0,5 1,41 0,46 -5,26 -22,14 -41,15 -25,2 -44,-25 -41,-61 2,-18 8,-33 12,-46 0,-1 1,-7 2,-8 5,-11 17,-8 27,-7 z"
+   class="fil0" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path37"
+   d="m 136,20 c 41,0 74,25 74,56 0,31 -33,56 -74,56 C 95,132 62,107 62,76 62,45 95,20 136,20 Z"
+   class="fil1" />
+   <g
+   id="g42"
+   clip-path="url(#id1)">
+    <g
+   id="g40">
+     <path
+   inkscape:connector-curvature="0"
+   d="m 53,103 c 11,8 21,15 32,15 10,0 21,-8 31,-15"
+   class="fil0 str0"
+   id="1" />
+    </g>
+   </g>
+   <path
+   inkscape:connector-curvature="0"
+   id="path44"
+   d="m 136,20 c 41,0 74,25 74,56 0,31 -33,56 -74,56 C 95,132 62,107 62,76 62,45 95,20 136,20 Z"
+   class="fil0" />
+   <ellipse
+   cy="0"
+   cx="0"
+   id="ellipse46"
+   ry="6"
+   rx="13"
+   transform="rotate(75.000005,-26.485324,83.825593)"
+   class="fil4" />
+   <circle
+   id="circle48"
+   r="12"
+   cy="58"
+   cx="113"
+   class="fil5" />
+   <circle
+   id="circle50"
+   r="6"
+   cy="62"
+   cx="109"
+   class="fil6" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path52"
+   d="m 200,273 c 15,15 24,30 27,40 2,7 3,11 -3,16 -5,5 -13,13 -22,11 -13,-3 -29,-19 -45,-34 -25,-25 -39,-56 -26,-69 8,-8 42,-18 57,-7 6,4 -8,25 -2,31 4,4 9,8 13,12 z"
+   class="fil7" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path54"
+   d="m 137,148 c -3,1 -7,4 -17,8 -10,4 -27,9 -41,11 -15,3 -27,3 -38,3 -11,0 -20,0 -25,-1 -5,-1 -4,-3 -5,-5 -1,-2 -2,-4 -4,-5 -2,-1 -4,-1 -5,1 -1,2 -1,6 -1,11 0,5 0,11 1,15 1,4 2,6 15,6 13,1 36,1 55,0 19,-1 33,-3 46,-6 13,-3 23,-8 30,-13 6,-5 8,-9 8,-12 -1,-4 -4,-8 -7,-11 -3,-3 -7,-5 -10,-4 z"
+   class="fil1" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path56"
+   d="m 133,310 c -11,18 -22,31 -31,37 -6,4 -10,5 -16,2 -7,-4 -16,-9 -16,-18 -1,-14 11,-33 22,-52 18,-31 39,-45 57,-49 6,-1 20,-4 30,-4 10,0 16,4 6,31 -2,7 -39,31 -43,38 -3,5 -6,11 -9,16 z"
+   class="fil8" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path58"
+   d="m 202,340 24,-24 c 1,-1 1,-1 2,0 l 6,6 c 0,0 0,0 0,0 v 0 c 1,-1 3,-1 4,0 l 13,13 c 1,1 1,3 0,4 l -37,37 c -1,1 -3,1 -4,0 l -13,-13 c -1,-1 -1,-3 0,-4 l 11,-11 c 0,0 0,0 0,0 l -6,-6 c -1,-1 -1,-1 0,-2 z"
+   class="fil4" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path60"
+   d="m 69,329 30,17 c 1,0 1,1 1,2 l -5,8 c 0,0 0,0 0,0 v 0 c 1,1 2,3 1,4 l -9,16 c -1,1 -3,2 -4,1 L 37,351 c -1,-1 -2,-3 -1,-4 l 9,-16 c 1,-1 3,-2 4,-1 l 14,8 c 0,0 0,0 0,-1 l 5,-8 c 0,-1 1,-1 2,-1 z"
+   class="fil4" />
+   <path
+   inkscape:connector-curvature="0"
+   id="path62"
+   d="m 117,33 c -2,-7 -2,-20 -1,-27 1,-7 5,-7 10,-4 6,3 13,9 18,13 5,4 6,8 7,10 1,2 1,3 -1,5 -2,2 -5,4 -10,5 -5,2 -10,3 -14,4 -4,1 -7,1 -9,-5 z"
+   class="fil1" />
+   <polygon
+   id="polygon64"
+   points="190,223 190,235 133,235 133,248 113,248 113,235 113,235 113,223 "
+   class="fil9" />
+  </g>
+ </g>
+</svg>
