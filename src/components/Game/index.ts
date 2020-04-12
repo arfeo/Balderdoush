@@ -3,11 +3,11 @@ import { PageComponent } from '../core/Page';
 import { GAME_CELL_SIZE_VMIN } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
-import { renderGameBoard, renderMap, renderPanel, renderStartScreen } from './render';
+import { renderGameBoard, renderStartScreen } from './render';
 import { onKeyDown, onKeyUp } from './events';
+import { startAnimations } from './animations';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
-import { startAnimations } from './animations';
 
 import {
   handleGravitation,
@@ -20,8 +20,11 @@ import {
 
 import { ImageProps } from '../../utils/types';
 
-class Game extends PageComponent {
-  protected appRoot: HTMLElement;
+interface State {
+  isGameStarted: boolean;
+}
+
+class Game extends PageComponent<State> {
   protected cellSize: number;
   protected levelId: number;
   protected diamondsToGet: number;
@@ -76,6 +79,10 @@ class Game extends PageComponent {
       throw 'Incorrect level id.';
     }
 
+    this.state = {
+      isGameStarted: false,
+    };
+
     this.cellSize = getCellSize(GAME_CELL_SIZE_VMIN, 32);
 
     this.levelId = levelId;
@@ -97,7 +104,6 @@ class Game extends PageComponent {
 
     this.offset = getInitialOffset.call(this);
 
-    this.isGameStarted = false;
     this.isGameOver = false;
     this.isExploding = false;
     this.isBrickWallSpecialActive = false;
@@ -167,18 +173,11 @@ class Game extends PageComponent {
     };
   }
 
-  private renderGame(): void {
-    renderGameBoard.call(this);
-    renderPanel.call(this);
-    renderMap.call(this);
-
-    moveMapCanvas.call(this);
-
-    startAnimations.call(this);
-  }
-
-  public render(): void {
-    renderStartScreen.call(this);
+  public afterRender(): void {
+    if (this.state.isGameStarted) {
+      moveMapCanvas.call(this);
+      startAnimations.call(this);
+    }
   }
 
   public loop(): void {
@@ -194,6 +193,14 @@ class Game extends PageComponent {
     handleGravitation.call(this);
     handleExits.call(this);
     handleKeysPressed.call(this);
+  }
+
+  public render(): HTMLElement {
+    if (!this.state.isGameStarted) {
+      return renderStartScreen.call(this);
+    }
+
+    return renderGameBoard.call(this);
   }
 }
 

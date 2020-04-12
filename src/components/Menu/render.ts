@@ -1,4 +1,4 @@
-function renderMenu(): void {
+function renderMenu(): HTMLElement {
   const menuContainer: HTMLElement = document.createElement('div');
   const menuControls: HTMLElement = document.createElement('div');
   const menuControlsCol1: HTMLElement = document.createElement('div');
@@ -17,9 +17,6 @@ function renderMenu(): void {
   menuContainer.innerText = 'Balderdoush';
   this.startGameButton.innerText = 'Start game';
 
-  this.appRoot.innerHTML = '';
-
-  this.appRoot.appendChild(menuContainer);
   menuContainer.appendChild(menuControls);
   menuControls.appendChild(menuControlsCol1);
   menuControls.appendChild(menuControlsCol2);
@@ -29,6 +26,10 @@ function renderMenu(): void {
   menuControlsCol2.appendChild(this.levelIdContainer);
   menuControlsCol2.appendChild(this.higherLevelButton);
   this.higherLevelButton.appendChild(higherLevelIcon);
+
+  renderLevelId.call(this);
+
+  return menuContainer;
 }
 
 function renderLevelId(): void {

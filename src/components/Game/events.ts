@@ -12,7 +12,7 @@ function onKeyDown(e: KeyboardEvent): void {
   }
 
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
-  const gameKeysActive: boolean = items.length && this.isGameStarted;
+  const gameKeysActive: boolean = items.length && this.state.isGameStarted;
   const { key } = e;
 
   switch (key) {
@@ -43,10 +43,10 @@ function onKeyDown(e: KeyboardEvent): void {
       }
       break;
     case ' ':
-      if (!this.isGameStarted) {
-        this.isGameStarted = true;
-
-        this.renderGame();
+      if (!this.state.isGameStarted) {
+        this.setState({
+          isGameStarted: true,
+        });
       } else {
         if (this.isGameOver) {
           this.destroy();

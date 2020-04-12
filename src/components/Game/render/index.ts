@@ -12,7 +12,7 @@ import { renderBrickWall } from './brickWall';
 import { renderButterfly } from './butterfly';
 import { renderGreenLava } from './greenLava';
 
-function renderStartScreen(): void {
+function renderStartScreen(): HTMLElement {
   const startScreenContainer: HTMLElement = document.createElement('div');
   const startScreenStat: HTMLElement = document.createElement('div');
   const startScreenContinue: HTMLElement = document.createElement('div');
@@ -29,14 +29,13 @@ function renderStartScreen(): void {
 
   startScreenContinue.innerText = 'PRESS SPACE TO CONTINUE';
 
-  this.appRoot.innerHTML = '';
-
-  this.appRoot.appendChild(startScreenContainer);
   startScreenContainer.appendChild(startScreenStat);
   startScreenContainer.appendChild(startScreenContinue);
+
+  return startScreenContainer;
 }
 
-function renderGameBoard(): void {
+function renderGameBoard(): HTMLElement {
   const gameContainer: HTMLElement = document.createElement('div');
   const gamePanel: HTMLElement = document.createElement('div');
   const gameMap: HTMLElement = document.createElement('div');
@@ -58,9 +57,6 @@ function renderGameBoard(): void {
   this.mapCanvas.width = this.cellSize * TOTAL_MAP_WIDTH;
   this.mapCanvas.height = this.cellSize * TOTAL_MAP_HEIGHT;
 
-  this.appRoot.innerHTML = '';
-
-  this.appRoot.appendChild(gameContainer);
   gameContainer.appendChild(gamePanel);
   gameContainer.appendChild(gameMap);
   gamePanel.appendChild(panelDiamondsContainer);
@@ -71,6 +67,11 @@ function renderGameBoard(): void {
   panelTimeContainer.appendChild(this.panelTime);
   panelScoreContainer.appendChild(this.panelScore);
   gameMap.appendChild(this.mapCanvas);
+
+  renderPanel.call(this);
+  renderMap.call(this);
+
+  return gameContainer;
 }
 
 function renderMap(): void {

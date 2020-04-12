@@ -1,11 +1,10 @@
 import { PageComponent } from '../core/Page';
 
-import { renderLevelId, renderMenu } from './render';
+import { renderMenu } from './render';
 import { onHigherLevel, onKeyDown, onLowerLevel, onStartGame } from './events';
 import { getStorageData } from '../../utils/storage';
 
 class Menu extends PageComponent {
-  protected appRoot: HTMLElement;
   protected startGameButton: HTMLButtonElement;
   protected lowerLevelButton: HTMLButtonElement;
   protected levelIdContainer: HTMLElement;
@@ -47,9 +46,8 @@ class Menu extends PageComponent {
     ];
   }
 
-  public render(): void {
-    renderMenu.call(this);
-    renderLevelId.call(this);
+  public render(): HTMLElement {
+    return renderMenu.call(this);
   }
 }
 

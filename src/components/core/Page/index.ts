@@ -6,14 +6,18 @@ export interface Images {
 
 const DEFAULT_LOOP_TIMEOUT = 4;
 
-export abstract class PageComponent {
+export abstract class PageComponent<TState = {}> {
   private loopRequestId: number;
+  public appRoot: HTMLElement;
+  public state: TState;
   public eventHandlers: EventHandler[];
   public images: Images;
   public loopTimeout: number;
   public animations: { [key: string]: number[] | number };
   public init?(...args: any[]): Promise<any> | void;
-  public abstract render(): void;
+  public abstract render(): HTMLElement;
+  public afterRender?(): void;
+  public afterMount?(): void;
   public loop?(): void;
   public beforeUnmount?(): void;
 
@@ -24,7 +28,11 @@ export abstract class PageComponent {
 
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
-        typeof this.render === 'function' && this.render();
+        if (typeof this.render === 'function') {
+          this.renderComponent();
+        }
+
+        typeof this.afterMount === 'function' && this.afterMount();
         typeof this.loop === 'function' && this.startLoop(() => this.loop());
 
         if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
@@ -119,12 +127,37 @@ export abstract class PageComponent {
     }
   }
 
+  private renderComponent(): void {
+    this.appRoot.innerHTML = '';
+    this.appRoot.appendChild(this.render());
+
+    typeof this.afterRender === 'function' && this.afterRender();
+  }
+
   public setUpEventHandlers(): void {
     this.processEventHandlers('add');
   }
 
   public removeEventHandlers(): void {
     this.processEventHandlers('remove');
+  }
+
+  public setState<K extends keyof TState>(state: (Pick<TState, K> | TState | null)): void {
+    this.state = {
+      ...this.state,
+      ...state,
+    };
+
+    const shouldUpdate: boolean = this.shouldComponentUpdate(this.state);
+
+    if (typeof this.render === 'function' && shouldUpdate) {
+      this.renderComponent();
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public shouldComponentUpdate(state: TState): boolean {
+    return true;
   }
 
   public destroy(): void {
