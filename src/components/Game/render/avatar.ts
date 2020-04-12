@@ -3,7 +3,7 @@ import { clearCells } from './';
 
 import { ImageProps } from '../../../utils/types';
 
-function renderAvatar(x: number, y: number): void {
+function renderAvatar(x: number, y: number, state?: number): void {
   const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
 
   const getImageForState = (): ImageProps => {
@@ -11,9 +11,13 @@ function renderAvatar(x: number, y: number): void {
       case 'prop':
         return this.images.avatarProp;
       case 'pushLeft':
-        return this.images.avatarPushLeft;
+        return this.images[`avatarPushLeft${state || 1}`];
       case 'pushRight':
-        return this.images.avatarPushRight;
+        return this.images[`avatarPushRight${state || 1}`];
+      case 'walkLeft':
+        return this.images[`avatarWalkLeft${state || 1}`];
+      case 'walkRight':
+        return this.images[`avatarWalkRight${state || 1}`];
       default:
         return this.images.avatarIdle;
     }

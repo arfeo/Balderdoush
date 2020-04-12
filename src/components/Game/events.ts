@@ -66,9 +66,7 @@ function onKeyUp(e: KeyboardEvent): void {
     return;
   }
 
-  if (!this.isPaused && ['pushLeft', 'pushRight'].indexOf(this.avatarState) > -1) {
-    this.avatarState = 'idle';
-  }
+  this.avatarState = 'idle';
 
   const { key } = e;
 

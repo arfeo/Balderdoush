@@ -55,8 +55,14 @@ class Game extends PageComponent<State> {
   public images: {
     avatarIdle: ImageProps;
     avatarProp: ImageProps;
-    avatarPushLeft: ImageProps;
-    avatarPushRight: ImageProps;
+    avatarPushLeft1: ImageProps;
+    avatarPushLeft2: ImageProps;
+    avatarPushRight1: ImageProps;
+    avatarPushRight2: ImageProps;
+    avatarWalkLeft1: ImageProps;
+    avatarWalkLeft2: ImageProps;
+    avatarWalkRight1: ImageProps;
+    avatarWalkRight2: ImageProps;
   };
   public animations: {
     avatar?: number;
@@ -120,20 +126,34 @@ class Game extends PageComponent<State> {
 
     this.images = {
       avatarIdle: {
-        element: new Image(),
         src: './static/avatar-idle.svg',
       },
       avatarProp: {
-        element: new Image(),
         src: './static/avatar-prop.svg',
       },
-      avatarPushLeft: {
-        element: new Image(),
-        src: './static/avatar-push-left.svg',
+      avatarPushLeft1: {
+        src: './static/avatar-push-left1.svg',
       },
-      avatarPushRight: {
-        element: new Image(),
-        src: './static/avatar-push-right.svg',
+      avatarPushLeft2: {
+        src: './static/avatar-push-left2.svg',
+      },
+      avatarPushRight1: {
+        src: './static/avatar-push-right1.svg',
+      },
+      avatarPushRight2: {
+        src: './static/avatar-push-right2.svg',
+      },
+      avatarWalkLeft1: {
+        src: './static/avatar-walk-left1.svg',
+      },
+      avatarWalkLeft2: {
+        src: './static/avatar-walk-left2.svg',
+      },
+      avatarWalkRight1: {
+        src: './static/avatar-walk-right1.svg',
+      },
+      avatarWalkRight2: {
+        src: './static/avatar-walk-right2.svg',
       },
     };
 

@@ -39,14 +39,12 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   const isActiveExit: boolean = mapItem === MapItems.Exit && this.diamondsToGet === 0;
   const isBoulder: boolean = mapItem === MapItems.Boulder;
 
-  if (isBoulder) {
-    if (isMovingLeft) {
-      this.avatarState = 'pushLeft';
-    }
-
-    if (isMovingRight) {
-      this.avatarState = 'pushRight';
-    }
+  if (isMovingLeft) {
+    this.avatarState = isBoulder ? 'pushLeft' : 'walkLeft';
+  } else if (isMovingRight) {
+    this.avatarState = isBoulder ? 'pushRight' : 'walkRight';
+  } else {
+    this.avatarState = 'idle';
   }
 
   return (
@@ -505,8 +503,6 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
   if (!checkMovePossibility.call(this, targetX, targetY) || !isGameActive.call(this)) {
     return;
   }
-
-  this.avatarState = 'idle';
 
   checkTarget.call(this, targetX, targetY);
 

@@ -58,7 +58,10 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
 }
 
 function animateAvatar(): void {
-  const animate = (): void => {
+  let start: number = performance.now();
+  let state = 1;
+
+  const animate = (time: number): void => {
     if (this.storedAvatarState !== this.avatarState) {
       const avatarItems: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 
@@ -71,6 +74,23 @@ function animateAvatar(): void {
       renderAvatar.call(this, avatarX, avatarY);
 
       this.storedAvatarState = this.avatarState;
+    } else {
+      if (time - start > 500) {
+        if (['pushLeft', 'pushRight', 'walkLeft', 'walkRight'].indexOf(this.avatarState) > -1) {
+          const avatarItems: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
+
+          if (!avatarItems.length) {
+            return cancelAnimationFrame(this.animations.avatar);
+          }
+
+          const [avatarY, avatarX] = avatarItems[0];
+
+          renderAvatar.call(this, avatarX, avatarY, state);
+        }
+
+        state = state === 2 ? 1 : 2;
+        start = time;
+      }
     }
 
     this.animations.avatar = requestAnimationFrame(animate);
