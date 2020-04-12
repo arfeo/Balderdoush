@@ -54,8 +54,12 @@ export abstract class PageComponent<TState = {}> {
     }
 
     return Promise.all(Object.keys(images).map((key: string): Promise<void> => new Promise((resolve, reject): void => {
-      if (!Object.prototype.hasOwnProperty.call(images, key) || images[key] === undefined) {
+      if (images[key] === undefined) {
         return reject();
+      }
+
+      if (!(images[key].element instanceof Image)) {
+        images[key].element = new Image();
       }
 
       images[key].element.src = images[key].src;
@@ -163,15 +167,13 @@ export abstract class PageComponent<TState = {}> {
 
     if (typeof this.animations === 'object' && Object.keys(this.animations).length > 0) {
       Object.keys(this.animations).forEach((key: string) => {
-        if (Object.prototype.hasOwnProperty.call(this.animations, key)) {
-          const item: number[] | number = this.animations[key];
+        const item: number[] | number = this.animations[key];
 
-          typeof item === 'number' && window.cancelAnimationFrame(item as number);
+        typeof item === 'number' && window.cancelAnimationFrame(item as number);
 
-          if (Array.isArray(item)) {
-            for (const requestId of item) {
-              typeof requestId === 'number' && window.cancelAnimationFrame(requestId);
-            }
+        if (Array.isArray(item)) {
+          for (const requestId of item) {
+            typeof requestId === 'number' && window.cancelAnimationFrame(requestId);
           }
         }
       });
