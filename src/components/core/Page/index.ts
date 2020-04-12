@@ -148,9 +148,7 @@ export abstract class PageComponent<TState = {}> {
       ...state,
     };
 
-    const shouldUpdate: boolean = this.shouldComponentUpdate(this.state);
-
-    if (typeof this.render === 'function' && shouldUpdate) {
+    if (typeof this.render === 'function' && this.shouldComponentUpdate(this.state)) {
       this.renderComponent();
     }
   }
