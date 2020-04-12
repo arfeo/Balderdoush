@@ -20,7 +20,7 @@ function onKeyDown(e: KeyboardEvent): void {
     case 'ArrowRight':
     case 'ArrowDown':
     case 'ArrowLeft':
-      if (gameKeysActive) {
+      if (gameKeysActive && !this.isPaused) {
         this.keysPressed = {
           ...this.keysPressed,
           [key]: true,
@@ -44,9 +44,7 @@ function onKeyDown(e: KeyboardEvent): void {
       break;
     case ' ':
       if (!this.state.isGameStarted) {
-        this.setState({
-          isGameStarted: true,
-        });
+        this.setState({ isGameStarted: true });
       } else {
         if (this.isGameOver) {
           this.destroy();
