@@ -102,13 +102,13 @@ export abstract class PageComponent<TState = {}> {
     for (const prop of this.eventHandlers) {
       const { target, type, listener } = prop;
 
-      const isElement: boolean = (
+      const isApplicable: boolean = (
         target instanceof Element ||
         target instanceof HTMLDocument ||
         target instanceof Window
       );
 
-      const element: HTMLElement = isElement ? target as HTMLElement : document.getElementById(target as string);
+      const element: HTMLElement = isApplicable ? target as HTMLElement : document.getElementById(target as string);
 
       if (!element) {
         break;
@@ -148,13 +148,13 @@ export abstract class PageComponent<TState = {}> {
       ...state,
     };
 
-    if (typeof this.render === 'function' && this.shouldComponentUpdate(this.state)) {
+    if (typeof this.render === 'function' && this.shouldRerender(this.state)) {
       this.renderComponent();
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public shouldComponentUpdate(state: TState): boolean {
+  public shouldRerender(state: TState): boolean {
     return true;
   }
 
