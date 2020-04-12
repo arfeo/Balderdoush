@@ -30,7 +30,7 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
 
   const [, avatarX] = items[0];
   const mapItem: number = this.levelMap[targetY][targetX];
-  const isNormalState: boolean = this.avatarState === 'idle' || this.avatarState === 'walk';
+  const isNormalState: boolean = ['idle', 'walkLeft', 'walkRight'].indexOf(this.avatarState) > -1;
   const isMovingLeft: boolean = avatarX > targetX;
   const isMovingRight: boolean = avatarX < targetX;
   const isEmptySpace: boolean = mapItem === MapItems.EmptySpace;
