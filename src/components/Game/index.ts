@@ -93,6 +93,8 @@ class Game extends PageComponent {
     this.panelScore = document.createElement('div');
     this.mapCanvas = document.createElement('canvas');
 
+    this.appRoot.innerText = 'Loading...';
+
     this.offset = getInitialOffset.call(this);
 
     this.isGameStarted = false;
