@@ -74,6 +74,8 @@ function animateAvatar(): void {
       renderAvatar.call(this, avatarX, avatarY);
 
       this.storedAvatarState = this.avatarState;
+
+      state = 1;
     } else {
       if (time - start > 100) {
         if (['pushLeft', 'pushRight', 'walkLeft', 'walkRight'].indexOf(this.avatarState) > -1) {
@@ -86,10 +88,10 @@ function animateAvatar(): void {
           const [avatarY, avatarX] = avatarItems[0];
 
           renderAvatar.call(this, avatarX, avatarY, state);
-        }
 
-        state += state < 4 ? 1 : -3;
-        start = time;
+          state += state < 4 ? 1 : -3;
+          start = time;
+        }
       }
     }
 
