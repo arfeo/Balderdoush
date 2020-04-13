@@ -2,12 +2,11 @@ import { MapItems } from '../../constants/game';
 
 import { renderExitActive } from './render/exit';
 import { renderExplosion } from './render/explosion';
-import { renderPanel } from './render';
+import { renderMapItem, renderPanel } from './render';
 import { renderAvatar } from './render/avatar';
 import { renderBrickWall } from './render/brickWall';
 import { renderSquare } from './render/square';
 import { renderButterfly } from './render/butterfly';
-import { renderGreenLava } from './render/greenLava';
 import { getRandomNum, isEmpty, isObject } from '../../utils/common';
 import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { checkGreenLavaNeighbors } from './actions';
@@ -204,6 +203,8 @@ function animateGreenLavaFlow(): void {
           const [itemY, itemX] = item;
 
           this.levelMap = changeMapValue(this.levelMap, itemX, itemY, MapItems.Diamond);
+
+          renderMapItem.call(this, itemX, itemY);
         });
 
         return cancelAnimationFrame(this.animations.greenLava);
@@ -217,7 +218,7 @@ function animateGreenLavaFlow(): void {
       start = time;
       wait = getRandomNum(250, 1500);
 
-      renderGreenLava.call(this, neighborX, neighborY);
+      renderMapItem.call(this, neighborX, neighborY);
     }
 
     this.animations.greenLava = requestAnimationFrame(animate);
