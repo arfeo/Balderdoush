@@ -6,6 +6,7 @@ import { LEVELS } from '../../constants/levels';
 import { renderGameBoard, renderStartScreen } from './render';
 import { onKeyDown, onKeyUp } from './events';
 import { startAnimations } from './animations';
+import { setImages } from './assets';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../utils/game';
 
@@ -57,8 +58,12 @@ class Game extends PageComponent<State> {
     avatarProp: ImageProps;
     avatarPushLeft1: ImageProps;
     avatarPushLeft2: ImageProps;
+    avatarPushLeft3: ImageProps;
+    avatarPushLeft4: ImageProps;
     avatarPushRight1: ImageProps;
     avatarPushRight2: ImageProps;
+    avatarPushRight3: ImageProps;
+    avatarPushRight4: ImageProps;
     avatarWalkLeft1: ImageProps;
     avatarWalkLeft2: ImageProps;
     avatarWalkRight1: ImageProps;
@@ -124,38 +129,7 @@ class Game extends PageComponent<State> {
     this.loopTimeout = 70;
     this.loopThrottle = 0;
 
-    this.images = {
-      avatarIdle: {
-        src: './static/avatar-idle.svg',
-      },
-      avatarProp: {
-        src: './static/avatar-prop.svg',
-      },
-      avatarPushLeft1: {
-        src: './static/avatar-push-left1.svg',
-      },
-      avatarPushLeft2: {
-        src: './static/avatar-push-left2.svg',
-      },
-      avatarPushRight1: {
-        src: './static/avatar-push-right1.svg',
-      },
-      avatarPushRight2: {
-        src: './static/avatar-push-right2.svg',
-      },
-      avatarWalkLeft1: {
-        src: './static/avatar-walk-left1.svg',
-      },
-      avatarWalkLeft2: {
-        src: './static/avatar-walk-left2.svg',
-      },
-      avatarWalkRight1: {
-        src: './static/avatar-walk-right1.svg',
-      },
-      avatarWalkRight2: {
-        src: './static/avatar-walk-right2.svg',
-      },
-    };
+    this.images = setImages.call(this);
 
     this.eventHandlers = [
       {
