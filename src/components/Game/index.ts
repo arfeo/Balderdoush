@@ -66,8 +66,12 @@ class Game extends PageComponent<State> {
     avatarPushRight4: ImageProps;
     avatarWalkLeft1: ImageProps;
     avatarWalkLeft2: ImageProps;
+    avatarWalkLeft3: ImageProps;
+    avatarWalkLeft4: ImageProps;
     avatarWalkRight1: ImageProps;
     avatarWalkRight2: ImageProps;
+    avatarWalkRight3: ImageProps;
+    avatarWalkRight4: ImageProps;
   };
   public animations: {
     avatar?: number;

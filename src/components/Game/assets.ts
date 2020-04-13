@@ -38,10 +38,22 @@ function setImages(): Images {
     avatarWalkLeft2: {
       src: './static/avatar-walk-left2.svg',
     },
+    avatarWalkLeft3: {
+      src: './static/avatar-walk-left3.svg',
+    },
+    avatarWalkLeft4: {
+      src: './static/avatar-walk-left2.svg',
+    },
     avatarWalkRight1: {
       src: './static/avatar-walk-right1.svg',
     },
     avatarWalkRight2: {
+      src: './static/avatar-walk-right2.svg',
+    },
+    avatarWalkRight3: {
+      src: './static/avatar-walk-right3.svg',
+    },
+    avatarWalkRight4: {
       src: './static/avatar-walk-right2.svg',
     },
   };
