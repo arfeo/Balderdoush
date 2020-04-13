@@ -128,7 +128,7 @@ function animateTimer(): void {
 }
 
 function animateSquare(id: number): void {
-  let start = performance.now();
+  let start: number = performance.now();
   let state = 1;
 
   const animate = (time: number): void => {
@@ -152,7 +152,7 @@ function animateSquare(id: number): void {
 }
 
 function animateButterfly(id: number): void {
-  let start = performance.now();
+  let start: number = performance.now();
   let state = 1;
 
   const animate = (time: number): void => {
@@ -185,8 +185,8 @@ function animateMonsters(): void {
 }
 
 function animateGreenLavaFlow(): void {
-  let start = performance.now();
-  let wait = getRandomNum(500, 2000);
+  let start: number = performance.now();
+  let wait: number = getRandomNum(500, 2000);
 
   const animate = (time: number): void => {
     if (isGameActive.call(this) && time - start > wait) {
@@ -228,8 +228,8 @@ function animateGreenLavaFlow(): void {
 }
 
 function animateBrickWallSpecial(): void {
-  const memorisedStart = performance.now();
-  let start = memorisedStart;
+  const memorisedStart: number = performance.now();
+  let start: number = memorisedStart;
   let state = 1;
 
   const animate = (time: number): void => {
