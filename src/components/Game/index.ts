@@ -61,19 +61,15 @@ class Game extends PageComponent<State> {
     avatarPushLeft1: ImageProps;
     avatarPushLeft2: ImageProps;
     avatarPushLeft3: ImageProps;
-    avatarPushLeft4: ImageProps;
     avatarPushRight1: ImageProps;
     avatarPushRight2: ImageProps;
     avatarPushRight3: ImageProps;
-    avatarPushRight4: ImageProps;
     avatarWalkLeft1: ImageProps;
     avatarWalkLeft2: ImageProps;
     avatarWalkLeft3: ImageProps;
-    avatarWalkLeft4: ImageProps;
     avatarWalkRight1: ImageProps;
     avatarWalkRight2: ImageProps;
     avatarWalkRight3: ImageProps;
-    avatarWalkRight4: ImageProps;
   };
 
   public animations: {

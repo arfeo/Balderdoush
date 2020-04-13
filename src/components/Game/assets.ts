@@ -17,9 +17,6 @@ function setImages(): Images {
     avatarPushLeft3: {
       src: './static/avatar-push-left3.svg',
     },
-    avatarPushLeft4: {
-      src: './static/avatar-push-left2.svg',
-    },
     avatarPushRight1: {
       src: './static/avatar-push-right1.svg',
     },
@@ -28,9 +25,6 @@ function setImages(): Images {
     },
     avatarPushRight3: {
       src: './static/avatar-push-right3.svg',
-    },
-    avatarPushRight4: {
-      src: './static/avatar-push-right2.svg',
     },
     avatarWalkLeft1: {
       src: './static/avatar-walk-left1.svg',
@@ -41,9 +35,6 @@ function setImages(): Images {
     avatarWalkLeft3: {
       src: './static/avatar-walk-left3.svg',
     },
-    avatarWalkLeft4: {
-      src: './static/avatar-walk-left2.svg',
-    },
     avatarWalkRight1: {
       src: './static/avatar-walk-right1.svg',
     },
@@ -52,9 +43,6 @@ function setImages(): Images {
     },
     avatarWalkRight3: {
       src: './static/avatar-walk-right3.svg',
-    },
-    avatarWalkRight4: {
-      src: './static/avatar-walk-right2.svg',
     },
   };
 }
