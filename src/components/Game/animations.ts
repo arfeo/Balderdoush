@@ -186,7 +186,7 @@ function animateMonsters(): void {
 
 function animateGreenLavaFlow(): void {
   let start = performance.now();
-  let wait = getRandomNum(250, 1500);
+  let wait = getRandomNum(500, 2000);
 
   const animate = (time: number): void => {
     if (isGameActive.call(this) && time - start > wait) {
