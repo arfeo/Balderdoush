@@ -59,7 +59,8 @@ function animateExplosion(index: number, x: number, y: number): Promise<void> {
 
 function animateAvatar(): void {
   let start: number = performance.now();
-  let state = 1;
+
+  this.avatarAnimationState = 1;
 
   const animate = (time: number): void => {
     if (this.storedAvatarState !== this.avatarState) {
@@ -71,11 +72,11 @@ function animateAvatar(): void {
 
       const [avatarY, avatarX] = avatarItems[0];
 
-      renderAvatar.call(this, avatarX, avatarY);
+      renderAvatar.call(this, avatarX, avatarY, this.avatarAnimationState);
 
       this.storedAvatarState = this.avatarState;
 
-      state = 1;
+      this.avatarAnimationState = 1;
     } else {
       if (time - start > 100) {
         if (['pushLeft', 'pushRight', 'walkLeft', 'walkRight'].indexOf(this.avatarState) > -1) {
@@ -87,9 +88,9 @@ function animateAvatar(): void {
 
           const [avatarY, avatarX] = avatarItems[0];
 
-          renderAvatar.call(this, avatarX, avatarY, state);
+          renderAvatar.call(this, avatarX, avatarY, this.avatarAnimationState);
 
-          state += state < 4 ? 1 : -3;
+          this.avatarAnimationState += this.avatarAnimationState < 4 ? 1 : -3;
           start = time;
         }
       }

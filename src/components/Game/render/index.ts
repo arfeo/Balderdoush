@@ -101,7 +101,7 @@ function renderMapItem(x: number, y: number): void {
       renderSquare.call(this, x, y, 1);
       break;
     case MapItems.Avatar:
-      renderAvatar.call(this, x, y);
+      renderAvatar.call(this, x, y, this.avatarAnimationState);
       break;
     case MapItems.Exit:
       this.diamondsToGet > 0 && renderExit.call(this, x, y);

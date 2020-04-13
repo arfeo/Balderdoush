@@ -49,10 +49,12 @@ class Game extends PageComponent<State> {
   protected isPaused: boolean;
   protected avatarState: AvatarState;
   protected storedAvatarState: AvatarState;
+  protected avatarAnimationState: number;
   protected monsters: Monsters;
   protected fallingItems: number[][];
   protected loopThrottle: number;
   protected keysPressed: KeysPressed;
+
   public images: {
     avatarIdle: ImageProps;
     avatarProp: ImageProps;
@@ -73,6 +75,7 @@ class Game extends PageComponent<State> {
     avatarWalkRight3: ImageProps;
     avatarWalkRight4: ImageProps;
   };
+
   public animations: {
     avatar?: number;
     exits?: number[];
@@ -127,6 +130,7 @@ class Game extends PageComponent<State> {
     this.isPaused = false;
 
     this.avatarState = this.storedAvatarState = 'idle';
+    this.avatarAnimationState = 1;
     this.monsters = getMonsters.call(this);
     this.fallingItems = [];
 
