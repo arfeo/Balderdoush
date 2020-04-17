@@ -1,7 +1,7 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { APP, MapItems } from '../../constants/game';
+import { APP, INITIAL_KEY_STATES, MapItems } from '../../constants/game';
 
 import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
@@ -22,7 +22,7 @@ function onKeyDown(e: KeyboardEvent): void {
     case 'ArrowLeft':
       if (gameKeysActive && !this.isPaused) {
         this.keysPressed = {
-          ...this.keysPressed,
+          ...INITIAL_KEY_STATES,
           [key]: true,
         };
       }

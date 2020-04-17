@@ -25,3 +25,10 @@ export enum MapItems {
   Butterfly,
   GreenLava,
 }
+
+export const INITIAL_KEY_STATES = {
+  ArrowUp: false,
+  ArrowRight: false,
+  ArrowDown: false,
+  ArrowLeft: false,
+};

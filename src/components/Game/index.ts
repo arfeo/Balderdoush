@@ -1,6 +1,6 @@
 import { PageComponent } from '../core/Page';
 
-import { GAME_CELL_SIZE_VMIN } from '../../constants/game';
+import { GAME_CELL_SIZE_VMIN, INITIAL_KEY_STATES } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderGameBoard, renderStartScreen } from './render';
@@ -153,12 +153,7 @@ class Game extends PageComponent<State> {
       },
     ];
 
-    this.keysPressed = {
-      ArrowUp: false,
-      ArrowRight: false,
-      ArrowDown: false,
-      ArrowLeft: false,
-    };
+    this.keysPressed = { ...INITIAL_KEY_STATES };
 
     this.animations = {
       avatar: null,
