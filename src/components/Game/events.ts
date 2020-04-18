@@ -66,9 +66,11 @@ function onKeyUp(e: KeyboardEvent): void {
     return;
   }
 
-  this.avatarState = 'idle';
-
   const { key } = e;
+
+  if (['p', 'P', ' '].indexOf(key) === -1) {
+    this.avatarState = 'idle';
+  }
 
   if (['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'].indexOf(key) > -1) {
     this.keysPressed = {

@@ -166,7 +166,7 @@ class Game extends PageComponent<State> {
     };
   }
 
-  public afterRender(): void {
+  public afterUpdate(): void {
     if (this.state.isGameStarted) {
       moveMapCanvas.call(this);
       startAnimations.call(this);

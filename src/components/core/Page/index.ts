@@ -16,7 +16,7 @@ export abstract class PageComponent<TState = {}> {
   public animations: { [key: string]: number[] | number };
   public init?(...args: any[]): Promise<any> | void;
   public abstract render(): HTMLElement;
-  public afterRender?(): void;
+  public afterUpdate?(): void;
   public afterMount?(): void;
   public loop?(): void;
   public beforeUnmount?(): void;
@@ -135,7 +135,7 @@ export abstract class PageComponent<TState = {}> {
     this.appRoot.innerHTML = '';
     this.appRoot.appendChild(this.render());
 
-    typeof this.afterRender === 'function' && this.afterRender();
+    typeof this.afterUpdate === 'function' && this.afterUpdate();
   }
 
   public setUpEventHandlers(): void {
@@ -165,16 +165,16 @@ export abstract class PageComponent<TState = {}> {
   public destroy(): void {
     typeof this.beforeUnmount === 'function' && this.beforeUnmount();
 
-    if (typeof this.animations === 'object' && Object.keys(this.animations).length > 0) {
+    if (typeof this.animations === 'object') {
       Object.keys(this.animations).forEach((key: string) => {
         const item: number[] | number = this.animations[key];
-
-        typeof item === 'number' && window.cancelAnimationFrame(item as number);
 
         if (Array.isArray(item)) {
           for (const requestId of item) {
             typeof requestId === 'number' && window.cancelAnimationFrame(requestId);
           }
+        } else {
+          typeof item === 'number' && window.cancelAnimationFrame(item);
         }
       });
     }
