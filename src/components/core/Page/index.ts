@@ -152,13 +152,13 @@ export abstract class PageComponent<TState = {}> {
       ...state,
     };
 
-    if (typeof this.render === 'function' && this.shouldRerender(this.state)) {
+    if (typeof this.render === 'function' && this.shouldUpdate(this.state)) {
       this.renderComponent();
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public shouldRerender(state: TState): boolean {
+  public shouldUpdate(state: TState): boolean {
     return true;
   }
 
