@@ -3,7 +3,7 @@ import { PageComponent } from '../core/Page';
 
 class Help extends ModalComponent {
   public constructor(page: PageComponent) {
-    super(page, 'large');
+    super(page, { className: 'balderdoush', size: 'large' });
   }
 
   public init(): void {

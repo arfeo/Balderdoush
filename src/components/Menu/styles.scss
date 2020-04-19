@@ -1,23 +1,5 @@
 @import '../../assets/styles/variables';
 
-body {
-  .modal-container {
-    .modal-window {
-      border: 1px solid $white;
-      background-color: $black;
-      color: $white;
-
-      .modal-close {
-        color: rgb(176, 176, 176);
-
-        &:hover {
-          color: $white;
-        }
-      }
-    }
-  }
-}
-
 .menu-container {
   display: flex;
   flex-direction: column;
@@ -93,6 +75,22 @@ body {
             border-left: $largeFontSize/4 solid $white;
           }
         }
+      }
+    }
+  }
+}
+
+.modal-container.balderdoush {
+  .modal-window {
+    border: 1px solid $white;
+    background-color: $black;
+    color: $white;
+
+    .modal-close {
+      color: rgb(176, 176, 176);
+
+      &:hover {
+        color: $white;
       }
     }
   }
