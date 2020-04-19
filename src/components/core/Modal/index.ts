@@ -1,25 +1,19 @@
+import { BaseComponent } from '../BaseComponent';
 import { PageComponent } from '../Page';
 
-export type ModalSize = 'large' | 'medium' | 'small';
+import { ModalOptions } from '../types';
 
-export interface ModalOptions {
-  className?: string;
-  size?: ModalSize;
-}
-
-export abstract class ModalComponent {
-  protected parent: PageComponent;
-  protected modalContainer: HTMLElement;
-  protected modalMask: HTMLElement;
-  protected modalWindow: HTMLElement;
-  protected modalClose: HTMLElement;
-  protected modalBody: HTMLElement;
-  protected eventHandlers: EventHandler[];
-  public init?(...args: any[]): Promise<any> | void;
-  public abstract render(): HTMLElement;
-  public beforeUnmount?(): void;
+export abstract class ModalComponent extends BaseComponent {
+  private readonly parent: PageComponent;
+  private readonly modalContainer: HTMLElement;
+  private readonly modalMask: HTMLElement;
+  private readonly modalWindow: HTMLElement;
+  private readonly modalClose: HTMLElement;
+  private readonly modalBody: HTMLElement;
 
   protected constructor(parent: PageComponent, options: ModalOptions = {}, ...args: any[]) {
+    super();
+
     const { className, size } = options;
 
     this.parent = parent;
@@ -52,53 +46,18 @@ export abstract class ModalComponent {
     this.modalClose.addEventListener('click', this.destroy.bind(this));
 
     this.beforeMount(...args).then((): void => {
-      if (typeof this.render === 'function') {
-        this.renderComponent();
-      }
+      this.loadImages(this.images).then((): void => {
+        if (typeof this.render === 'function') {
+          this.renderComponent();
+        }
 
-      if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
-        this.setUpEventHandlers();
-      }
+        typeof this.afterMount === 'function' && this.afterMount();
+
+        if (Array.isArray(this.eventHandlers) && this.eventHandlers.length > 0) {
+          this.setUpEventHandlers();
+        }
+      });
     });
-  }
-
-  protected async beforeMount(...args: any[]): Promise<void> {
-    typeof this.init === 'function' && await this.init(...args);
-
-    return Promise.resolve();
-  }
-
-  private processEventHandlers(actionType: 'add' | 'remove'): void {
-    if (!Array.isArray(this.eventHandlers) || this.eventHandlers.length === 0) {
-      return;
-    }
-
-    for (const prop of this.eventHandlers) {
-      const { target, type, listener } = prop;
-
-      const isApplicable: boolean = (
-        target instanceof Element ||
-        target instanceof HTMLDocument ||
-        target instanceof Window
-      );
-
-      const element: HTMLElement = isApplicable ? target as HTMLElement : document.getElementById(target as string);
-
-      if (!element) {
-        break;
-      }
-
-      switch (actionType) {
-        case 'add':
-          element.addEventListener(type, listener);
-          break;
-        case 'remove':
-          element.removeEventListener(type, listener);
-          break;
-        default:
-          break;
-      }
-    }
   }
 
   private renderComponent(): void {
@@ -107,14 +66,6 @@ export abstract class ModalComponent {
     }
 
     this.modalBody.appendChild(this.render());
-  }
-
-  private setUpEventHandlers(): void {
-    this.processEventHandlers('add');
-  }
-
-  private removeEventHandlers(): void {
-    this.processEventHandlers('remove');
   }
 
   public destroy(restoreParentHandlers = true): void {
