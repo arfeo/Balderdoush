@@ -1,3 +1,5 @@
+import { componentRoot } from '../';
+
 import { ImageProps } from '../../../utils/types';
 
 export interface Images {
@@ -8,7 +10,6 @@ const DEFAULT_LOOP_TIMEOUT = 4;
 
 export abstract class PageComponent<TState = {}> {
   private loopRequestId: number;
-  public appRoot: HTMLElement;
   public state: TState;
   public eventHandlers: EventHandler[];
   public images: Images;
@@ -132,8 +133,8 @@ export abstract class PageComponent<TState = {}> {
   }
 
   private renderComponent(): void {
-    this.appRoot.innerHTML = '';
-    this.appRoot.appendChild(this.render());
+    componentRoot.innerHTML = '';
+    componentRoot.appendChild(this.render());
 
     typeof this.afterUpdate === 'function' && this.afterUpdate();
   }

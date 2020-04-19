@@ -107,14 +107,11 @@ class Game extends PageComponent<State> {
     this.lives = lives;
     this.levelMap = [...level.levelMap];
 
-    this.appRoot = document.getElementById('root');
     this.panelDiamonds = document.createElement('div');
     this.panelDiamondValue = document.createElement('div');
     this.panelTime = document.createElement('div');
     this.panelScore = document.createElement('div');
     this.mapCanvas = document.createElement('canvas');
-
-    this.appRoot.innerText = 'Loading...';
 
     this.offset = getInitialOffset.call(this);
 

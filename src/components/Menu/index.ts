@@ -12,13 +12,10 @@ class Menu extends PageComponent {
   protected levelId: number;
 
   public init(): void {
-    this.appRoot = document.getElementById('root');
     this.startGameButton = document.createElement('button');
     this.lowerLevelButton = document.createElement('button');
     this.levelIdContainer = document.createElement('div');
     this.higherLevelButton = document.createElement('button');
-
-    this.appRoot.innerText = 'Loading...';
 
     this.levelId = getStorageData('levelId') || 1;
 

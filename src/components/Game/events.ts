@@ -1,10 +1,11 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { APP, INITIAL_KEY_STATES, MapItems } from '../../constants/game';
+import { INITIAL_KEY_STATES, MapItems } from '../../constants/game';
 
 import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
+import { renderComponent } from '../core';
 
 function onKeyDown(e: KeyboardEvent): void {
   if (!e) {
@@ -39,7 +40,7 @@ function onKeyDown(e: KeyboardEvent): void {
       if (gameKeysActive) {
         this.destroy();
 
-        APP.pageInstance = new Menu();
+        renderComponent(Menu, document.getElementById('root'));
       }
       break;
     case ' ':
@@ -50,9 +51,9 @@ function onKeyDown(e: KeyboardEvent): void {
           this.destroy();
 
           if (this.lives > 0) {
-            APP.pageInstance = new Game(this.levelId, this.score, this.lives);
+            renderComponent(Game.bind(null, this.levelId, this.score, this.lives), document.getElementById('root'));
           } else {
-            APP.pageInstance = new Menu();
+            renderComponent(Menu, document.getElementById('root'));
           }
         }
       }

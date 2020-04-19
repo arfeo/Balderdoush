@@ -1,17 +1,17 @@
 import { Game } from '../Game';
 
-import { APP } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderLevelId } from './render';
 import { saveStorageData } from '../../utils/storage';
+import { renderComponent } from '../core';
 
 function onStartGame(): void {
   saveStorageData('levelId', this.levelId);
 
   this.destroy();
 
-  APP.pageInstance = new Game(this.levelId);
+  renderComponent(Game.bind(null, this.levelId), document.getElementById('root'));
 }
 
 function onLowerLevel(): void {

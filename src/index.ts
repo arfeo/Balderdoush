@@ -1,7 +1,7 @@
 import { Menu } from './components/Menu';
 
-import { APP } from './constants/game';
+import { renderComponent } from './components/core';
 
 window.onload = () => {
-  APP.pageInstance = new Menu();
+  renderComponent(Menu, document.getElementById('root'));
 };

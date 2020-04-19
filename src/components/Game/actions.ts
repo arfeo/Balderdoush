@@ -1,7 +1,7 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { APP, MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
+import { MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderMapItem, renderPanel, rerenderCellWithNeighbors } from './render';
@@ -9,6 +9,7 @@ import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
 import { isEmpty } from '../../utils/common';
 import { saveStorageData } from '../../utils/storage';
+import { renderComponent } from '../core';
 
 import {
   dropItem,
@@ -442,9 +443,9 @@ function checkTarget(targetX: number, targetY: number): void {
         if (LEVELS.some((level: Level) => level.id === nextLevelId)) {
           saveStorageData('levelId', nextLevelId);
 
-          APP.pageInstance = new Game(nextLevelId, this.score, this.lives);
+          renderComponent(Game.bind(null, nextLevelId, this.score, this.lives), document.getElementById('root'));
         } else {
-          APP.pageInstance = new Menu();
+          renderComponent(Menu, document.getElementById('root'));
         }
       }
       break;
