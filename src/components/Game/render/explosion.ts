@@ -2,8 +2,8 @@ import { drawCircle } from '../../../utils/drawing';
 import { clearCells } from './';
 import { getRandomNum } from '../../../utils/common';
 
-function renderExplosion(x: number, y: number, sizeNumerator: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderExplosion(x: number, y: number, sizeNumerator: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
 
   clearCells(ctx, x, y);
 

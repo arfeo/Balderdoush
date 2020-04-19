@@ -1,8 +1,8 @@
 import { drawImage } from '../../../utils/drawing';
 import { clearCells } from './';
 
-function renderAvatar(x: number, y: number, animationState: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderAvatar(x: number, y: number, animationState: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
 
   const getImageForState = (): ImageProps => {
     const state: number = animationState !== 4 ? animationState : 2;

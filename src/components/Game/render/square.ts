@@ -10,8 +10,8 @@ interface SquareColors {
   center: string;
 }
 
-function renderSquare(x: number, y: number, state: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderSquare(x: number, y: number, state: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
   let squareColors: SquareColors = {
     frame1: BLACK_COLOR,
     frame2: BLACK_COLOR,

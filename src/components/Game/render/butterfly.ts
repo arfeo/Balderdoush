@@ -1,8 +1,8 @@
 import { drawSector } from '../../../utils/drawing';
 import { clearCells } from './index';
 
-function renderButterfly(x: number, y: number, state: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderButterfly(x: number, y: number, state: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
 
   clearCells.call(this, ctx, x, y);
 

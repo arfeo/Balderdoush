@@ -122,7 +122,7 @@ function renderMapItem(x: number, y: number): void {
       renderButterfly.call(this, x, y, 1);
       break;
     case MapItems.GreenLava:
-      renderGreenLava.call(this, x, y, 1);
+      renderGreenLava.call(this, x, y);
       break;
     default: break;
   }

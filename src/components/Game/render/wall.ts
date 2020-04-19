@@ -6,8 +6,8 @@ export interface WallHole {
   top: number;
 }
 
-function renderWallBase(x: number, y: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderWallBase(x: number, y: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
 
   clearCells.call(this, ctx, x, y);
 

@@ -8,12 +8,12 @@ interface HoleSize {
 
 type ExitHole = WallHole & HoleSize;
 
-function renderExit(x: number, y: number): void {
-  renderWall.call(this, x, y);
+function renderExit(x: number, y: number, context?: CanvasRenderingContext2D): void {
+  renderWall.call(this, x, y, context);
 }
 
-function renderExitActive(x: number, y: number, state: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderExitActive(x: number, y: number, state: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
 
   renderWallBase.call(this, x, y);
 
