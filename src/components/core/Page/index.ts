@@ -135,7 +135,10 @@ export abstract class PageComponent<TState = {}> {
   }
 
   private renderComponent(): void {
-    componentRoot.innerHTML = '';
+    while (componentRoot.firstChild) {
+      componentRoot.removeChild(componentRoot.firstChild);
+    }
+
     componentRoot.appendChild(this.render());
 
     typeof this.afterUpdate === 'function' && this.afterUpdate();
