@@ -1,9 +1,9 @@
 import { ModalComponent } from '../core/Modal';
 import { PageComponent } from '../core/Page';
 
-class Alert extends ModalComponent {
-  public constructor(page: PageComponent, text: string, size?: 'large' | 'medium' | 'small') {
-    super(page, text, size);
+class Help extends ModalComponent {
+  public constructor(page: PageComponent) {
+    super(page, 'large');
   }
 
   public init(): void {
@@ -23,10 +23,12 @@ class Alert extends ModalComponent {
   public render(): HTMLElement {
     const labelText = document.createElement('div');
 
-    labelText.innerText = this.modalContent;
+    labelText.innerHTML = (`
+      <div>Help</div>
+    `);
 
     return labelText;
   }
 }
 
-export { Alert };
+export { Help };

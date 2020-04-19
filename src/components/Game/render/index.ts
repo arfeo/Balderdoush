@@ -12,6 +12,8 @@ import { renderBrickWall } from './brickWall';
 import { renderButterfly } from './butterfly';
 import { renderGreenLava } from './greenLava';
 
+import { NoiseParam } from '../types';
+
 function renderStartScreen(): HTMLElement {
   const startScreenContainer: HTMLElement = document.createElement('div');
   const startScreenStat: HTMLElement = document.createElement('div');

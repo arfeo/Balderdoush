@@ -19,7 +19,7 @@ import {
   moveMapCanvas,
 } from './actions';
 
-import { ImageProps } from '../../utils/types';
+import { AvatarState, KeysPressed, Level, Monsters } from './types';
 
 interface State {
   isGameStarted: boolean;

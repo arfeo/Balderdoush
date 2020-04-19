@@ -1,5 +1,23 @@
 @import '../../assets/styles/variables';
 
+body {
+  .modal-container {
+    .modal-window {
+      border: 1px solid $white;
+      background-color: $black;
+      color: $white;
+
+      .modal-close {
+        color: rgb(176, 176, 176);
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
 .menu-container {
   display: flex;
   flex-direction: column;
@@ -41,6 +59,7 @@
         position: relative;
         outline: none;
         font-weight: 400;
+        cursor: pointer;
 
         &:active {
           top: 0.1em;

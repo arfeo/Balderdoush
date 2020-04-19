@@ -12,6 +12,8 @@ import { changeMapValue, getMapItemsByType } from '../../utils/game';
 import { checkGreenLavaNeighbors } from './actions';
 import { isGameActive } from './helpers';
 
+import { MonsterInfo } from './types';
+
 function animateActiveExit(index: number, x: number, y: number): void {
   let start: number = performance.now();
   let state = 1;

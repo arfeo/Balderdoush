@@ -3,6 +3,8 @@ import { MapItems, VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH } from '../../constants
 import { getMapItemsByType } from '../../utils/game';
 import { renderMapItem } from './render';
 
+import { MapItemCoords, MonsterDirection, Monsters } from './types';
+
 function getInitialOffset(): number[] {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 

@@ -1,7 +1,7 @@
 import { PageComponent } from '../core/Page';
 
 import { renderMenu } from './render';
-import { onHigherLevel, onKeyDown, onLowerLevel, onStartGame } from './events';
+import { onHelp, onHigherLevel, onKeyDown, onLowerLevel, onStartGame } from './events';
 import { getStorageData } from '../../utils/storage';
 
 class Menu extends PageComponent {
@@ -9,6 +9,7 @@ class Menu extends PageComponent {
   protected lowerLevelButton: HTMLButtonElement;
   protected levelIdContainer: HTMLElement;
   protected higherLevelButton: HTMLButtonElement;
+  protected helpButton: HTMLButtonElement;
   protected levelId: number;
 
   public init(): void {
@@ -17,6 +18,7 @@ class Menu extends PageComponent {
     this.lowerLevelButton = document.createElement('button');
     this.levelIdContainer = document.createElement('div');
     this.higherLevelButton = document.createElement('button');
+    this.helpButton = document.createElement('button');
 
     this.levelId = getStorageData('levelId') || 1;
 
@@ -35,6 +37,11 @@ class Menu extends PageComponent {
         type: 'click',
         target: this.higherLevelButton,
         listener: onHigherLevel.bind(this),
+      },
+      {
+        type: 'click',
+        target: this.helpButton,
+        listener: onHelp.bind(this),
       },
       {
         type: 'keydown',

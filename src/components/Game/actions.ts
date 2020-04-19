@@ -21,6 +21,8 @@ import {
   removeFallingItem,
 } from './helpers';
 
+import { Level, MonsterDirection, MonsterInfo } from './types';
+
 function checkMovePossibility(targetX: number, targetY: number): boolean {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
 

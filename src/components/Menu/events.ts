@@ -1,9 +1,12 @@
 import { Game } from '../Game';
+import { Help } from './Help';
 
 import { LEVELS } from '../../constants/levels';
 
 import { renderLevelId } from './render';
 import { saveStorageData } from '../../utils/storage';
+
+import { Level } from '../Game/types';
 
 function onStartGame(): void {
   saveStorageData('levelId', this.levelId);
@@ -33,6 +36,10 @@ function onHigherLevel(): void {
   renderLevelId.call(this);
 }
 
+function onHelp(): void {
+  new Help(this);
+}
+
 function onKeyDown(e: KeyboardEvent): void {
   if (!e) {
     return;
@@ -56,5 +63,6 @@ export {
   onStartGame,
   onLowerLevel,
   onHigherLevel,
+  onHelp,
   onKeyDown,
 };

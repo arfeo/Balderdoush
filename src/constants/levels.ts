@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import { Level } from '../components/Game/types';
 
 /**
  * Map items:

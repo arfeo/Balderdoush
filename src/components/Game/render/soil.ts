@@ -1,6 +1,8 @@
 import { drawRectangle } from '../../../utils/drawing';
 import { clearCells, getNoiseParams } from './';
 
+import { NoiseParam } from '../types';
+
 let noiseParams: NoiseParam[] = [];
 
 function renderSoil(x: number, y: number): void {
