@@ -6,8 +6,6 @@ export interface Images {
   [key: string]: ImageProps;
 }
 
-const DEFAULT_LOOP_TIMEOUT = 4;
-
 export abstract class PageComponent<TState = {}> {
   private loopRequestId: number;
   public state: TState;
@@ -24,11 +22,15 @@ export abstract class PageComponent<TState = {}> {
 
   public constructor(...args: any[]) {
     this.eventHandlers = [];
-    this.loopTimeout = DEFAULT_LOOP_TIMEOUT;
+    this.loopTimeout = 4;
     this.animations = {};
 
     this.beforeMount(...args).then((): void => {
       this.loadImages(this.images).then((): void => {
+        if (!componentRoot) {
+          return;
+        }
+
         if (typeof this.render === 'function') {
           this.renderComponent();
         }
