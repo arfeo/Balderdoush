@@ -32,7 +32,7 @@ export abstract class ModalComponent {
 
     document.body.appendChild(this.modalContainer);
     this.modalContainer.appendChild(this.modalMask);
-    this.modalMask.appendChild(this.modalWindow);
+    this.modalContainer.appendChild(this.modalWindow);
     this.modalWindow.appendChild(this.modalClose);
     this.modalWindow.appendChild(this.modalBody);
 
