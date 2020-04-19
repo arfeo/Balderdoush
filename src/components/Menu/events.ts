@@ -1,6 +1,5 @@
 import { Game } from '../Game';
 
-import { APP } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderLevelId } from './render';
@@ -11,7 +10,7 @@ function onStartGame(): void {
 
   this.destroy();
 
-  APP.pageInstance = new Game(this.levelId);
+  new Game(this.levelId);
 }
 
 function onLowerLevel(): void {

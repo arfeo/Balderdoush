@@ -1,7 +1,7 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { APP, MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
+import { MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderMapItem, renderPanel, rerenderCellWithNeighbors } from './render';
@@ -442,9 +442,9 @@ function checkTarget(targetX: number, targetY: number): void {
         if (LEVELS.some((level: Level) => level.id === nextLevelId)) {
           saveStorageData('levelId', nextLevelId);
 
-          APP.pageInstance = new Game(nextLevelId, this.score, this.lives);
+          new Game(nextLevelId, this.score, this.lives);
         } else {
-          APP.pageInstance = new Menu();
+          new Menu();
         }
       }
       break;

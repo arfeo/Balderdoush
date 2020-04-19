@@ -1,7 +1,7 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { APP, INITIAL_KEY_STATES, MapItems } from '../../constants/game';
+import { INITIAL_KEY_STATES, MapItems } from '../../constants/game';
 
 import { renderPanel } from './render';
 import { getMapItemsByType } from '../../utils/game';
@@ -39,7 +39,7 @@ function onKeyDown(e: KeyboardEvent): void {
       if (gameKeysActive) {
         this.destroy();
 
-        APP.pageInstance = new Menu();
+        new Menu();
       }
       break;
     case ' ':
@@ -50,9 +50,9 @@ function onKeyDown(e: KeyboardEvent): void {
           this.destroy();
 
           if (this.lives > 0) {
-            APP.pageInstance = new Game(this.levelId, this.score, this.lives);
+            new Game(this.levelId, this.score, this.lives);
           } else {
-            APP.pageInstance = new Menu();
+            new Menu();
           }
         }
       }

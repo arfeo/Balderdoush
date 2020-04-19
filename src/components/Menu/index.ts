@@ -18,8 +18,6 @@ class Menu extends PageComponent {
     this.levelIdContainer = document.createElement('div');
     this.higherLevelButton = document.createElement('button');
 
-    this.appRoot.innerText = 'Loading...';
-
     this.levelId = getStorageData('levelId') || 1;
 
     this.eventHandlers = [
