@@ -47,10 +47,10 @@ function renderWallBase(x: number, y: number, context?: CanvasRenderingContext2D
   );
 }
 
-function renderWall(x: number, y: number): void {
-  const ctx: CanvasRenderingContext2D = this.mapCanvas.getContext('2d');
+function renderWall(x: number, y: number, context?: CanvasRenderingContext2D): void {
+  const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');
 
-  renderWallBase.call(this, x, y);
+  renderWallBase.call(this, x, y, context);
 
   const wallHoles: WallHole[] = [
     {
