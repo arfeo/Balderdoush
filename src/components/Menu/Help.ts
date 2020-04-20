@@ -142,6 +142,10 @@ class Help extends ModalComponent {
             </div>
           </div>
         </div>
+        <div>
+          <strong>P</strong>: pause the game<br />
+          <strong>Esc</strong>: quit the game and return to the main menu.
+        </div>
       </div>
     `);
 
