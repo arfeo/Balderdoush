@@ -82,46 +82,64 @@ class Help extends ModalComponent {
         <h3>Balderdoush help</h3>
         <div class="col">
           <canvas id="help-avatar-canvas"></canvas>
-          <div>1</div>
+          <div class="description">
+            Rockford. You can move him in every direction with arrow keys.
+          </div>
         </div>
         <div class="row">
           <div class="col">
             <canvas id="help-wall-canvas"></canvas>
-            <div>2</div>
+            <div class="description">
+              An indestructible wall, or, perhaps, the exit door.
+            </div>
           </div>
           <div class="col">
             <canvas id="help-square-canvas"></canvas>
-            <div>3</div>
+            <div class="description">
+              A square monster. Explode it to break the brick walls.
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <canvas id="help-soil-canvas"></canvas>
-            <div>4</div>
+            <div class="description">
+              A piece of soil. Dig it carefully. It's a good protection against monsters.
+            </div>
           </div>
           <div class="col">
             <canvas id="help-butterfly-canvas"></canvas>
-            <div>5</div>
+            <div class="description">
+              A butterfly monster. Explode it to optain more diamonds.
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <canvas id="help-boulder-canvas"></canvas>
-            <div>6</div>
+            <div class="description">
+              A boulder. Use it to explode monsters. Beware of unbalanced boulders.
+            </div>
           </div>
           <div class="col">
             <canvas id="help-brick-wall-canvas"></canvas>
-            <div>7</div>
+            <div class="description">
+              A brick wall. Some brick walls transform boulders into diamonds.
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <canvas id="help-diamond-canvas"></canvas>
-            <div>8</div>
+            <div class="description">
+              A diamond. Collect all diamonds to open the exit door.
+            </div>
           </div>
           <div class="col">
             <canvas id="help-green-lava-canvas"></canvas>
-            <div>9</div>
+            <div class="description">
+              Green lava. It explodes monsters. You can also enclose it to transorm it into diamonds.
+            </div>
           </div>
         </div>
       </div>

@@ -85,8 +85,10 @@
     border: 1px solid $white;
     background-color: $black;
     color: $white;
+    user-select: none;
 
     .modal-close {
+      font-family: 'Helvetica', 'Arial', 'sans-serif';
       color: rgb(176, 176, 176);
 
       &:hover {
@@ -106,6 +108,7 @@
           font-size: 3vmin;
           font-weight: 400;
           text-align: center;
+          text-decoration: underline;
         }
 
         .row {
@@ -119,6 +122,7 @@
           align-items: center;
           width: 100%;
           padding: 2vmin;
+          font-size: 1.7vmin;
 
           .row + & {
             width: 50%;
@@ -127,6 +131,11 @@
           canvas {
             width: $gameCellSize;
             height: $gameCellSize;
+            margin-right: 2vmin;
+          }
+
+          .description {
+            width: calc(100% - #{$gameCellSize} - 2vmin);
           }
         }
       }
