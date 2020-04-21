@@ -41,9 +41,9 @@ function checkMovePossibility(targetX: number, targetY: number): boolean {
   const isActiveExit: boolean = mapItem === MapItems.Exit && this.diamondsToGet === 0;
   const isBoulder: boolean = mapItem === MapItems.Boulder;
 
-  if (isMovingLeft) {
+  if (isMovingLeft && !this.keysPressed.Shift) {
     this.avatarState = isBoulder ? 'pushLeft' : 'walkLeft';
-  } else if (isMovingRight) {
+  } else if (isMovingRight && !this.keysPressed.Shift) {
     this.avatarState = isBoulder ? 'pushRight' : 'walkRight';
   } else {
     this.avatarState = 'idle';
@@ -434,7 +434,7 @@ function checkTarget(targetX: number, targetY: number): void {
 
   switch (mapItem) {
     case MapItems.Exit:
-      if (this.diamondsToGet === 0) {
+      if (this.diamondsToGet === 0 && !this.keysPressed.Shift) {
         const nextLevelId: number = this.levelId + 1;
 
         this.isLevelCompleted = true;
@@ -451,12 +451,12 @@ function checkTarget(targetX: number, targetY: number): void {
       }
       break;
     case MapItems.Boulder:
-      if (avatarX > targetX && isEmptyCell.call(this, targetX - 1, targetY)) {
+      if (avatarX > targetX && isEmptyCell.call(this, targetX - 1, targetY) && !this.keysPressed.Shift) {
         moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX - 1, y: targetY }, mapItem);
         renderMapItem.call(this, targetX - 1, targetY);
       }
 
-      if (avatarX < targetX && isEmptyCell.call(this, targetX + 1, targetY)) {
+      if (avatarX < targetX && isEmptyCell.call(this, targetX + 1, targetY) && !this.keysPressed.Shift) {
         moveMapItem.call(this, { x: targetX, y: targetY }, { x: targetX + 1, y: targetY }, mapItem);
         renderMapItem.call(this, targetX + 1, targetY);
       }
