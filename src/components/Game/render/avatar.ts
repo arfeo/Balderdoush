@@ -1,5 +1,7 @@
-import { drawImage } from '../../../utils/drawing';
+import { drawImage } from '../../../core/utils/drawing';
 import { clearCells } from './';
+
+import { ImageProps } from '../../../core/components/types';
 
 function renderAvatar(x: number, y: number, animationState: number, context?: CanvasRenderingContext2D): void {
   const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');

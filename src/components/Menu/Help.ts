@@ -1,9 +1,8 @@
-import { ModalComponent } from '../core/Modal';
-import { PageComponent } from '../core/Page';
+import { ModalComponent, PageComponent } from '../../core/components';
 
 import { GAME_CELL_SIZE_VMIN } from '../../constants/game';
 
-import { getCellSize } from '../../utils/game';
+import { getCellSize } from '../../core/utils/game';
 import { renderAvatar } from '../Game/render/avatar';
 import { renderWall } from '../Game/render/wall';
 import { renderSquare } from '../Game/render/square';
@@ -13,6 +12,8 @@ import { renderBoulder } from '../Game/render/boulder';
 import { renderBrickWall } from '../Game/render/brickWall';
 import { renderDiamond } from '../Game/render/diamond';
 import { renderGreenLava } from '../Game/render/greenLava';
+
+import { ImageProps } from '../../core/components/types';
 
 class Help extends ModalComponent {
   protected cellSize: number;
@@ -110,7 +111,7 @@ class Help extends ModalComponent {
           <div class="col">
             <canvas id="help-butterfly-canvas"></canvas>
             <div class="description">
-              A butterfly monster. Explode it to optain more diamonds.
+              A butterfly monster. Explode it to obtain more diamonds.
             </div>
           </div>
         </div>
@@ -138,13 +139,13 @@ class Help extends ModalComponent {
           <div class="col">
             <canvas id="help-green-lava-canvas"></canvas>
             <div class="description">
-              Green lava. It explodes monsters. You can also enclose it to transorm it into diamonds.
+              Green lava. It explodes monsters. You can also enclose it to transform it into diamonds.
             </div>
           </div>
         </div>
         <div>
-          <strong>P</strong>: pause the game<br />
-          <strong>Esc</strong>: quit the game and return to the main menu.
+          <strong>P</strong>: pause game.<br />
+          <strong>Esc</strong>: quit game and return to the main menu.
         </div>
       </div>
     `);

@@ -1,4 +1,4 @@
-export const STORAGE_PREFIX = 'balderdoush';
+export const STORAGE_NAME = 'balderdoush';
 
 export const GAME_CELL_SIZE_VMIN = 6;
 
@@ -27,4 +27,4 @@ export const INITIAL_KEY_STATES = {
   ArrowRight: false,
   ArrowDown: false,
   ArrowLeft: false,
-};
+} as const;

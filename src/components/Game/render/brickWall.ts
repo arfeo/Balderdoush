@@ -1,4 +1,4 @@
-import { drawLineToAngle, drawRectangle } from '../../../utils/drawing';
+import { drawLineToAngle, drawRectangle } from '../../../core/utils/drawing';
 import { clearCells } from './';
 
 function renderBrickWall(x: number, y: number, state: number, context?: CanvasRenderingContext2D): void {

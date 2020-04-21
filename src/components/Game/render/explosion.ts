@@ -1,6 +1,6 @@
-import { drawCircle } from '../../../utils/drawing';
+import { drawCircle } from '../../../core/utils/drawing';
 import { clearCells } from './';
-import { getRandomNum } from '../../../utils/common';
+import { getRandomNum } from '../../../core/utils/common';
 
 function renderExplosion(x: number, y: number, sizeNumerator: number, context?: CanvasRenderingContext2D): void {
   const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');

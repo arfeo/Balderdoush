@@ -7,8 +7,8 @@ import { renderAvatar } from './render/avatar';
 import { renderBrickWall } from './render/brickWall';
 import { renderSquare } from './render/square';
 import { renderButterfly } from './render/butterfly';
-import { getRandomNum, isEmpty, isObject } from '../../utils/common';
-import { changeMapValue, getMapItemsByType } from '../../utils/game';
+import { getRandomNum, isEmpty, isObject } from '../../core/utils/common';
+import { changeMapValue, getMapItemsByType } from '../../core/utils/game';
 import { checkGreenLavaNeighbors } from './actions';
 import { isGameActive } from './helpers';
 

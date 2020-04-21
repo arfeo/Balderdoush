@@ -1,14 +1,14 @@
 import { Game } from './index';
 import { Menu } from '../Menu';
 
-import { MapItems, TOTAL_MAP_WIDTH } from '../../constants/game';
+import { MapItems, STORAGE_NAME, TOTAL_MAP_WIDTH } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderMapItem, renderPanel, rerenderCellWithNeighbors } from './render';
-import { changeMapValue, getMapItemsByType } from '../../utils/game';
+import { changeMapValue, getMapItemsByType } from '../../core/utils/game';
 import { animateActiveExit, animateExplosion } from './animations';
-import { isEmpty } from '../../utils/common';
-import { saveStorageData } from '../../utils/storage';
+import { isEmpty } from '../../core/utils/common';
+import { saveStorageData } from '../../core/utils/storage';
 
 import {
   dropItem,
@@ -442,7 +442,7 @@ function checkTarget(targetX: number, targetY: number): void {
         this.destroy();
 
         if (LEVELS.some((level: Level) => level.id === nextLevelId)) {
-          saveStorageData('levelId', nextLevelId);
+          saveStorageData(STORAGE_NAME, 'levelId', nextLevelId);
 
           new Game(nextLevelId, this.score, this.lives);
         } else {

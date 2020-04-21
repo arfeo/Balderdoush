@@ -4,7 +4,7 @@ import { Menu } from '../Menu';
 import { INITIAL_KEY_STATES, MapItems } from '../../constants/game';
 
 import { renderPanel } from './render';
-import { getMapItemsByType } from '../../utils/game';
+import { getMapItemsByType } from '../../core/utils/game';
 
 function onKeyDown(e: KeyboardEvent): void {
   if (!e) {

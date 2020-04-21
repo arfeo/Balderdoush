@@ -1,4 +1,4 @@
-import { PageComponent } from '../core/Page';
+import { PageComponent } from '../../core/components';
 
 import { GAME_CELL_SIZE_VMIN, INITIAL_KEY_STATES } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
@@ -8,7 +8,7 @@ import { onKeyDown, onKeyUp } from './events';
 import { startAnimations } from './animations';
 import { setImages } from './assets';
 import { getInitialOffset, getMonsters } from './helpers';
-import { getCellSize } from '../../utils/game';
+import { getCellSize } from '../../core/utils/game';
 
 import {
   handleGravitation,
@@ -20,6 +20,7 @@ import {
 } from './actions';
 
 import { AvatarState, KeysPressed, Level, Monsters } from './types';
+import { ImageProps } from '../../core/components/types';
 
 interface State {
   isGameStarted: boolean;

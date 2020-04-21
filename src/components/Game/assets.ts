@@ -1,4 +1,4 @@
-import { Images } from '../core/types';
+import { Images } from '../../core/components/types';
 
 function setImages(): Images {
   return {

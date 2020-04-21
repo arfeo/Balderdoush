@@ -1,4 +1,4 @@
-import { drawTriangle } from '../../../utils/drawing';
+import { drawTriangle } from '../../../core/utils/drawing';
 import { clearCells } from './';
 
 function renderDiamond(x: number, y: number, context?: CanvasRenderingContext2D): void {

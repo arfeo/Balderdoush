@@ -1,4 +1,4 @@
-import { drawRectangle } from '../../../utils/drawing';
+import { drawRectangle } from '../../../core/utils/drawing';
 import { clearCells } from './index';
 
 const BLACK_COLOR = 'rgb(0, 0, 0)';

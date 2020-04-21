@@ -1,6 +1,6 @@
 import { MapItems, VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH } from '../../constants/game';
 
-import { getMapItemsByType } from '../../utils/game';
+import { getMapItemsByType } from '../../core/utils/game';
 import { renderMapItem } from './render';
 
 import { MapItemCoords, MonsterDirection, Monsters } from './types';

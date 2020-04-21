@@ -1,4 +1,4 @@
-import { drawSector } from '../../../utils/drawing';
+import { drawSector } from '../../../core/utils/drawing';
 import { clearCells } from './index';
 
 function renderButterfly(x: number, y: number, state: number, context?: CanvasRenderingContext2D): void {

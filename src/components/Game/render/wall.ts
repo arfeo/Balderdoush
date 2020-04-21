@@ -1,4 +1,4 @@
-import { drawLineToAngle, drawRectangle } from '../../../utils/drawing';
+import { drawLineToAngle, drawRectangle } from '../../../core/utils/drawing';
 import { clearCells } from './';
 
 export interface WallHole {

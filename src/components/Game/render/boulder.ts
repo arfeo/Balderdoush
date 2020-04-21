@@ -1,4 +1,4 @@
-import { drawCircle } from '../../../utils/drawing';
+import { drawCircle } from '../../../core/utils/drawing';
 import { clearCells } from './';
 
 function renderBoulder(x: number, y: number, context?: CanvasRenderingContext2D): void {

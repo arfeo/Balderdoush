@@ -1,15 +1,16 @@
 import { Game } from '../Game';
 import { Help } from './Help';
 
+import { STORAGE_NAME } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
 import { renderLevelId } from './render';
-import { saveStorageData } from '../../utils/storage';
+import { saveStorageData } from '../../core/utils/storage';
 
 import { Level } from '../Game/types';
 
 function onStartGame(): void {
-  saveStorageData('levelId', this.levelId);
+  saveStorageData(STORAGE_NAME, 'levelId', this.levelId);
 
   this.destroy();
 

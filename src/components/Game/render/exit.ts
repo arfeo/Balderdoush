@@ -1,5 +1,5 @@
 import { renderWall, renderWallBase, WallHole } from './wall';
-import { drawRectangle } from '../../../utils/drawing';
+import { drawRectangle } from '../../../core/utils/drawing';
 
 interface HoleSize {
   width?: number;
