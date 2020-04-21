@@ -3,6 +3,7 @@ export interface KeysPressed  {
   ArrowRight: boolean;
   ArrowDown: boolean;
   ArrowLeft: boolean;
+  Shift: boolean;
 }
 
 export interface Level {

@@ -22,6 +22,14 @@ function onKeyDown(e: KeyboardEvent): void {
     case 'ArrowLeft':
       if (gameKeysActive && !this.isPaused) {
         this.keysPressed = {
+          ...(!this.keysPressed.Shift ? INITIAL_KEY_STATES : this.keysPressed),
+          [key]: true,
+        };
+      }
+      break;
+    case 'Shift':
+      if (gameKeysActive && !this.isPaused) {
+        this.keysPressed = {
           ...INITIAL_KEY_STATES,
           [key]: true,
         };
@@ -72,7 +80,7 @@ function onKeyUp(e: KeyboardEvent): void {
     this.avatarState = 'idle';
   }
 
-  if (['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'].indexOf(key) > -1) {
+  if (Object.keys(INITIAL_KEY_STATES).indexOf(key) > -1) {
     this.keysPressed = {
       ...this.keysPressed,
       [key]: false,

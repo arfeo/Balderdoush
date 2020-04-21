@@ -468,7 +468,16 @@ function checkTarget(targetX: number, targetY: number): void {
         this.diamondsToGet -= 1;
       }
 
+      if (this.keysPressed.Shift) {
+        this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.EmptySpace);
+      }
+
       renderPanel.call(this);
+      break;
+    case MapItems.Soil:
+      if (this.keysPressed.Shift) {
+        this.levelMap = changeMapValue(this.levelMap, targetX, targetY, MapItems.EmptySpace);
+      }
       break;
     default: break;
   }
@@ -508,14 +517,16 @@ function makeMove(itemX: number, itemY: number, targetX: number, targetY: number
 
   checkTarget.call(this, targetX, targetY);
 
-  moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
+  if (!this.keysPressed.Shift) {
+    moveMapItem.call(this, { x: itemX, y: itemY }, { x: targetX, y: targetY }, MapItems.Avatar);
+    renderMapItem.call(this, itemX, itemY);
 
-  renderMapItem.call(this, itemX, itemY);
-  renderMapItem.call(this, targetX, targetY);
-
-  if (adjustOffset.call(this, targetX, targetY)) {
-    moveMapCanvas.call(this);
+    if (adjustOffset.call(this, targetX, targetY)) {
+      moveMapCanvas.call(this);
+    }
   }
+
+  renderMapItem.call(this, targetX, targetY);
 }
 
 function handleKeysPressed(): void {

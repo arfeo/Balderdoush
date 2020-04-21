@@ -27,4 +27,5 @@ export const INITIAL_KEY_STATES = {
   ArrowRight: false,
   ArrowDown: false,
   ArrowLeft: false,
+  Shift: false,
 } as const;
