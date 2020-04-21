@@ -84,7 +84,9 @@ class Help extends ModalComponent {
         <div class="col">
           <canvas id="help-avatar-canvas"></canvas>
           <div class="description">
-            Rockford. You can move him in every direction with arrow keys.
+            Rockford. You can move him in every direction with arrow keys. You can pick up
+            diamonds or dig without moving by pressing a direction key together with the
+            "pick up" key.
           </div>
         </div>
         <div class="row">
@@ -144,6 +146,7 @@ class Help extends ModalComponent {
           </div>
         </div>
         <div>
+          <strong>Shift</strong>: Pick up<br />
           <strong>P</strong>: pause game.<br />
           <strong>Esc</strong>: quit game and return to the main menu.
         </div>
