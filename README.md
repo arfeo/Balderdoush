@@ -6,12 +6,6 @@ Remake of `Balderdoush`, a puzzle game initially developed by Georges Lobry (rel
 
 [Live demo](https://tests.arfeo.net/balderdoush/)
 
-## Controls
-
-- Arrow keys: move
-- P: pause
-- Esc: quit the game and return to the main menu
-
 ## Installation
 
 Clone the project:
