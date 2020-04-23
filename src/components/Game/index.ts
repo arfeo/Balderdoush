@@ -27,34 +27,34 @@ interface State {
 }
 
 class Game extends PageComponent<State> {
-  protected cellSize: number;
-  protected levelId: number;
-  protected diamondsToGet: number;
-  protected diamondValue: number;
-  protected time: number;
-  protected score: number;
-  protected lives: number;
-  protected levelMap: number[][];
-  protected panelDiamonds: HTMLElement;
-  protected panelDiamondValue: HTMLElement;
-  protected panelTime: HTMLElement;
-  protected panelScore: HTMLElement;
-  protected mapCanvas: HTMLCanvasElement;
-  protected offset: number[];
-  protected isGameStarted: boolean;
-  protected isGameOver: boolean;
-  protected isExploding: boolean;
-  protected isBrickWallSpecialActive: boolean;
-  protected isBrickWallSpecialUsed: boolean;
-  protected isLevelCompleted: boolean;
-  protected isPaused: boolean;
-  protected avatarState: AvatarState;
-  protected storedAvatarState: AvatarState;
-  protected avatarAnimationState: number;
-  protected monsters: Monsters;
-  protected fallingItems: number[][];
-  protected loopThrottle: number;
-  protected keysPressed: KeysPressed;
+  private cellSize: number;
+  private levelId: number;
+  private diamondsToGet: number;
+  private diamondValue: number;
+  private time: number;
+  private score: number;
+  private lives: number;
+  private levelMap: number[][];
+  private panelDiamonds: HTMLElement;
+  private panelDiamondValue: HTMLElement;
+  private panelTime: HTMLElement;
+  private panelScore: HTMLElement;
+  private mapCanvas: HTMLCanvasElement;
+  private offset: number[];
+  private isGameStarted: boolean;
+  private isGameOver: boolean;
+  private isExploding: boolean;
+  private isBrickWallSpecialActive: boolean;
+  private isBrickWallSpecialUsed: boolean;
+  private isLevelCompleted: boolean;
+  private isPaused: boolean;
+  private avatarState: AvatarState;
+  private storedAvatarState: AvatarState;
+  private avatarAnimationState: number;
+  private monsters: Monsters;
+  private fallingItems: number[][];
+  private loopThrottle: number;
+  private keysPressed: KeysPressed;
 
   public images: {
     avatarIdle: ImageProps;
