@@ -1,5 +1,5 @@
 import { drawLineToAngle, drawRectangle } from '../../../core/utils/drawing';
-import { clearCells } from './';
+import { clearCells } from '../helpers';
 
 export interface WallHole {
   left: number;

@@ -1,6 +1,23 @@
-import { Images } from '../../core/components/types';
+import { ImageProps, Images } from '../../core/components/types';
 
-function setImages(): Images {
+export interface ImageAssets extends Images {
+  avatarIdle: ImageProps;
+  avatarProp: ImageProps;
+  avatarPushLeft1: ImageProps;
+  avatarPushLeft2: ImageProps;
+  avatarPushLeft3: ImageProps;
+  avatarPushRight1: ImageProps;
+  avatarPushRight2: ImageProps;
+  avatarPushRight3: ImageProps;
+  avatarWalkLeft1: ImageProps;
+  avatarWalkLeft2: ImageProps;
+  avatarWalkLeft3: ImageProps;
+  avatarWalkRight1: ImageProps;
+  avatarWalkRight2: ImageProps;
+  avatarWalkRight3: ImageProps;
+}
+
+function getImageAssets(): ImageAssets {
   return {
     avatarIdle: {
       src: './static/avatar-idle.svg',
@@ -47,4 +64,4 @@ function setImages(): Images {
   };
 }
 
-export { setImages };
+export { getImageAssets };

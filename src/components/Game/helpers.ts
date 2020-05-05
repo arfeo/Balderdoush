@@ -3,7 +3,7 @@ import { MapItems, VISIBLE_MAP_HEIGHT, VISIBLE_MAP_WIDTH } from '../../constants
 import { getMapItemsByType } from '../../core/utils/game';
 import { renderMapItem } from './render';
 
-import { MapItemCoords, MonsterDirection, Monsters } from './types';
+import { MapItemCoords, MonsterDirection, Monsters, NoiseParam } from './types';
 
 function getInitialOffset(): number[] {
   const items: number[][] = getMapItemsByType(this.levelMap, MapItems.Avatar);
@@ -116,6 +116,32 @@ function isGameActive(): boolean {
   return !this.isPaused && !this.isGameOver && !this.isLevelCompleted;
 }
 
+function clearCells(ctx: CanvasRenderingContext2D, left: number, top: number, xCount = 1, yCount = 1): void {
+  ctx.clearRect(
+    this.cellSize * left,
+    this.cellSize * top,
+    this.cellSize * xCount,
+    this.cellSize * yCount,
+  );
+}
+
+function getNoiseParams(cellSize: number): NoiseParam[] {
+  const result: NoiseParam[] = [];
+  const hmTimes = Math.round(cellSize * 1.3);
+
+  for (let i = 0; i <= hmTimes; i += 1) {
+    result.push({
+      randomX: Math.floor((Math.random() * cellSize) + 1),
+      randomY: Math.floor((Math.random() * cellSize) + 1),
+      randomSize: Math.floor((Math.random() * 1.5 * cellSize / 75) + 1),
+      randomOpacityOne: Math.floor((Math.random() * 7) + 1),
+      randomOpacityTwo: Math.floor((Math.random() * 7) + 1),
+    });
+  }
+
+  return result;
+}
+
 export {
   getInitialOffset,
   isEmptyCell,
@@ -127,4 +153,6 @@ export {
   dropItem,
   removeFallingItem,
   isGameActive,
+  clearCells,
+  getNoiseParams,
 };

@@ -1,12 +1,16 @@
 import { MapItems } from '../../constants/game';
 
-import { renderExitActive } from './render/exit';
-import { renderExplosion } from './render/explosion';
-import { renderMapItem, renderPanel } from './render';
-import { renderAvatar } from './render/avatar';
-import { renderBrickWall } from './render/brickWall';
-import { renderSquare } from './render/square';
-import { renderButterfly } from './render/butterfly';
+import {
+  renderAvatar,
+  renderBrickWall,
+  renderButterfly,
+  renderExitActive,
+  renderExplosion,
+  renderMapItem,
+  renderPanel,
+  renderSquare,
+} from './render';
+
 import { getRandomNum, isEmpty, isObject } from '../../core/utils/common';
 import { changeMapValue, getMapItemsByType } from '../../core/utils/game';
 import { checkGreenLavaNeighbors } from './actions';

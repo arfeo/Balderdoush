@@ -1,5 +1,5 @@
 import { drawCircle } from '../../../core/utils/drawing';
-import { clearCells } from './';
+import { clearCells } from '../helpers';
 
 function renderBoulder(x: number, y: number, context?: CanvasRenderingContext2D): void {
   const ctx: CanvasRenderingContext2D = context || this.mapCanvas.getContext('2d');

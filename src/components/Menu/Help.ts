@@ -3,15 +3,18 @@ import { ModalComponent, PageComponent } from '../../core/components';
 import { GAME_CELL_SIZE_VMIN } from '../../constants/game';
 
 import { getCellSize } from '../../core/utils/game';
-import { renderAvatar } from '../Game/render/avatar';
-import { renderWall } from '../Game/render/wall';
-import { renderSquare } from '../Game/render/square';
-import { renderSoil } from '../Game/render/soil';
-import { renderButterfly } from '../Game/render/butterfly';
-import { renderBoulder } from '../Game/render/boulder';
-import { renderBrickWall } from '../Game/render/brickWall';
-import { renderDiamond } from '../Game/render/diamond';
-import { renderGreenLava } from '../Game/render/greenLava';
+
+import {
+  renderAvatar,
+  renderBoulder,
+  renderBrickWall,
+  renderButterfly,
+  renderDiamond,
+  renderGreenLava,
+  renderSoil,
+  renderSquare,
+  renderWall,
+} from '../Game/render';
 
 import { ImageProps } from '../../core/components/types';
 
@@ -23,7 +26,7 @@ class Help extends ModalComponent {
   };
 
   public constructor(page: PageComponent) {
-    super(page, { className: 'balderdoush', size: 'large' });
+    super(page, { className: 'help', size: 'large' });
   }
 
   public init(): void {
@@ -146,7 +149,7 @@ class Help extends ModalComponent {
           </div>
         </div>
         <div>
-          <strong>Shift</strong>: Pick up<br />
+          <strong>Shift</strong>: pick up.<br />
           <strong>P</strong>: pause game.<br />
           <strong>Esc</strong>: quit game and return to the main menu.
         </div>

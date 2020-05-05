@@ -1,5 +1,5 @@
 import { drawCircle } from '../../../core/utils/drawing';
-import { clearCells } from './';
+import { clearCells } from '../helpers';
 import { getRandomNum } from '../../../core/utils/common';
 
 function renderExplosion(x: number, y: number, sizeNumerator: number, context?: CanvasRenderingContext2D): void {

@@ -1,5 +1,5 @@
 import { drawRectangle } from '../../../core/utils/drawing';
-import { clearCells, getNoiseParams } from './';
+import { clearCells, getNoiseParams } from '../helpers';
 
 import { NoiseParam } from '../types';
 

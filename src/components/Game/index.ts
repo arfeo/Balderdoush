@@ -6,7 +6,7 @@ import { LEVELS } from '../../constants/levels';
 import { renderGameBoard, renderStartScreen } from './render';
 import { onKeyDown, onKeyUp } from './events';
 import { startAnimations } from './animations';
-import { setImages } from './assets';
+import { getImageAssets, ImageAssets } from './assets';
 import { getInitialOffset, getMonsters } from './helpers';
 import { getCellSize } from '../../core/utils/game';
 
@@ -20,7 +20,6 @@ import {
 } from './actions';
 
 import { AvatarState, KeysPressed, Level, Monsters } from './types';
-import { ImageProps } from '../../core/components/types';
 
 interface State {
   isGameStarted: boolean;
@@ -41,7 +40,6 @@ class Game extends PageComponent<State> {
   private panelScore: HTMLElement;
   private mapCanvas: HTMLCanvasElement;
   private offset: number[];
-  private isGameStarted: boolean;
   private isGameOver: boolean;
   private isExploding: boolean;
   private isBrickWallSpecialActive: boolean;
@@ -56,22 +54,7 @@ class Game extends PageComponent<State> {
   private loopThrottle: number;
   private keysPressed: KeysPressed;
 
-  public images: {
-    avatarIdle: ImageProps;
-    avatarProp: ImageProps;
-    avatarPushLeft1: ImageProps;
-    avatarPushLeft2: ImageProps;
-    avatarPushLeft3: ImageProps;
-    avatarPushRight1: ImageProps;
-    avatarPushRight2: ImageProps;
-    avatarPushRight3: ImageProps;
-    avatarWalkLeft1: ImageProps;
-    avatarWalkLeft2: ImageProps;
-    avatarWalkLeft3: ImageProps;
-    avatarWalkRight1: ImageProps;
-    avatarWalkRight2: ImageProps;
-    avatarWalkRight3: ImageProps;
-  };
+  public images: ImageAssets;
 
   public animations: {
     avatar?: number;
@@ -134,7 +117,7 @@ class Game extends PageComponent<State> {
     this.loopTimeout = 70;
     this.loopThrottle = 0;
 
-    this.images = setImages.call(this);
+    this.images = getImageAssets.call(this);
 
     this.eventHandlers = [
       {

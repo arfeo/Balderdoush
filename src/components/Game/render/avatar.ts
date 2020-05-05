@@ -1,5 +1,5 @@
 import { drawImage } from '../../../core/utils/drawing';
-import { clearCells } from './';
+import { clearCells } from '../helpers';
 
 import { ImageProps } from '../../../core/components/types';
 
