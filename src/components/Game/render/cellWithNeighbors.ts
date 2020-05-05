@@ -1,4 +1,4 @@
-import { renderMapItem } from './mapItem';
+import { renderMapItem } from './map';
 
 function rerenderCellWithNeighbors(x: number, y: number): void {
   const rerenderCoords: number[][] = [
