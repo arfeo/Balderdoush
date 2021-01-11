@@ -1,9 +1,9 @@
 import { PageComponent } from '../../core/components';
 
-import { GAME_CELL_SIZE_VMIN, INITIAL_KEY_STATES } from '../../constants/game';
+import { GAME_CELL_SIZE_VMIN, INITIAL_KEY_STATES, TOTAL_MAP_HEIGHT, TOTAL_MAP_WIDTH } from '../../constants/game';
 import { LEVELS } from '../../constants/levels';
 
-import { renderGameBoard, renderStartScreen } from './render';
+import { renderMap, renderPanel } from './render';
 import { onKeyDown, onKeyUp } from './events';
 import { startAnimations } from './animations';
 import { getImageAssets, ImageAssets } from './assets';
@@ -152,6 +152,8 @@ class Game extends PageComponent<State> {
 
   public afterUpdate(): void {
     if (this.state.isGameStarted) {
+      renderPanel.call(this);
+      renderMap.call(this);
       moveMapCanvas.call(this);
       startAnimations.call(this);
     }
@@ -174,10 +176,61 @@ class Game extends PageComponent<State> {
 
   public render(): HTMLElement {
     if (!this.state.isGameStarted) {
-      return renderStartScreen.call(this);
+      const startScreenContainer: HTMLElement = document.createElement('div');
+      const startScreenStat: HTMLElement = document.createElement('div');
+      const startScreenContinue: HTMLElement = document.createElement('div');
+
+      startScreenContainer.className = 'start-screen-container';
+      startScreenStat.className = '-stat';
+      startScreenContinue.className = '-continue';
+
+      startScreenStat.innerText = (
+        `LEVEL ${this.levelId.toString().padStart(2, '0')}
+        LIVES ${this.lives} 
+        SCORE ${this.score.toString().padStart(6, '0')}`
+      );
+
+      startScreenContinue.innerText = 'PRESS SPACE TO CONTINUE';
+
+      startScreenContainer.appendChild(startScreenStat);
+      startScreenContainer.appendChild(startScreenContinue);
+
+      return startScreenContainer;
     }
 
-    return renderGameBoard.call(this);
+    const gameContainer: HTMLElement = document.createElement('div');
+    const gamePanel: HTMLElement = document.createElement('div');
+    const gameMap: HTMLElement = document.createElement('div');
+    const panelDiamondsContainer: HTMLElement = document.createElement('div');
+    const panelTimeContainer: HTMLElement = document.createElement('div');
+    const panelScoreContainer: HTMLElement = document.createElement('div');
+
+    gameContainer.className = 'game-container';
+    gamePanel.className = '-panel';
+    panelDiamondsContainer.className = '-diamonds';
+    panelTimeContainer.className = '-time';
+    panelScoreContainer.className = '-score';
+    this.panelDiamonds.className = '-label';
+    this.panelTime.className = '-label';
+    this.panelScore.className = '-label';
+    gameMap.className = '-map';
+    this.mapCanvas.className = '-map-canvas';
+
+    this.mapCanvas.width = this.cellSize * TOTAL_MAP_WIDTH;
+    this.mapCanvas.height = this.cellSize * TOTAL_MAP_HEIGHT;
+
+    gameContainer.appendChild(gamePanel);
+    gameContainer.appendChild(gameMap);
+    gamePanel.appendChild(panelDiamondsContainer);
+    gamePanel.appendChild(panelTimeContainer);
+    gamePanel.appendChild(panelScoreContainer);
+    panelDiamondsContainer.appendChild(this.panelDiamonds);
+    panelDiamondsContainer.appendChild(this.panelDiamondValue);
+    panelTimeContainer.appendChild(this.panelTime);
+    panelScoreContainer.appendChild(this.panelScore);
+    gameMap.appendChild(this.mapCanvas);
+
+    return gameContainer;
   }
 }
 
